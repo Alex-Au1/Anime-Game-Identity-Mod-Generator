@@ -5,3 +5,8 @@
 Data/Mod[[:space:]]Downloads/**/*.dds filter=lfs diff=lfs merge=lfs -text
 Data/Mod[[:space:]]Downloads/**/*.buf filter=lfs diff=lfs merge=lfs -text
 Data/Mod[[:space:]]Downloads/**/*.ib filter=lfs diff=lfs merge=lfs -text
+Mods/**/*.dds filter=lfs diff=lfs merge=lfs -text
+Mods/**/*.buf filter=lfs diff=lfs merge=lfs -text
+Mods/**/*.ib filter=lfs diff=lfs merge=lfs -text
+# the generated mods' .ini files are written with CRLF on purpose: keep their bytes exactly as generated
+Mods/**/*.ini -text

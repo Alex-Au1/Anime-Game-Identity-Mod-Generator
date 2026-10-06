@@ -136,6 +136,27 @@ the buffers and textures were identical to the checkout's, the checksum OK. It t
 including FixRaidenBoss2's import. No GI character can be fetched fully from GitHub until this repo's
 `Data` is pushed, because every GI folder needs this repo's `Hash.json`.
 
+## `Mods/`: EVERY CHARACTER'S IDENTITY MOD, READY-MADE (2026-10-06)
+
+The maintainer created `Mods/` "for storing compiled mods in case users don't want to run the library".
+
+- **How it is made.** `Tools/populateMods.py <AGRemap master export's Data/Mod Downloads>` runs
+  `IDModGenService` over every character in the manifest. It reads AGRemap's files from the export and this
+  repo's from `Data/`, so nothing is downloaded, and writes `Mods/<GI|WuWa>/<Name>/` and the index
+  `Mods/README.md` (game version and source per mod). Use `--only gi|wuwa` and `--names ...` to redo part of it.
+- **When to rerun it.** After any change to a generator, `Data/` or the manifest.
+- **The 2026-10-06 run:** 144 GI and 54 WuWa mods, 0 failures, 4,182 files, 4.61 GB.
+- **Git LFS.** `Mods/**/*.dds`, `*.buf` and `*.ib` are tracked in Git LFS, and `Mods/**/*.ini` is `-text`. The
+  generators write `.ini` files with CRLF on purpose, as AGRemap's prototypes did, and `-text` keeps those bytes
+  from `core.autocrlf`.
+- **It costs little in LFS.** A mod's buffers and textures are byte-for-byte its download folder's, and LFS
+  stores identical content once. Of the 4.61 GB, only 0.71 GB (696 distinct files) is content `Data/` does not
+  already hold: what came from AGRemap's own folders.
+- **What a mod contains.**
+  - Each is what `python -m AGIDMGen <gi|wuwa> <Name> --download` would write.
+  - Skins with texture donors bind them.
+  - WuWa mods name their textures `<prefix>Texture<hash>.dds` (see "THE WWMI PORT" in Identity Mods).
+
 ## HASH FILES DERIVED FROM AGREMAP'S OWN DATA: `Tools/Downloads/hashFromAGRemap.py` (2026-10-05)
 
 Some AGRemap GI folders have no asset folder to take a `hash.json` from:

@@ -88,9 +88,15 @@ has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Download
 `github.com/.../raw/main/...` works: Aino was generated entirely from GitHub after the first push
 (2026-10-05). LFS storage and bandwidth count against the owner's quota. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "GIT LFS".
 
-**`Mods/` HOLDS PRE-GENERATED IDENTITY MODS (2026-10-05)**, for users who do not want to run the
-library. It is empty (2026-10-05). How and from what to fill it (asset repos or download folders, which
-characters, which versions) is the maintainer's call; ask first.
+**`Mods/` HOLDS EVERY CHARACTER'S PRE-GENERATED IDENTITY MOD (2026-10-06)**, for users who do not want to run
+the library. There are 144 GI and 54 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed in `Mods/README.md`.
+
+- **It is all generated** by `Tools/populateMods.py`, through `IDModGenService`, from each character's newest
+  download folder. Rerun the tool; never edit `Mods/` by hand.
+- **Regenerate it after any change to a generator, `Data/` or the manifest.**
+- **Binaries are in Git LFS, and the `.ini` files are `-text`**, so their CRLF bytes reach users as generated.
+
+See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "`Mods/`".
 
 **AN IDENTITY MOD IS A SAMPLE OF NONE (inherited from AGRemap, 2026-10-02).** It is the easy case in
 every way (every vertex group and band, 32-bit indices, `drawindexed = auto`, one variant with today's

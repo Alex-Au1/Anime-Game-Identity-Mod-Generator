@@ -29,6 +29,12 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 
 <br>
 
+## Pre-generated Mods
+Don't want to run the library? Every character's identity mod is ready-made in the [Mods](Mods/README.md) folder:
+144 Genshin Impact (GIMI) and 54 Wuthering Waves (WWMI) characters. Clone with [Git LFS](https://git-lfs.com) installed.
+
+<br>
+
 ## How To Run:
 See the [library's README](AGIDMGen/README.md).
 
