@@ -111,6 +111,9 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 - **The job names are what a branch protection rule matches**, as a chain such as
   `Tests / Unit Tests (3.9) / Run Unit Tester`. Renaming a job strands the rule, as AGRemap's CI guide warns;
   change them only together with the rule.
+- **`main`'s branch protection requires two checks (set by the maintainer, 2026-10-06):**
+  `Tests / Unit Tests (3.13) / Run Unit Tester` and `Tests / Integration Tests / Run Integration Tester`.
+  `Unit Tests (3.9)` still runs, guarding `requires-python = ">=3.9"`, but does not block a merge.
 - **No checkout fetches Git LFS.** `modsCheck.py` checks each generated binary against the sha256 and size its
   `Mods/` pointer records. So a run spends LFS bandwidth only on the sample character whose download folder
   is this repo's own (Razor, about 6 MB).
