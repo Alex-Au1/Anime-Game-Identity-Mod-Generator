@@ -97,6 +97,52 @@ Two rules from AGRemap's lessons:
   [Identity Mods](../IdentityMods/CLAUDE.md)'s lessons); a bug that only shows on real mods will not show
   on it.
 
+## CI: `.github/workflows` (2026-10-06)
+
+The layout follows AGRemap's. `tests.yml` ("Testers") is the entry point: a push to `main`, a pull request,
+every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both testers side by side:
+
+| Job | Workflow | What it runs |
+| --- | --- | --- |
+| `Unit Tests (3.9)`, `Unit Tests (3.13)` | `unit-test-workflow.yml` | `pip install ./AGIDMGen` (proving the packaging and pulling numpy and FixRaidenBoss2 from PyPI), the tester's `requirements.txt` (AGRemapUtils), then `main.py` |
+| `Integration Tests` | `integration-test-workflow.yml` | `modsCheck.py`: regenerates a sample of identity mods from GitHub and compares them with the committed `Mods/` |
+
+- **Unlike AGRemap, it also runs on a push to `main`.** Nothing is compiled, so a run takes minutes.
+- **The job names are what a branch protection rule matches**, as a chain such as
+  `Tests / Unit Tests (3.9) / Run Unit Tester`. Renaming a job strands the rule, as AGRemap's CI guide warns;
+  change them only together with the rule.
+- **No checkout fetches Git LFS.** `modsCheck.py` checks each generated binary against the sha256 and size its
+  `Mods/` pointer records. So a run spends LFS bandwidth only on the sample character whose download folder
+  is this repo's own (Razor, about 6 MB).
+- **What CI cannot run:** `gimiCheck.py`, `wwmiCheck.py` and `downloadsCheck.py` need the asset repos and AGRemap's
+  prototypes, which only this machine has. Run them by hand after a generator change.
+- **Checked here before the first push (2026-10-06):** every workflow parses, every `uses:` target exists, and every
+  input passed is declared (a PyYAML check). FixRaidenBoss2 5.0.0 on PyPI has manylinux x86_64 wheels for cp39 to
+  cp315. AGRemapUtils 1.0.7's wheel contains `Utils/tests/BaseTestProgram.py` and the rest of what the tester
+  imports. **The workflows themselves had not run yet**: the first run on GitHub is their test.
+
+## `modsCheck.py`: THE COMMITTED MODS ARE THE GOLDEN OUTPUT (2026-10-06)
+
+```bash
+py -3 modsCheck.py                                      # the sample, from GitHub
+py -3 modsCheck.py --all --localData AGRemap=<export> --localData AGIDMGen=<repo>/Data/Mod\ Downloads
+```
+
+The sample covers:
+
+- Yelan: AGRemap's files plus this repo's `Hash.json`;
+- YelanTranquil: several components, texture donors;
+- Razor: every file from this repo, through LFS;
+- Sanhua: AGRemap's files only;
+- Lynae: 8 weights, three blend remaps.
+
+`--all` regenerates every mod in `Mods/`.
+
+**Its first run found a real bug (2026-10-06).** A GIMI mod made by `generateFromRepo` named its download folder in
+the `.ini`'s last comment, and that folder was a TEMPORARY one (`tmp1ypq794d`). So the output was not
+reproducible, and the 144 committed GI mods each carried a random name. `generateFromRepo` now passes
+`sourceName = "GI/<Name>/<version>"`, and the GI mods were regenerated.
+
 ## THE DOWNLOAD FOLDERS' CHECK: `Testing/Integration Tester/downloadsCheck.py` (2026-10-05)
 
 ```bash

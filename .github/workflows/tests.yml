@@ -1,0 +1,24 @@
+name: Testers
+
+# A push to main, a pull request, the schedule (every 3 days) or a manual run: both testers, side by side.
+#
+# note: unlike AG Remap's, this also runs on a push to main. Nothing is compiled here, so a run takes
+#   minutes, not the build AG Remap's needs first.
+#
+# note: the job names ('Tests' and the names inside test-workflow.yml) are what a branch protection rule
+#   matches a required check by, as a chain ('Tests / Unit Tests (3.9) / Run Unit Tester'). Renaming one
+#   strands the rule (AG Remap's CI guide), so change them only together with the rule.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # every 3 days, at midnight UTC, on the default branch (main): the run the README's badge reports
+    - cron: "0 0 */3 * *"
+
+jobs:
+  tests:
+    name: Tests
+    uses: './.github/workflows/test-workflow.yml'

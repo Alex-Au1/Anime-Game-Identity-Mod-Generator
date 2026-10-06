@@ -1,0 +1,37 @@
+name: Integration Tests
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: The python to test on
+        type: string
+        default: "3.12"
+
+jobs:
+  run-tests:
+    name: Run Integration Tester
+    runs-on: ubuntu-latest
+
+    steps:
+    # no Git LFS, on purpose. modsCheck.py downloads the sample's download folders from GitHub, as a user's
+    #   run would, and checks each generated binary against the sha256 and size its Mods/ LFS POINTER
+    #   records -- so a run spends nothing of the repository's LFS bandwidth except the sample character
+    #   whose download folder is this repo's own (Razor, about 6 MB)
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install the package and its dependencies
+      run: python -m pip install ./AGIDMGen
+
+    - name: Prove the package imports before testing anything
+      run: python -c "import FixRaidenBoss2; print('FixRaidenBoss2', FixRaidenBoss2.__file__)"
+
+    # regenerates a sample of identity mods from GitHub and compares them with the committed Mods/
+    - name: Run Integration Tests
+      run: python modsCheck.py
+      working-directory: './Testing/Integration Tester'

@@ -88,6 +88,15 @@ has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Download
 `github.com/.../raw/main/...` works: Aino was generated entirely from GitHub after the first push
 (2026-10-05). LFS storage and bandwidth count against the owner's quota. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "GIT LFS".
 
+**CI RUNS BOTH TESTERS ON GITHUB ACTIONS (2026-10-06)**, laid out like AGRemap's (`tests.yml` -> `test-workflow.yml`
+-> the unit and integration workflows):
+
+- the unit tester on Python 3.9 and 3.13, after `pip install ./AGIDMGen`;
+- `Testing/Integration Tester/modsCheck.py`, which regenerates a sample from GitHub and checks it against the
+  committed `Mods/` through their LFS pointers' sha256, fetching no LFS.
+
+**Job names are branch-protection check names; do not rename them casually.** See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "CI".
+
 **`Mods/` HOLDS EVERY CHARACTER'S PRE-GENERATED IDENTITY MOD (2026-10-06)**, for users who do not want to run
 the library. There are 144 GI and 54 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed in `Mods/README.md`.
 

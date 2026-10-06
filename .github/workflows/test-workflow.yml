@@ -1,0 +1,29 @@
+name: Test
+
+# Runs both testers at the same time; neither needs the other.
+
+on:
+  workflow_call:
+    inputs:
+      integration-python-version:
+        description: The python the integration tester runs on
+        type: string
+        default: "3.12"
+
+jobs:
+  # the library's lowest python and the newest one FixRaidenBoss2 has wheels for and setup-python offers
+  unit-tests:
+    name: Unit Tests (${{ matrix.python-version }})
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.13"]
+    uses: './.github/workflows/unit-test-workflow.yml'
+    with:
+      python-version: ${{ matrix.python-version }}
+
+  integration-tests:
+    name: Integration Tests
+    uses: './.github/workflows/integration-test-workflow.yml'
+    with:
+      python-version: ${{ inputs.integration-python-version }}
