@@ -119,7 +119,7 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 - **Checked here before the first push (2026-10-06):** every workflow parses, every `uses:` target exists, and every
   input passed is declared (a PyYAML check). FixRaidenBoss2 5.0.0 on PyPI has manylinux x86_64 wheels for cp39 to
   cp315. AGRemapUtils 1.0.7's wheel contains `Utils/tests/BaseTestProgram.py` and the rest of what the tester
-  imports. **The workflows themselves had not run yet**: the first run on GitHub is their test.
+  imports. **The first run on GitHub (commit 252be50, 2026-10-06) passed every job.**
 
 ## `modsCheck.py`: THE COMMITTED MODS ARE THE GOLDEN OUTPUT (2026-10-06)
 
