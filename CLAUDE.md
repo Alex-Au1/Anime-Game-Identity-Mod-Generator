@@ -55,7 +55,8 @@ download folder: each file from AGRemap's GitHub if AGRemap keeps it, else from 
 `Data/Mod Downloads`, which holds only what AGRemap lacks. The fetching goes through AGRemap's
 `FixRaidenBoss2.FileDownload`. **The library knows about a folder only through the generated
 `AGIDMGen/data/ModDownloadData.py`**: rerun `Tools/Downloads/buildDownloadManifest.py` after any change to
-either repo's download folders. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md).
+either repo's download folders, **on an export of AGRemap's `master` (`exportAGRemapDownloads.py`), never
+on AGRemap's checkout**, which may be on another branch. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md).
 
 **`IDModGenService` IS THE LIBRARY'S ENTRY POINT, AND `BaseLogger` ITS VIEW (the maintainer's direction, 2026-10-05).**
 They follow AGRemap's `RemapService` / logger for API users, and for a future Django backend that will use both

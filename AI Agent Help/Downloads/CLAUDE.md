@@ -52,16 +52,33 @@ A version folder here holds **only what AGRemap's folder of the same version lac
 | Tool | Does |
 | --- | --- |
 | `populateDownloads.py <gi\|wuwa> <assets> <AGRemap Data/Mod Downloads> --version X_Y [--only ...] [--dryRun]` | builds every asset folder's download folder, compares it with AGRemap's newest, and writes only the difference into `Data/Mod Downloads` |
+| `exportAGRemapDownloads.py <AGRemap repo> <out> [--ref origin/master]` | exports AGRemap's `Data/Mod Downloads` exactly as `origin/master` has it (`git archive`), without touching the checkout's branch or files. **Every tool below takes this export, not the checkout** |
 | `buildDownloadManifest.py <AGRemap Data/Mod Downloads>` | writes `AGIDMGen/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file |
 | `downloadTools.py` | what the two share: `Aliases.json`, version folders, prefix detection |
 
 **Rerun `buildDownloadManifest.py` after `populateDownloads.py`, and whenever AGRemap's `master` gains a
 download folder.** The manifest is a generated file (it says so in its header); never edit it by hand.
 
-**The manifest lists AGRemap's files from a LOCAL checkout.** That checkout must match what AGRemap's
-GitHub `master` serves. A folder that exists only on a local branch makes the library ask GitHub for
-files that 404. On 2026-10-05 the local AGRemap checkout was on branch `add-citlali`. Check
-`git -C <AGRemap> status` and compare it with `master` before regenerating for a release.
+**BUILD THE MANIFEST FROM AGREMAP'S `master`, NEVER FROM ITS CHECKOUT (2026-10-05).** The library downloads
+AGRemap's files from its GitHub `master`, so the manifest must list exactly what `master` serves. A folder
+that exists only on a local branch makes the library ask for files that 404, and one only on `master` is
+missed. The procedure:
+
+```bash
+git -C "E:/Computer/Games/Genshin/Repos/Repos/Fix-Raiden-Boss" fetch origin master
+py -3 Tools/Downloads/exportAGRemapDownloads.py "E:/Computer/Games/Genshin/Repos/Repos/Fix-Raiden-Boss" <scratch>/agmaster
+py -3 Tools/Downloads/buildDownloadManifest.py "<scratch>/agmaster/Data/Mod Downloads"
+```
+
+The fetch only moves `origin/master`. The export never switches the checkout's branch: other agents share
+that checkout, and it was on `add-citlali` on 2026-10-05.
+
+**Rebuilt against `master` `5422f264` on 2026-10-05.** The checkout's `Data/Mod Downloads` had no local-only
+files. `master` had two WuWa characters the checkout lacked, **Lynae and LynaePeppermint** (3_7, 8 weights a
+vertex, blend remaps), and is otherwise identical. So the manifest gained exactly those two: 144 GI and 54
+WuWa characters (55 versions), and nothing else changed. Lynae was then generated entirely from AGRemap's
+GitHub (47 files, three blend remaps, checksum OK). LynaePeppermint was generated from the export
+(checksum OK).
 
 **A new folder is only live once it is on GitHub.** This repo's on `main`, AGRemap's on `master`.
 Committing and merging them is the maintainer's call, as it is in AGRemap (its Overview: "commit them,
