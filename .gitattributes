@@ -1,0 +1,7 @@
+# download folders and generated mods: never line-ending converted
+*.buf binary
+*.ib binary
+*.dds binary
+Data/Mod[[:space:]]Downloads/**/*.dds filter=lfs diff=lfs merge=lfs -text
+Data/Mod[[:space:]]Downloads/**/*.buf filter=lfs diff=lfs merge=lfs -text
+Data/Mod[[:space:]]Downloads/**/*.ib filter=lfs diff=lfs merge=lfs -text

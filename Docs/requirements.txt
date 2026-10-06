@@ -1,0 +1,5 @@
+Sphinx==7.4.7
+sphinx_design==0.5.0
+furo==2024.8.6
+numpy>=1.26.4
+FixRaidenBoss2>=5.0.0
