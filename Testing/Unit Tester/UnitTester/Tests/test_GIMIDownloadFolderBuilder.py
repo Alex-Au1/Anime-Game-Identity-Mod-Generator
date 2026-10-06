@@ -85,3 +85,17 @@ class GIMIDownloadFolderBuilderTest(BaseUnitTest):
         os.remove(os.path.join(self.download, "TesterHash.json"))
         with self.assertRaises(IDMG.BadAssetData):
             IDMG.GIMIIdentityModGenerator().generateFromDownload(self.download, self.path("Mod"), "Tester")
+
+    def test_modFromRepo_namesItsSourceNotTheTemporaryFolder(self):
+        from unittest import mock
+        writeAssets(self.assets, "Tester", oneComponent())
+        own = self.path("Own")
+        IDMG.GIMIDownloadFolderBuilder().build(self.assets, os.path.join(own, "GI", "Tester", "6_8"), "Tester")
+        files = {f: "AGIDMGen" for f in os.listdir(os.path.join(own, "GI", "Tester", "6_8"))}
+
+        with mock.patch.dict(IDMG.ModDownloadData, {"GI": {"Tester": {"6_8": ("Tester", files)}}}, clear = True):
+            downloader = IDMG.ModDownloader(localFolders = {IDMG.ModDownloadRepos.AGIDMGen: own})
+            IDMG.GIMIIdentityModGenerator().generateFromRepo("Tester", self.path("Mod"), downloader = downloader)
+
+        with open(self.path("Mod", "Tester.ini"), encoding = "utf-8") as f:
+            self.assertIn("out of its download folder (GI/Tester/6_8), built by AGIDMGen", f.read())

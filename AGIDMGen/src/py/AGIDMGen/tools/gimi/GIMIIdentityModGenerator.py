@@ -25,6 +25,7 @@ from ..ModDownloader import ModDownloader
 from ...constants.ModLoaders import ModLoaders
 from .GIMIIniBuilder import GIMIIniBuilder
 from ...constants.FileEncodings import FileEncodings
+from ...constants.ModDownloadRepos import ModDownloadGameFolders
 from ...constants.GIMIBuffers import GIMIBuffers, GIMISemanticBuffers, GIMIFixedStrides, GIMIHashFileSuffix
 from ...constants.GIMITextureLayouts import GIMITextureLayouts
 from ...exceptions.BadAssetData import BadAssetData
@@ -352,9 +353,12 @@ class GIMIIdentityModGenerator(Model):
 
         with tempfile.TemporaryDirectory() as temp:
             downloader.download(download, temp if (downloadFolder is None) else downloadFolder)
-            return self.generateFromDownload(download.folder, modFolder, download.prefix, name = modName)
+            # named by what it is, not by where it was downloaded to (a temporary folder's name is random)
+            sourceName = f"{ModDownloadGameFolders[download.loader]}/{download.name}/{download.version}"
+            return self.generateFromDownload(download.folder, modFolder, download.prefix, name = modName, sourceName = sourceName)
 
-    def generateFromDownload(self, downloadFolder: str, modFolder: str, prefix: str, name: Optional[str] = None) -> GIMIIdentityMod:
+    def generateFromDownload(self, downloadFolder: str, modFolder: str, prefix: str, name: Optional[str] = None,
+                             sourceName: Optional[str] = None) -> GIMIIdentityMod:
         """
         Generates the identity mod of a character from its download folder, laid out as Anime Game Remap's
         ``Data/Mod Downloads/GI/<Name>/<version>`` folders are:
@@ -379,6 +383,11 @@ class GIMIIdentityModGenerator(Model):
 
         name: Optional[:class:`str`]
             The name of the character in the mod's files and sections. If this value is ``None``, ``prefix`` is used :raw-html:`<br />` :raw-html:`<br />`
+
+            **Default**: ``None``
+
+        sourceName: Optional[:class:`str`]
+            What the ``.ini``'s last comment calls the download folder (eg. ``GI/Yelan/4_0``). If this value is ``None``, the name of ``downloadFolder`` is used :raw-html:`<br />` :raw-html:`<br />`
 
             **Default**: ``None``
 
@@ -437,7 +446,7 @@ class GIMIIdentityModGenerator(Model):
 
         faceDiffuse, faceHash = self._getFace(face, lambda obj: os.path.join(downloadFolder, f"{prefix}FaceDiffuse.dds"), name, textureCopies)
         return self._write(name, modFolder, components, textureCopies, faceDiffuse, faceHash, unskinned,
-                           f"its download folder ({os.path.basename(os.path.normpath(downloadFolder))})")
+                           f"its download folder ({os.path.basename(os.path.normpath(downloadFolder)) if (sourceName is None) else sourceName})")
 
     def _getEntries(self, hashes: List[Dict[str, Any]], name: str) -> Tuple[List[Dict[str, Any]], List[str], Optional[Dict[str, Any]]]:
         # the skinned components, the names of the unskinned ones and the face entry, checked
