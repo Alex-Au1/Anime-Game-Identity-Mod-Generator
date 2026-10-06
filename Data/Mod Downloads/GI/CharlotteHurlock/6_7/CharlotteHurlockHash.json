@@ -1,0 +1,158 @@
+[
+    {
+        "component_name": "Bangs",
+        "draw_vb": "270e0ffd",
+        "position_vb": "53d723bf",
+        "blend_vb": "88e539c7",
+        "texcoord_vb": "78468110",
+        "ib": "60af405e",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "A",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Body",
+        "draw_vb": "f45bbdaf",
+        "position_vb": "e35ce2c4",
+        "blend_vb": "d3a63a25",
+        "texcoord_vb": "637e74a3",
+        "ib": "5d42c20a",
+        "object_indexes": [
+            0,
+            53529,
+            99756,
+            103914,
+            104172
+        ],
+        "object_classifications": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "ef84e3a2"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "568b4633"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "7f17929f"
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "de63ec65"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "fe270fd4"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "b7fb158e"
+                ]
+            ],
+            [],
+            [],
+            []
+        ],
+        "texture_sources": {
+            "C": {
+                "component": "Body",
+                "object": "B",
+                "layout": "plain"
+            },
+            "D": {
+                "component": "Body",
+                "object": "A",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Camera",
+        "draw_vb": "127d2fe8",
+        "position_vb": "1ec056e4",
+        "blend_vb": "c1923b49",
+        "texcoord_vb": "18514e5e",
+        "ib": "f7f00837",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ]
+    },
+    {
+        "component_name": "Eyes",
+        "draw_vb": "61b441bd",
+        "position_vb": "c813722b",
+        "blend_vb": "bd6d3bcd",
+        "texcoord_vb": "c37b323a",
+        "ib": "a64cdb3d",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "B",
+                "layout": "plain"
+            }
+        }
+    },
+    {
+        "component_name": "Face",
+        "object_classifications": [
+            "Head"
+        ],
+        "object_indexes": [
+            0
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "58d9859b"
+                ]
+            ]
+        ]
+    }
+]

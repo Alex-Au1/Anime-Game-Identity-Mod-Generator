@@ -1,0 +1,175 @@
+[
+    {
+        "component_name": "Bangs",
+        "root_vs": "653c63ba4a73ca8b",
+        "draw_vb": "fe07758c",
+        "position_vb": "383ef938",
+        "blend_vb": "a86ded57",
+        "texcoord_vb": "ee96e5b3",
+        "ib": "773fbe7b",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            14517
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "0f6493aa"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "0287a193"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "ab64b4cc"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Eyes",
+        "root_vs": "653c63ba4a73ca8b",
+        "draw_vb": "af972a39",
+        "position_vb": "0fb69ab1",
+        "blend_vb": "631c6483",
+        "texcoord_vb": "5f855db6",
+        "ib": "39564ab6",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            684
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "0f6493aa"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "ab64b4cc"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Body",
+        "root_vs": "653c63ba4a73ca8b",
+        "draw_vb": "520661f0",
+        "position_vb": "9e1f9f1f",
+        "blend_vb": "750e063d",
+        "texcoord_vb": "5d9385a9",
+        "ib": "e282f691",
+        "object_indexes": [
+            0,
+            46956,
+            101592
+        ],
+        "object_index_counts": [
+            46956,
+            54636,
+            870
+        ],
+        "object_classifications": [
+            "A",
+            "B",
+            "C"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "0f6493aa"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "0287a193"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "ab64b4cc"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "573e8513"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "758056f3"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "832fe591"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "573e8513"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "758056f3"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "832fe591"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Face",
+        "root_vs": "",
+        "draw_vb": "",
+        "position_vb": "",
+        "blend_vb": "",
+        "texcoord_vb": "",
+        "ib": "",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            5196
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "1d1bd3cf"
+                ]
+            ]
+        ]
+    }
+]

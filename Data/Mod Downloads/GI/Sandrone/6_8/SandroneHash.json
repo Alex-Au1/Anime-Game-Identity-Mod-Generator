@@ -1,0 +1,210 @@
+[
+    {
+        "component_name": "Bangs",
+        "root_vs": "653c63ba4a73ca8b",
+        "draw_vb": "1aeb272b",
+        "position_vb": "65a4831f",
+        "blend_vb": "65475558",
+        "texcoord_vb": "f8d59976",
+        "ib": "e4924b14",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            11724
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "3a482e27"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "3aef38f5"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "8068d5dd"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Eyes",
+        "root_vs": "",
+        "draw_vb": "",
+        "position_vb": "",
+        "blend_vb": "",
+        "texcoord_vb": "",
+        "ib": "",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            1608
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "78c51b47"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Body",
+        "root_vs": "653c63ba4a73ca8b",
+        "draw_vb": "edd898d6",
+        "position_vb": "1bedd6d1",
+        "blend_vb": "c6358586",
+        "texcoord_vb": "d33c21da",
+        "ib": "73c8cae2",
+        "object_indexes": [
+            0,
+            43845,
+            97119,
+            105087,
+            122247
+        ],
+        "object_index_counts": [
+            43845,
+            53274,
+            7968,
+            17160,
+            11346
+        ],
+        "object_classifications": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "3a482e27"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "3aef38f5"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "8068d5dd"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "c3bebfd4"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "7d0a84ea"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "2c8b3c25"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "c3bebfd4"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "7d0a84ea"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "2c8b3c25"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "59d82ec1"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "ce172f92"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "24383b4b"
+                ]
+            ],
+            [
+                [
+                    "LightMap",
+                    ".dds",
+                    "59d82ec1"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "ce172f92"
+                ],
+                [
+                    "Diffuse",
+                    ".dds",
+                    "24383b4b"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Face",
+        "root_vs": "",
+        "draw_vb": "",
+        "position_vb": "",
+        "blend_vb": "",
+        "texcoord_vb": "",
+        "ib": "",
+        "object_indexes": [
+            0
+        ],
+        "object_index_counts": [
+            10620
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "87ecca6f"
+                ]
+            ]
+        ]
+    }
+]

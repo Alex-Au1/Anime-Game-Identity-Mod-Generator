@@ -1,0 +1,185 @@
+[
+    {
+        "component_name": "Bangs",
+        "draw_vb": "59d2fb7c",
+        "position_vb": "902a9ef2",
+        "blend_vb": "5cebe332",
+        "texcoord_vb": "502e7a13",
+        "ib": "d44b2c85",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ]
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "A",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Body",
+        "draw_vb": "2da4e7cf",
+        "position_vb": "43a45ed1",
+        "blend_vb": "209b5952",
+        "texcoord_vb": "0e50caed",
+        "ib": "f117984b",
+        "object_indexes": [
+            0,
+            60888,
+            111096,
+            122916
+        ],
+        "object_classifications": [
+            "A",
+            "B",
+            "C",
+            "D"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Eyes",
+        "draw_vb": "4e827f53",
+        "position_vb": "b95d494c",
+        "blend_vb": "89585621",
+        "texcoord_vb": "b8b31d33",
+        "ib": "f4cca9ef",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ]
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "A",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Face",
+        "object_classifications": [
+            "Head"
+        ],
+        "object_indexes": [
+            0
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "5783625d"
+                ]
+            ]
+        ]
+    }
+]

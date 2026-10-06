@@ -1,0 +1,120 @@
+[
+    {
+        "component_name": "Bang",
+        "draw_vb": "2f953b46",
+        "position_vb": "a8a0adb9",
+        "blend_vb": "d2bb6147",
+        "texcoord_vb": "5a79eaa8",
+        "ib": "43ad99d1",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "A",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Body",
+        "draw_vb": "bc87167b",
+        "position_vb": "14efbc45",
+        "blend_vb": "09b92379",
+        "texcoord_vb": "51dd19aa",
+        "ib": "022a9ccd",
+        "object_indexes": [
+            0,
+            44334
+        ],
+        "object_classifications": [
+            "A",
+            "B"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    ""
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Eye",
+        "draw_vb": "feb0e532",
+        "position_vb": "f5dd3d9e",
+        "blend_vb": "89827a3f",
+        "texcoord_vb": "941adcbf",
+        "ib": "91b4d5dd",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "Body",
+                "object": "A",
+                "layout": "plain"
+            }
+        }
+    },
+    {
+        "component_name": "Face",
+        "object_classifications": [
+            "Head"
+        ],
+        "object_indexes": [
+            0
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "2b1b2edf"
+                ]
+            ]
+        ]
+    }
+]

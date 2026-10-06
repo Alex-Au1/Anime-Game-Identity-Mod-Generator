@@ -1,0 +1,124 @@
+[
+    {
+        "component_name": "",
+        "draw_vb": "e3050e5d",
+        "position_vb": "f44024e8",
+        "blend_vb": "9d21697f",
+        "texcoord_vb": "3c73d0f8",
+        "ib": "9634fc3d",
+        "object_indexes": [
+            0,
+            57141
+        ],
+        "object_classifications": [
+            "Head",
+            "Body"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "0c6f8065"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "be447210"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "6047c273"
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "f07f0f1e"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "d243092e"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "c8a81cc8"
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Bang",
+        "draw_vb": "6eedab0d",
+        "position_vb": "c04f6a33",
+        "blend_vb": "d64f34de",
+        "texcoord_vb": "eb066bfa",
+        "ib": "e4e2950f",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "",
+                "object": "Head",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Eye",
+        "draw_vb": "cf21b035",
+        "position_vb": "f02928e4",
+        "blend_vb": "55f71eef",
+        "texcoord_vb": "2f19fb2a",
+        "ib": "36f018fc",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    ""
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    ""
+                ]
+            ]
+        ]
+    },
+    {
+        "component_name": "Face",
+        "object_classifications": [
+            "Head"
+        ],
+        "object_indexes": [
+            0
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "1e92b57a"
+                ]
+            ]
+        ]
+    }
+]

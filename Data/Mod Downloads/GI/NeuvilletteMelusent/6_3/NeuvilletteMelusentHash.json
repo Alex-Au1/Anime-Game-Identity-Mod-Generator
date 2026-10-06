@@ -1,0 +1,154 @@
+[
+    {
+        "component_name": "",
+        "draw_vb": "ffa97f00",
+        "position_vb": "102faf04",
+        "blend_vb": "9382866e",
+        "texcoord_vb": "9a8d48d3",
+        "ib": "e6c3cde1",
+        "object_indexes": [
+            0,
+            46620,
+            71025
+        ],
+        "object_classifications": [
+            "Head",
+            "Body",
+            "Dress"
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "f9635e58"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "1a459a0b"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "77b4f04a"
+                ]
+            ],
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "aa75c82e"
+                ],
+                [
+                    "LightMap",
+                    ".dds",
+                    "41c1c725"
+                ],
+                [
+                    "NormalMap",
+                    ".dds",
+                    "a8c0d859"
+                ]
+            ],
+            []
+        ],
+        "texture_sources": {
+            "Dress": {
+                "component": "",
+                "object": "Head",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Bang",
+        "draw_vb": "d6f09ecc",
+        "position_vb": "48ebf5d3",
+        "blend_vb": "2341c41c",
+        "texcoord_vb": "7e91f197",
+        "ib": "d39a7138",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "",
+                "object": "Head",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Coat",
+        "draw_vb": "2d6bc773",
+        "position_vb": "f9220539",
+        "blend_vb": "d20c0406",
+        "texcoord_vb": "a94b7f74",
+        "ib": "5084b153",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "",
+                "object": "Body",
+                "layout": "normalMap"
+            }
+        }
+    },
+    {
+        "component_name": "Eye",
+        "draw_vb": "fbf6a372",
+        "position_vb": "c2b92f2e",
+        "blend_vb": "bd570b78",
+        "texcoord_vb": "b48884e6",
+        "ib": "9181b82c",
+        "object_indexes": [
+            0
+        ],
+        "object_classifications": [
+            "A"
+        ],
+        "texture_hashes": [
+            []
+        ],
+        "texture_sources": {
+            "A": {
+                "component": "",
+                "object": "Head",
+                "layout": "plain"
+            }
+        }
+    },
+    {
+        "component_name": "Face",
+        "object_classifications": [
+            "Head"
+        ],
+        "object_indexes": [
+            0
+        ],
+        "texture_hashes": [
+            [
+                [
+                    "Diffuse",
+                    ".dds",
+                    "6dab6f0e"
+                ]
+            ]
+        ]
+    }
+]
