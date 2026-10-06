@@ -207,10 +207,7 @@ Then rerun `buildDownloadManifest.py`. **The manifest lists 144 GI characters af
 
 - **`--check`.** The tool derived the hash file of the 20 AGRemap folders that already have one from the
   asset repo, and compared what the generator reads. **19 agree in every hash, object and first index.**
-  The 20th is a data disagreement, not a derivation fault: Kaeya's face diffuse is `6d5856da` in
-  AGRemap's data, while the asset repo changed it in December 2024 (`4fb2b1f`) to `4e6a8e9d`, which is
-  AGRemap's KaeyaSailwind face hash. **Which one the game binds is the maintainer's call** (an in-game
-  check). Kaeya's `Hash.json` here is the asset repo's.
+  The 20th is a data disagreement, not a derivation fault; see "KAEYA'S FACE HASH" below.
 - **Real mods.** Every derived hash of the 12 skins was searched for in the 386 `.ini` files of
   `E:\Computer\Games\Wuthering Waves Mods\Importer\GIMI\Mods`:
   - CherryHuTao, JeanSea, KiraraBoots, NilouBreeze and XianglingCheer: 5 of 5 found;
@@ -249,3 +246,24 @@ noTextures, textureDonor, donorNormalMap}`, and a donor is `"Body;A"`, or `";Hea
   Camera A.
 - **Re-deriving.** `--overwrite --only <Name> ...` re-derives a hash file this tool wrote; an asset repo's
   hash file is never replaced.
+
+## KAEYA'S FACE HASH: AGREMAP'S IS LIKELY STALE (looked into 2026-10-06)
+
+The sources disagree on Kaeya's face diffuse:
+
+- **AGRemap** (master, `api/src/cpp/core/src/data/HashData.cpp`): `6d5856da`. It was entered at 4.0 and never
+  updated, although the same data moves Kaeya's `draw_vb` at 4.1 and his `ib` to `2b3f575a` at 4.3.
+- **The GI asset repo**: `4e6a8e9d`, since its "Characters re-dump" (`4fb2b1f`, 2024-12-14). That dump is after
+  4.3, since its IB is `2b3f575a`, and it replaced the face texture file as well as the hash.
+
+**The evidence points to `4e6a8e9d`.** The re-dumped `KaeyaFaceHeadDiffuse.dds` is byte-identical (same sha1) to
+`KaeyaSailwindFaceHeadDiffuse.dds`, and `4e6a8e9d` is also Sailwind's face hash in both sources. 3DMigoto
+derives a texture's hash from its contents, so since the re-dump base Kaeya and Sailwind most likely share one
+face texture. The texture before the re-dump was different.
+
+- **No independent mod settles it.** In the maintainer's GIMI `Mods`, the only `.ini` with `6d5856da` is a
+  KaeyaSailwind mod remapped by AGRemap, which only repeats AGRemap's data. No `.ini` uses `4e6a8e9d`.
+- **This repo already uses `4e6a8e9d`.** Kaeya's `Hash.json` in `Data/Mod Downloads` is the asset repo's, and so
+  is `Mods/GI/Kaeya`.
+- **Not verified in game.** To settle it, hunt base Kaeya's face texture with GIMI. If it reports `4e6a8e9d`,
+  AGRemap's `HashData.cpp` needs the update. That is AGRemap's change to make, not this repo's.
