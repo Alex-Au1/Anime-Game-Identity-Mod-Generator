@@ -83,9 +83,9 @@ Reach for its `CreditsUpdater`, `Heading` or `Pipeline` before writing a new too
 
 **`Data/Mod Downloads`' BINARIES ARE IN GIT LFS (the maintainer's decision, 2026-10-05).** About 3.8 GB of
 `.dds` / `.buf` / `.ib` are tracked by `.gitattributes`; the `.json` stay ordinary git. A clone without git-lfs
-has pointer files, which `ModDownloader` refuses with `DownloadFailed`. **Downloading LFS files through
-`github.com/.../raw/main/...` is unproved until the first push**, and LFS storage and bandwidth count against
-the owner's quota. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "GIT LFS".
+has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Downloading LFS files through
+`github.com/.../raw/main/...` works: Aino was generated entirely from GitHub after the first push
+(2026-10-05). LFS storage and bandwidth count against the owner's quota. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "GIT LFS".
 
 **`Mods/` HOLDS PRE-GENERATED IDENTITY MODS (2026-10-05)**, for users who do not want to run the
 library. It is empty (2026-10-05). How and from what to fill it (asset repos or download folders, which

@@ -99,9 +99,11 @@ user's global git config.
   (`raw.githubusercontent.com`) serves the pointer too. `ModDownloader` refuses any fetched file that is a
   pointer (`isLfsPointer`), with `DownloadFailed`, and any download that left no file.
 - **The library's addresses are `github.com/<owner>/<repo>/raw/<branch>/...`.** GitHub redirects these to
-  LFS storage for an LFS file, and FixRaidenBoss2's `FileDownload` follows redirects. **This is unproved
-  until `Data` is on GitHub (2026-10-05)**. After the first push, download one `.dds` of this repo through
-  `ModDownloader` and compare it with the working tree's; the pointer guard turns a failure into a clear error.
+  LFS storage for an LFS file, and FixRaidenBoss2's `FileDownload` follows redirects. **Proved on
+  2026-10-05, after the first push** (`c1abc53`; 2,651 LFS objects, 3.2 GB):
+  `GIMIIdentityModGenerator().generateFromRepo("Aino", ...)` fetched all 37 of Aino's files from this repo's
+  GitHub in 26 s. Every LFS binary was byte-identical to the working tree, and `AinoHash.json` differed
+  only in line endings.
 - **Quotas.** LFS storage, and the bandwidth of every user's download, count against the repo owner's GitHub
   LFS quota, not ordinary repository limits. Check the plan before pushing all 3.8 GB.
 - **AGRemap's own folders are not in LFS.** Its files keep coming from its ordinary blobs.
