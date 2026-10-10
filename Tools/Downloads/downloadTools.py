@@ -12,7 +12,7 @@ import sys
 from typing import Dict, List, Optional
 
 RepoRoot = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "src", "py"))
+sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "api", "src", "py"))
 import AGIDMGen as IDMG
 
 # this repo's own download folders

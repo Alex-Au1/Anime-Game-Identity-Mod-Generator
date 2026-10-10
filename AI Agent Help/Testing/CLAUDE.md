@@ -104,7 +104,7 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 
 | Job | Workflow | What it runs |
 | --- | --- | --- |
-| `Unit Tests (3.9)`, `Unit Tests (3.13)` | `unit-test-workflow.yml` | `pip install ./AGIDMGen` (proving the packaging and pulling numpy and FixRaidenBoss2 from PyPI), the tester's `requirements.txt` (AGRemapUtils), then `main.py` |
+| `Unit Tests (3.9)`, `Unit Tests (3.13)` | `unit-test-workflow.yml` | `pip install ./AGIDMGen/api` (proving the packaging and pulling numpy and FixRaidenBoss2 from PyPI), the tester's `requirements.txt` (AGRemapUtils), then `main.py`, then `Tools/ScriptBuilder/main.py --check` (the committed script build is what the source builds; added 2026-10-10) |
 | `Integration Tests` | `integration-test-workflow.yml` | `modsCheck.py`: regenerates a sample of identity mods from GitHub and compares them with the committed `Mods/` |
 
 - **Unlike AGRemap, it also runs on a push to `main`.** Nothing is compiled, so a run takes minutes.
@@ -123,6 +123,47 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
   input passed is declared (a PyYAML check). FixRaidenBoss2 5.0.0 on PyPI has manylinux x86_64 wheels for cp39 to
   cp315. AGRemapUtils 1.0.7's wheel contains `Utils/tests/BaseTestProgram.py` and the rest of what the tester
   imports. **The first run on GitHub (commit 252be50, 2026-10-06) passed every job.**
+- **The script build's check runs on PyPI's AGRemapUtils 1.0.7 (2026-10-10).** It was published on 2026-10-05,
+  after AGRemap's 2026-09-10 change that gave `ScriptBuilder` its `replacements`, and it requires `ordered-set`. Checked
+  from PyPI's JSON, not yet by a run on GitHub.
+
+## PUBLISHING TO PYPI: `python-publish.yml` (2026-10-10)
+
+`python-publish.yml` ("Upload AGIDMGen Package") publishes the package, laid out like AGRemap's file of the same name.
+It runs on a **published release or by hand**, and both do the same three steps:
+
+| Job | What it does |
+| --- | --- |
+| `Tests` | `test-workflow.yml`, the same two testers `tests.yml` runs |
+| `Build distribution` | `python -m build` in `AGIDMGen/api` (sdist + one `py3-none-any` wheel), `twine check --strict`, then installs the WHEEL in a clean venv and imports `AGIDMGen` from outside the repo |
+| `Publish AGIDMGen Package to PyPI` | `pypa/gh-action-pypi-publish`, trusted publishing, environment `pypi` |
+
+- **No compile step and no cibuildwheel**, unlike AGRemap's: the package is pure Python.
+- **The version is `pyproject.toml`'s, not the release tag's.** Bump it, and rebuild the script build (it reads the
+  version), before releasing; PyPI refuses a version it already has, and the run fails at the last step.
+- **The upload is a plain job of `python-publish.yml`, never in a reusable workflow**: PyPI refuses a trusted-publishing
+  token minted inside one (`invalid-publisher`; AGRemap's CI guide, 2026-09-18).
+- **The maintainer's one-time setup on PyPI**: register a trusted publisher for `AGIDMGen` with owner `Alex-Au1`,
+  repository `Anime-Game-Identity-Mod-Generator`, workflow `python-publish.yml`, environment `pypi`. While the project
+  does not exist on PyPI yet, that is a *pending* publisher (PyPI -> Account -> Publishing). Without it the last job
+  fails with `invalid-publisher`.
+- **Checked here before the first run (2026-10-10):** every workflow parses, and an offline sdist of
+  `AGIDMGen/api` (setuptools 68) holds all 11 package folders, `py.typed`, the README and the LICENSE. The wheel
+  could not be built here (no `wheel` package, and PyPI is unreachable from the sandbox); the workflow's own
+  install-and-import step is its check. **It has not run on GitHub yet.**
+
+## PROVING THE SCRIPT BUILD (2026-10-10)
+
+The single-file script (`AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py`, see [Overview](../Overview/CLAUDE.md)) is the library
+flattened into one file, so its acceptance test is **the same bytes as the library**: run it and `python -m AGIDMGen`
+on the same characters and compare the mod folders, and compare both with `Mods/`. Pass `--out` as an absolute path:
+the script changes into its own folder first. On 2026-10-10 Albedo, Aino, Aalto and Augusta (110 files) matched
+`Mods/` byte for byte.
+
+- **`--check` was proven against a broken build:** a line appended to the committed script makes it exit 1.
+- **The name-clash guard was proven on a two-module fake package** that both define `Shared`.
+- **The build is deterministic:** `--check` passes under several `PYTHONHASHSEED`s. Keep every collection of modules
+  the builder visits ordered; a plain set's order changes from run to run, and with it the order of the script.
 
 ## `modsCheck.py`: THE COMMITTED MODS ARE THE GOLDEN OUTPUT (2026-10-06)
 

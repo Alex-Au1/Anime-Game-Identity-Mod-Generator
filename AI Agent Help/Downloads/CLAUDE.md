@@ -53,7 +53,7 @@ A version folder here holds **only what AGRemap's folder of the same version lac
 | --- | --- |
 | `populateDownloads.py <gi\|wuwa> <assets> <AGRemap Data/Mod Downloads> --version X_Y [--only ...] [--dryRun]` | builds every asset folder's download folder, compares it with AGRemap's newest, and writes only the difference into `Data/Mod Downloads` |
 | `exportAGRemapDownloads.py <AGRemap repo> <out> [--ref origin/master]` | exports AGRemap's `Data/Mod Downloads` exactly as `origin/master` has it (`git archive`), without touching the checkout's branch or files. **Every tool below takes this export, not the checkout** |
-| `buildDownloadManifest.py <AGRemap Data/Mod Downloads>` | writes `AGIDMGen/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file |
+| `buildDownloadManifest.py <AGRemap Data/Mod Downloads>` | writes `AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file |
 | `downloadTools.py` | what the two share: `Aliases.json`, version folders, prefix detection |
 
 **Rerun `buildDownloadManifest.py` after `populateDownloads.py`, and whenever AGRemap's `master` gains a

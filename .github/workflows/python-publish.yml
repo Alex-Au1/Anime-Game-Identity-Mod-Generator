@@ -1,0 +1,116 @@
+# This workflow will upload a Python Package when a release is published
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Upload AGIDMGen Package
+
+# The release flow, in order, as AG Remap's python-publish.yml:
+#
+#   1. run both testers, at the same time (the same test-workflow.yml that tests.yml runs)
+#   2. once both pass, build the sdist and the wheel, and prove the wheel installs and imports
+#   3. publish AGIDMGen to PyPI
+#
+# A manual run does all three, exactly as a release does.
+#
+# note: nothing is compiled, so unlike AG Remap's there is no build before the testers and no
+#   cibuildwheel: the package is pure Python, and one 'py3-none-any' wheel serves every platform.
+#
+# note: the version published is 'version' in AGIDMGen/api/pyproject.toml, not the release's tag. Bump it
+#   (and rebuild the script build, which reads it) before releasing: PyPI refuses a version it already has.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+# -------------------------------------------------
+# 1. Both testers in parallel
+# -------------------------------------------------
+  tests:
+    name: Tests
+    uses: './.github/workflows/test-workflow.yml'
+
+
+# -------------------------------------------------
+# 2. Build the distribution
+# -------------------------------------------------
+  build:
+    name: Build distribution
+    needs: tests
+    runs-on: ubuntu-latest
+
+    steps:
+    # no Git LFS: the package holds nothing under Data/ or Mods/
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install pypa/build and twine
+      run: python -m pip install build twine
+
+    - name: Build a binary wheel and a source tarball
+      run: python -m build
+      working-directory: './AGIDMGen/api'
+
+    # the metadata PyPI will render (the README among it), checked before the upload rather than by it
+    - name: Check the distribution's metadata
+      run: python -m twine check --strict dist/*
+      working-directory: './AGIDMGen/api'
+
+    # the WHEEL itself, in a clean environment of its own, from outside the repo: the testers installed from
+    #   the source folder, so a file the wheel left out (a subpackage, py.typed) would not show there
+    - name: Prove the wheel installs and imports
+      run: |
+        python -m venv "$RUNNER_TEMP/wheelcheck"
+        "$RUNNER_TEMP/wheelcheck/bin/python" -m pip install AGIDMGen/api/dist/*.whl
+        cd "$RUNNER_TEMP"
+        "$RUNNER_TEMP/wheelcheck/bin/python" -c "import AGIDMGen; print('AGIDMGen imports from', AGIDMGen.__file__)"
+
+    - name: Store the distribution packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-package-distributions
+        path: 'AGIDMGen/api/dist/'
+        if-no-files-found: error
+
+
+# -------------------------------------------------
+# 3. Publish AGIDMGen to PyPI
+#
+# A plain job of THIS file, never inside a reusable workflow: PyPI's trusted publishing refuses a token
+# minted inside one (AG Remap's CI guide, 'invalid-publisher', 2026-09-18). This file is what PyPI must
+# have registered as AGIDMGen's trusted publisher, with the 'pypi' environment.
+# -------------------------------------------------
+  publish-to-pypi:
+    name: Publish AGIDMGen Package to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/AGIDMGen
+
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+    steps:
+    - name: Download the distribution packages
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Publish distribution to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

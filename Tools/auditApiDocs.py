@@ -14,13 +14,13 @@ import re
 import sys
 
 RepoRoot = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "src", "py"))
+sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "api", "src", "py"))
 import AGIDMGen as IDMG
 
 
 def main() -> int:
     with open(os.path.join(RepoRoot, "Docs", "src", "api.rst"), "r", encoding = "utf-8") as f:
-        documented = set(re.findall(r"^(\w+)\n~+\n", f.read(), re.MULTILINE))
+        documented = set(re.findall(r"^(\w+)\n=+\n", f.read(), re.MULTILINE))
 
     exported = set(IDMG.__all__)
     missing = sorted(exported - documented)

@@ -1,11 +1,38 @@
+.. role:: raw-html(raw)
+    :format: html
+
+=============
 API Reference
 =============
 
+Every class below is importable straight from the top-level package, e.g. ``AGIDMGen.IDModGenService``.
+
+:raw-html:`<br />`
+
+Where to start
+**************
+
+You rarely need more than a handful of the classes on this page. Depending on what you want to do:
+
+- **Make the identity mods of several characters at once**, the way the command line does:
+  :class:`IDModGenService`. It records what it made, and every error, in its :class:`IDModGenStats`.
+- **Make one character's identity mod**: :class:`GIMIIdentityModGenerator` (GI) or
+  :class:`WWMIIdentityModGenerator` (WuWa). Unlike the service, they raise an error when they fail.
+- **Choose the game**: :class:`ModLoaders`.
+- **Find the characters that can be made without an asset folder**: :class:`ModDownloader`.
+
+:doc:`API Examples <apiExamples>` shows each of these end to end.
+
+:raw-html:`<br />`
+:raw-html:`<br />`
+
 Service
--------
+*******
 
 IDModGenService
-~~~~~~~~~~~~~~~
+===============
+
+.. attributetable:: AGIDMGen.IDModGenService
 
 .. autoclass:: AGIDMGen.IDModGenService
     :members:
@@ -13,10 +40,12 @@ IDModGenService
 :raw-html:`<br />`
 
 Model
------
+*****
 
 DumpDataType
-~~~~~~~~~~~~
+============
+
+.. attributetable:: AGIDMGen.DumpDataType
 
 .. autoclass:: AGIDMGen.DumpDataType
     :members:
@@ -24,7 +53,9 @@ DumpDataType
 :raw-html:`<br />`
 
 DumpElement
-~~~~~~~~~~~
+===========
+
+.. attributetable:: AGIDMGen.DumpElement
 
 .. autoclass:: AGIDMGen.DumpElement
     :members:
@@ -32,7 +63,9 @@ DumpElement
 :raw-html:`<br />`
 
 FmtFile
-~~~~~~~
+=======
+
+.. attributetable:: AGIDMGen.FmtFile
 
 .. autoclass:: AGIDMGen.FmtFile
     :members:
@@ -40,7 +73,9 @@ FmtFile
 :raw-html:`<br />`
 
 GIMIComponent
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.GIMIComponent
 
 .. autoclass:: AGIDMGen.GIMIComponent
     :members:
@@ -48,7 +83,9 @@ GIMIComponent
 :raw-html:`<br />`
 
 GIMIIdentityMod
-~~~~~~~~~~~~~~~
+===============
+
+.. attributetable:: AGIDMGen.GIMIIdentityMod
 
 .. autoclass:: AGIDMGen.GIMIIdentityMod
     :members:
@@ -56,7 +93,9 @@ GIMIIdentityMod
 :raw-html:`<br />`
 
 GIMITextureSource
-~~~~~~~~~~~~~~~~~
+=================
+
+.. attributetable:: AGIDMGen.GIMITextureSource
 
 .. autoclass:: AGIDMGen.GIMITextureSource
     :members:
@@ -64,7 +103,9 @@ GIMITextureSource
 :raw-html:`<br />`
 
 IbDumpFile
-~~~~~~~~~~
+==========
+
+.. attributetable:: AGIDMGen.IbDumpFile
 
 .. autoclass:: AGIDMGen.IbDumpFile
     :members:
@@ -72,7 +113,9 @@ IbDumpFile
 :raw-html:`<br />`
 
 IDModGenStats
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.IDModGenStats
 
 .. autoclass:: AGIDMGen.IDModGenStats
     :members:
@@ -80,7 +123,9 @@ IDModGenStats
 :raw-html:`<br />`
 
 ModDownload
-~~~~~~~~~~~
+===========
+
+.. attributetable:: AGIDMGen.ModDownload
 
 .. autoclass:: AGIDMGen.ModDownload
     :members:
@@ -88,7 +133,9 @@ ModDownload
 :raw-html:`<br />`
 
 VbDumpFile
-~~~~~~~~~~
+==========
+
+.. attributetable:: AGIDMGen.VbDumpFile
 
 .. autoclass:: AGIDMGen.VbDumpFile
     :members:
@@ -96,7 +143,9 @@ VbDumpFile
 :raw-html:`<br />`
 
 WWMIBlendRemap
-~~~~~~~~~~~~~~
+==============
+
+.. attributetable:: AGIDMGen.WWMIBlendRemap
 
 .. autoclass:: AGIDMGen.WWMIBlendRemap
     :members:
@@ -104,7 +153,9 @@ WWMIBlendRemap
 :raw-html:`<br />`
 
 WWMIComponent
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.WWMIComponent
 
 .. autoclass:: AGIDMGen.WWMIComponent
     :members:
@@ -112,7 +163,9 @@ WWMIComponent
 :raw-html:`<br />`
 
 WWMIDrawRange
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.WWMIDrawRange
 
 .. autoclass:: AGIDMGen.WWMIDrawRange
     :members:
@@ -120,7 +173,9 @@ WWMIDrawRange
 :raw-html:`<br />`
 
 WWMIIdentityMod
-~~~~~~~~~~~~~~~
+===============
+
+.. attributetable:: AGIDMGen.WWMIIdentityMod
 
 .. autoclass:: AGIDMGen.WWMIIdentityMod
     :members:
@@ -128,7 +183,9 @@ WWMIIdentityMod
 :raw-html:`<br />`
 
 WWMIMesh
-~~~~~~~~
+========
+
+.. attributetable:: AGIDMGen.WWMIMesh
 
 .. autoclass:: AGIDMGen.WWMIMesh
     :members:
@@ -136,7 +193,9 @@ WWMIMesh
 :raw-html:`<br />`
 
 WWMIShapeKeys
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.WWMIShapeKeys
 
 .. autoclass:: AGIDMGen.WWMIShapeKeys
     :members:
@@ -144,10 +203,12 @@ WWMIShapeKeys
 :raw-html:`<br />`
 
 Constants
----------
+*********
 
 DumpDataKinds
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.DumpDataKinds
 
 .. autoclass:: AGIDMGen.DumpDataKinds
     :members:
@@ -155,21 +216,23 @@ DumpDataKinds
 :raw-html:`<br />`
 
 DXGIFormatPrefix
-~~~~~~~~~~~~~~~~
+================
 
 .. autodata:: AGIDMGen.constants.DXGIFormats.DXGIFormatPrefix
 
 :raw-html:`<br />`
 
 DXGIFormats
-~~~~~~~~~~~
+===========
 
 .. autodata:: AGIDMGen.constants.DXGIFormats.DXGIFormats
 
 :raw-html:`<br />`
 
 FileEncodings
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.FileEncodings
 
 .. autoclass:: AGIDMGen.FileEncodings
     :members:
@@ -177,7 +240,9 @@ FileEncodings
 :raw-html:`<br />`
 
 GIMIBuffers
-~~~~~~~~~~~
+===========
+
+.. attributetable:: AGIDMGen.GIMIBuffers
 
 .. autoclass:: AGIDMGen.GIMIBuffers
     :members:
@@ -185,28 +250,30 @@ GIMIBuffers
 :raw-html:`<br />`
 
 GIMIFixedStrides
-~~~~~~~~~~~~~~~~
+================
 
 .. autodata:: AGIDMGen.constants.GIMIBuffers.GIMIFixedStrides
 
 :raw-html:`<br />`
 
 GIMIHashFileSuffix
-~~~~~~~~~~~~~~~~~~
+==================
 
 .. autodata:: AGIDMGen.constants.GIMIBuffers.GIMIHashFileSuffix
 
 :raw-html:`<br />`
 
 GIMISemanticBuffers
-~~~~~~~~~~~~~~~~~~~
+===================
 
 .. autodata:: AGIDMGen.constants.GIMIBuffers.GIMISemanticBuffers
 
 :raw-html:`<br />`
 
 GIMITextureLayouts
-~~~~~~~~~~~~~~~~~~
+==================
+
+.. attributetable:: AGIDMGen.GIMITextureLayouts
 
 .. autoclass:: AGIDMGen.GIMITextureLayouts
     :members:
@@ -214,21 +281,23 @@ GIMITextureLayouts
 :raw-html:`<br />`
 
 IniFileEncoding
-~~~~~~~~~~~~~~~
+===============
 
 .. autodata:: AGIDMGen.constants.FileEncodings.IniFileEncoding
 
 :raw-html:`<br />`
 
 ModDownloadGameFolders
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 
 .. autodata:: AGIDMGen.constants.ModDownloadRepos.ModDownloadGameFolders
 
 :raw-html:`<br />`
 
 ModDownloadRepos
-~~~~~~~~~~~~~~~~
+================
+
+.. attributetable:: AGIDMGen.ModDownloadRepos
 
 .. autoclass:: AGIDMGen.ModDownloadRepos
     :members:
@@ -236,7 +305,9 @@ ModDownloadRepos
 :raw-html:`<br />`
 
 ModLoaders
-~~~~~~~~~~
+==========
+
+.. attributetable:: AGIDMGen.ModLoaders
 
 .. autoclass:: AGIDMGen.ModLoaders
     :members:
@@ -244,35 +315,37 @@ ModLoaders
 :raw-html:`<br />`
 
 ReadEncodings
-~~~~~~~~~~~~~
+=============
 
 .. autodata:: AGIDMGen.constants.FileEncodings.ReadEncodings
 
 :raw-html:`<br />`
 
 WWMIBlendIndexLimit
-~~~~~~~~~~~~~~~~~~~
+===================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIBlendIndexLimit
 
 :raw-html:`<br />`
 
 WWMIBlendRemapBuffers
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIBlendRemapBuffers
 
 :raw-html:`<br />`
 
 WWMIBlendRemapSize
-~~~~~~~~~~~~~~~~~~
+==================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIBlendRemapSize
 
 :raw-html:`<br />`
 
 WWMIBuffers
-~~~~~~~~~~~
+===========
+
+.. attributetable:: AGIDMGen.WWMIBuffers
 
 .. autoclass:: AGIDMGen.WWMIBuffers
     :members:
@@ -280,31 +353,31 @@ WWMIBuffers
 :raw-html:`<br />`
 
 WWMIDownloadNames
-~~~~~~~~~~~~~~~~~
+=================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIDownloadNames
 
 :raw-html:`<br />`
 
 WWMIDownloadTextureSuffix
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIDownloadTextureSuffix
 
 :raw-html:`<br />`
 
 WWMIShapeKeySlots
-~~~~~~~~~~~~~~~~~
+=================
 
 .. autodata:: AGIDMGen.constants.WWMIBuffers.WWMIShapeKeySlots
 
 :raw-html:`<br />`
 
 Data
-----
+****
 
 ModDownloadAliases
-~~~~~~~~~~~~~~~~~~
+==================
 
 .. autodata:: AGIDMGen.data.ModDownloadData.ModDownloadAliases
     :no-value:
@@ -312,7 +385,7 @@ ModDownloadAliases
 :raw-html:`<br />`
 
 ModDownloadData
-~~~~~~~~~~~~~~~
+===============
 
 .. autodata:: AGIDMGen.data.ModDownloadData.ModDownloadData
     :no-value:
@@ -320,10 +393,12 @@ ModDownloadData
 :raw-html:`<br />`
 
 Exceptions
-----------
+**********
 
 BadAssetData
-~~~~~~~~~~~~
+============
+
+.. attributetable:: AGIDMGen.BadAssetData
 
 .. autoclass:: AGIDMGen.BadAssetData
     :members:
@@ -331,7 +406,9 @@ BadAssetData
 :raw-html:`<br />`
 
 DownloadFailed
-~~~~~~~~~~~~~~
+==============
+
+.. attributetable:: AGIDMGen.DownloadFailed
 
 .. autoclass:: AGIDMGen.DownloadFailed
     :members:
@@ -339,7 +416,9 @@ DownloadFailed
 :raw-html:`<br />`
 
 Error
-~~~~~
+=====
+
+.. attributetable:: AGIDMGen.Error
 
 .. autoclass:: AGIDMGen.Error
     :members:
@@ -347,7 +426,9 @@ Error
 :raw-html:`<br />`
 
 UnknownDXGIFormat
-~~~~~~~~~~~~~~~~~
+=================
+
+.. attributetable:: AGIDMGen.UnknownDXGIFormat
 
 .. autoclass:: AGIDMGen.UnknownDXGIFormat
     :members:
@@ -355,10 +436,12 @@ UnknownDXGIFormat
 :raw-html:`<br />`
 
 Tools
------
+*****
 
 DumpValueTools
-~~~~~~~~~~~~~~
+==============
+
+.. attributetable:: AGIDMGen.DumpValueTools
 
 .. autoclass:: AGIDMGen.DumpValueTools
     :members:
@@ -366,7 +449,9 @@ DumpValueTools
 :raw-html:`<br />`
 
 FormatTools
-~~~~~~~~~~~
+===========
+
+.. attributetable:: AGIDMGen.FormatTools
 
 .. autoclass:: AGIDMGen.FormatTools
     :members:
@@ -374,7 +459,9 @@ FormatTools
 :raw-html:`<br />`
 
 GIMIDownloadFolderBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
+
+.. attributetable:: AGIDMGen.GIMIDownloadFolderBuilder
 
 .. autoclass:: AGIDMGen.GIMIDownloadFolderBuilder
     :members:
@@ -382,7 +469,9 @@ GIMIDownloadFolderBuilder
 :raw-html:`<br />`
 
 GIMIIdentityModGenerator
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
+
+.. attributetable:: AGIDMGen.GIMIIdentityModGenerator
 
 .. autoclass:: AGIDMGen.GIMIIdentityModGenerator
     :members:
@@ -390,7 +479,9 @@ GIMIIdentityModGenerator
 :raw-html:`<br />`
 
 GIMIIniBuilder
-~~~~~~~~~~~~~~
+==============
+
+.. attributetable:: AGIDMGen.GIMIIniBuilder
 
 .. autoclass:: AGIDMGen.GIMIIniBuilder
     :members:
@@ -398,7 +489,9 @@ GIMIIniBuilder
 :raw-html:`<br />`
 
 ModDownloader
-~~~~~~~~~~~~~
+=============
+
+.. attributetable:: AGIDMGen.ModDownloader
 
 .. autoclass:: AGIDMGen.ModDownloader
     :members:
@@ -406,7 +499,9 @@ ModDownloader
 :raw-html:`<br />`
 
 VersionTools
-~~~~~~~~~~~~
+============
+
+.. attributetable:: AGIDMGen.VersionTools
 
 .. autoclass:: AGIDMGen.VersionTools
     :members:
@@ -414,7 +509,9 @@ VersionTools
 :raw-html:`<br />`
 
 WWMIDownloadFolderBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
+
+.. attributetable:: AGIDMGen.WWMIDownloadFolderBuilder
 
 .. autoclass:: AGIDMGen.WWMIDownloadFolderBuilder
     :members:
@@ -422,7 +519,9 @@ WWMIDownloadFolderBuilder
 :raw-html:`<br />`
 
 WWMIIdentityModGenerator
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
+
+.. attributetable:: AGIDMGen.WWMIIdentityModGenerator
 
 .. autoclass:: AGIDMGen.WWMIIdentityModGenerator
     :members:
@@ -430,7 +529,9 @@ WWMIIdentityModGenerator
 :raw-html:`<br />`
 
 WWMIIniBuilder
-~~~~~~~~~~~~~~
+==============
+
+.. attributetable:: AGIDMGen.WWMIIniBuilder
 
 .. autoclass:: AGIDMGen.WWMIIniBuilder
     :members:
@@ -438,7 +539,7 @@ WWMIIniBuilder
 :raw-html:`<br />`
 
 WWMITexturePattern
-~~~~~~~~~~~~~~~~~~
+==================
 
 .. autodata:: AGIDMGen.tools.wwmi.WWMIIdentityModGenerator.WWMITexturePattern
 

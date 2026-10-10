@@ -2,7 +2,7 @@
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 #
-# The library is not pip installed here: conf.py puts 'AGIDMGen/src/py' on sys.path instead.
+# The library is not pip installed here: conf.py puts 'AGIDMGen/api/src/py' on sys.path instead.
 
 version: 2
 

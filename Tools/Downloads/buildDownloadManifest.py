@@ -1,7 +1,7 @@
 #
 # ===== buildDownloadManifest =====
 #
-# Writes AGIDMGen/src/py/AGIDMGen/data/ModDownloadData.py: every download folder an identity mod can be
+# Writes AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py: every download folder an identity mod can be
 # generated from, and the repo each of its files is kept in, read off AG Remap's Data/Mod Downloads and
 # this repo's:
 #
@@ -23,7 +23,7 @@ import sys
 from downloadTools import Games, OwnDownloads, RepoRoot, readAliases, getVersionFolders, findPrefix
 import AGIDMGen as IDMG
 
-Output = os.path.join(RepoRoot, "AGIDMGen", "src", "py", "AGIDMGen", "data", "ModDownloadData.py")
+Output = os.path.join(RepoRoot, "AGIDMGen", "api", "src", "py", "AGIDMGen", "data", "ModDownloadData.py")
 
 Header = '''##### Credits
 

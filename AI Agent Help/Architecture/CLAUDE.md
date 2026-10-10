@@ -9,7 +9,7 @@ tests, which every new class needs.
 ## Package layout
 
 ```
-AGIDMGen/                     distribution folder: pyproject.toml, README.md, LICENSE (MIT)
+AGIDMGen/api/                 distribution folder: pyproject.toml, README.md, LICENSE (MIT)
   src/
     py/AGIDMGen/              the Python package
       __init__.py             flat re-export of every public name + explicit __all__
@@ -175,7 +175,7 @@ What is deliberately NOT AGRemap's:
 ## Dependencies
 
 AGRemap's API first (above), then the standard library. A third-party dependency goes in
-`AGIDMGen/pyproject.toml` with a lower bound, and in `Docs/requirements.txt` and
+`AGIDMGen/api/pyproject.toml` with a lower bound, and in `Docs/requirements.txt` and
 `Testing/Unit Tester/requirements.txt` too: Read the Docs and the tester import the package. The
 dependencies are **numpy** (`>=1.26.4`) and **FixRaidenBoss2** (`>=5.0.0`).
 

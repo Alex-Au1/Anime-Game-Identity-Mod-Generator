@@ -27,7 +27,7 @@ It takes 3.2 s cold and 0.3 s warm.
 
 ## The package itself needs no install to test or build the docs
 
-Both the unit tester and `Docs/src/conf.py` put `AGIDMGen/src/py` at the **front** of `sys.path` and
+Both the unit tester and `Docs/src/conf.py` put `AGIDMGen/api/src/py` at the **front** of `sys.path` and
 import the package from source. The tester also needs AGRemapUtils: either pip-installed, or AGRemap's
 source named by `AGREMAP_UTILS_SRC`. So, from a fresh clone on this machine:
 
@@ -41,7 +41,7 @@ copy documented. (AGRemap hit exactly this, with autodoc documenting an older in
 
 ## THE NAMESPACE-PACKAGE TRAP (2026-10-05)
 
-The distribution folder `AGIDMGen/` at the repo root has no `__init__.py`. Python 3 therefore imports
+The folder `AGIDMGen/` at the repo root (holding `api/` and `script build/`) has no `__init__.py`. Python 3 therefore imports
 it as an empty **namespace package** whenever the repo root is on `sys.path` — which it is, as the
 working directory, every time you run `python -c` from the root:
 
@@ -51,14 +51,18 @@ None
 ```
 
 The import *succeeds*, and every attribute access then fails, or `__file__` is `None`. If
-`import AGIDMGen` "works" but nothing is in it, this is why; put `AGIDMGen/src/py` first on `sys.path`.
+`import AGIDMGen` "works" but nothing is in it, this is why; put `AGIDMGen/api/src/py` first on `sys.path`.
 `test_ImportCheck.py` guards the tester against it by checking that the imported package's folder is
 the source folder.
+
+**The script build is a second real package named `AGIDMGen` (2026-10-10):** `AGIDMGen/script build/src/AGIDMGen` has an
+`__init__.py`. With `AGIDMGen/script build/src` on `sys.path` ahead of `AGIDMGen/api/src/py`, `import AGIDMGen` gives
+the compiled script, not the source; check `AGIDMGen.__file__`.
 
 ## Installing the package (editable)
 
 ```bash
-py -3 -m pip install -e AGIDMGen
+py -3 -m pip install -e AGIDMGen/api
 ```
 
 This needs **setuptools 61 or newer**, because the metadata is in `pyproject.toml`'s `[project]` table.
