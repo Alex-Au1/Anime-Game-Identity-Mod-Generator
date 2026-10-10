@@ -36,7 +36,7 @@ Commit and push only when asked, and then straight to `main`.
 maintainer's decision: no C++ / pybind11 / Cython layer until some part is *measured* too slow, or is
 plainly better done in C++. When that happens it goes beside the Python source as `src/cpp` /
 `src/cy`, the way AGRemap's API is laid out — that is why the package lives at
-`AGIDMGen/src/py/AGIDMGen` and not `AGIDMGen/src/AGIDMGen`. Bring the measurement when you propose it.
+`AGIDMGen/api/src/py/AGIDMGen` and not `AGIDMGen/api/src/AGIDMGen`. Bring the measurement when you propose it.
 See [Architecture](AI%20Agent%20Help/Architecture/CLAUDE.md).
 
 **FOLLOW AGREMAP'S CONVENTIONS; ITS DOCS ARE ON THIS MACHINE (2026-10-05).** Code style, docstrings,
@@ -102,9 +102,13 @@ has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Download
 **CI RUNS BOTH TESTERS ON GITHUB ACTIONS (2026-10-06)**, laid out like AGRemap's (`tests.yml` -> `test-workflow.yml`
 -> the unit and integration workflows):
 
-- the unit tester on Python 3.9 and 3.13, after `pip install ./AGIDMGen`;
+- the unit tester on Python 3.9 and 3.13, after `pip install ./AGIDMGen/api`;
 - `Testing/Integration Tester/modsCheck.py`, which regenerates a sample from GitHub and checks it against the
   committed `Mods/` through their LFS pointers' sha256, fetching no LFS.
+
+**`python-publish.yml` publishes `AGIDMGen` to PyPI (2026-10-10)**, on a published release or by hand: both testers
+first, then the sdist and wheel, then a trusted-publishing upload. The version is `pyproject.toml`'s, so bump it before
+a release. See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "PUBLISHING TO PYPI".
 
 **Job names are branch-protection check names; do not rename them casually.** See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "CI".
 
@@ -117,6 +121,17 @@ the library. There are 144 GI and 54 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed
 - **Binaries are in Git LFS, and the `.ini` files are `-text`**, so their CRLF bytes reach users as generated.
 
 See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "`Mods/`".
+
+**THE LIBRARY IS ALSO ONE SCRIPT, `AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py` (the maintainer's request, 2026-10-10)**, for
+users who cannot install a Python package. Like AGRemap's script build, it is compiled by `Tools/ScriptBuilder/main.py`
+on AGRemapUtils' `ScriptBuilder`, but it CONTAINS the library (pure Python), and pip-installs numpy and FixRaidenBoss2 on
+its first run.
+
+- **Rebuild it after any library change**; CI's `Tools/ScriptBuilder/main.py --check` fails on a stale one.
+- **Its `.py` files are generated**: never edit them.
+- **Keep every module's section markers, and top-level names unique across the package**: the builder refuses a clash.
+
+See [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s "THE SCRIPT BUILD".
 
 **AN IDENTITY MOD IS A SAMPLE OF NONE (inherited from AGRemap, 2026-10-02).** It is the easy case in
 every way (every vertex group and band, 32-bit indices, `drawindexed = auto`, one variant with today's
