@@ -13,7 +13,7 @@ import sys
 from typing import List, Optional, Tuple
 
 RepoRoot = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "src", "py"))
+sys.path.insert(0, os.path.join(RepoRoot, "AGIDMGen", "api", "src", "py"))
 
 
 def readIniLines(path: str, generatorLines: Tuple[str, ...]) -> List[bytes]:
