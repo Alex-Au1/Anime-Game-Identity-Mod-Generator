@@ -79,8 +79,14 @@ Mods/                         every character's pre-generated identity mod (GENE
 
 ## Operating norms
 
-- **Don't push or open a PR unless asked.** If asked, branch off `main` and target `main`. Branch names
-  are kebab-case (`add-wwmi-generator`).
+- **Commit and push only when asked, and then straight to `main` (the maintainer's practice, 2026-10-06).**
+  The maintainer asks "commit and push to main" after reviewing a step. Split unrelated work into separate
+  commits, and report each hash. Branch (kebab-case, e.g. `add-wwmi-generator`) and open a PR only when asked
+  for one.
+- **Push with `git -c http.sslBackend=schannel push`.** The default TLS backend fails here.
+- **`main` is branch-protected (2026-10-06):** two CI checks are required (see [Testing](../Testing/CLAUDE.md)'s
+  "CI"). The maintainer's account bypasses the rule, so a direct push succeeds and prints
+  `2 of 2 required status checks are expected`. That message is expected, not an error.
 - **Commit subjects are `Scope: lowercase imperative -- detail`**, AGRemap's style, e.g.
   `GIMI: write the face diffuse on ps-t1 for 6.x skins -- 6.x moved it off ps-t0`. Bodies end with
   the `Co-Authored-By:` line.
@@ -94,6 +100,63 @@ Mods/                         every character's pre-generated identity mod (GENE
   the next agent does not hand-edit it.
 
 ## Working a feature or bug request here
+
+### THE CHANGE CHECKLIST: WHAT TO RERUN AFTER CHANGING WHAT (2026-10-10)
+
+Every output of this repo is checked by something, and most outputs are COMMITTED generated files. A change
+is done only when the checks it touches pass and the generated files it touches are regenerated in the
+same commit.
+
+| You changed | Rerun | Then |
+| --- | --- | --- |
+| Any library code | the unit tester ([Testing](../Testing/CLAUDE.md)) | add a unit test for the bug or feature |
+| A GIMI generator, the dump readers or the `.ini` builder | `gimiCheck.py` (parity with AGRemap's prototype) and `downloadsCheck.py gi` | regenerate `Mods/GI` (`Tools/populateMods.py ... --only gi`), then `modsCheck.py --all` |
+| A WWMI generator or `.ini` builder | `wwmiCheck.py` and `downloadsCheck.py wuwa` | regenerate `Mods/WuWa` (`--only wuwa`), then `modsCheck.py --all` |
+| `Data/Mod Downloads`, or AGRemap's `master` gained a folder | `buildDownloadManifest.py` on a fresh `master` export ([Downloads](../Downloads/CLAUDE.md)) | regenerate the affected `Mods/` characters (`--names ...`) |
+| A public name (new class, function, constant) | `Tools/auditApiDocs.py`, and the docs build | add its `api.rst` entry ([Documentation](../Documentation/CLAUDE.md)) |
+| A workflow in `.github/workflows` | nothing runs it locally | keep the job names: they are required checks |
+| A convention, a gotcha or a decision | | write it into the guide it belongs to, dated |
+
+- **A regenerated `Mods/` that changes bytes nobody expected is a bug report, not a refresh.** Find out
+  why before committing it; `git diff --stat Mods` shows which files moved. The `sourceName` bug was found
+  exactly this way.
+- **The checks that need this machine's asset repos and AGRemap's prototypes** (`gimiCheck.py`,
+  `wwmiCheck.py`, `downloadsCheck.py`) do not run in CI. If you changed a generator, CI passing is not enough;
+  run them here.
+
+### Where the inputs live on this machine
+
+| What | Where |
+| --- | --- |
+| AGRemap (shared checkout; never switch its branch) | `E:\Computer\Games\Genshin\Repos\Repos\Fix-Raiden-Boss` |
+| AGRemap's `master` download folders | an export made by `Tools/Downloads/exportAGRemapDownloads.py` into your scratch folder, never the checkout |
+| AGRemap's hash data | `master:Anime Game Remap (for all users)/api/src/cpp/core/src/data/HashData.cpp`; the `HashData.py` beside the Python API is only a shim over it |
+| GI assets | `E:\Computer\Games\Genshin\Repos\Repos\GI-Model-Importer-Assets` |
+| WuWa assets | `E:\Computer\Games\Wuthering Waves Mods\Repos\WWMI-Assets` |
+| The maintainer's installed GIMI mods (real-world hash evidence) | `E:\Computer\Games\Wuthering Waves Mods\Importer\GIMI\Mods` |
+
+Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A `git grep` over all of
+`master` takes minutes.
+
+### THIS MACHINE'S TOOLING QUIRKS (2026-10-10)
+
+- **Keep `Mods/` and `Data/` out of a search.** They hold several GB, and a repo-wide `grep -r` runs past
+  the tool timeout. Search `AGIDMGen/`, `Testing/`, `Tools/` and `AI Agent Help/`, or pass a glob that
+  excludes them.
+- **After a large rewrite of `Mods/`, git is slow and `.git/index.lock` can be held.** The Claude desktop app
+  runs its own `git status` / `git diff` in the background, and rehashing thousands of LFS files takes
+  minutes. If a command fails on `index.lock`, check for running `git.exe` processes before anything else.
+  Remove the lock only once none is left.
+- **`gh` is not logged in, and the browser pane is signed out of GitHub.** Neither can change repo settings
+  (branch protection, secrets), and an agent must not sign in for the maintainer. Give the maintainer the
+  exact steps instead. Read-only GitHub data comes from the public API through Python:
+  `urllib.request.urlopen("https://api.github.com/repos/Alex-Au1/Anime-Game-Identity-Mod-Generator/commits/<sha>/check-runs")`
+  lists a commit's check names and results. `curl` fails TLS here; do not turn verification off.
+- **Write a multi-line edit as a Python script in your scratch folder, or use the Edit tool.** Inline Bash
+  heredocs that hold Python strings have put literal newlines into the edited files more than once.
+
+### Habits
+
 
 AGRemap's list of habits (its Overview, "Working a feature or bug request here") applies here in
 full. The ones that matter most for a generator library:
@@ -116,10 +179,28 @@ full. The ones that matter most for a generator library:
 
 ## Add yourself to The Council
 
-When your session made a real contribution, add a badge to the roster in
-[`AI Agent Help/README.md`](../README.md) — a work-specific name (`The <Role>`), an emoji pair and a
-colour, in the same Shields.io static-badge format as the existing ones — or bump an existing badge's
-count if your work fits its name. Then **recompute the total as the sum of every badge's count** and
-write it into BOTH `Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg` and
-`TheCouncilofClaudeAgentsBadgeMiniWithCount.svg`: in each, the `<text>` element that shows the number
-AND the root `aria-label`. (Total on 2026-10-05: 1.)
+The ritual is AGRemap's: its Overview's "Add yourself to The Council" has every detail. In short, when the
+maintainer asks you to join:
+
+1. **Pick a name from the work you actually did** (`The <Role>`, with an emoji pair). If an existing badge in
+   the roster in [`AI Agent Help/README.md`](../README.md) already fits that work, bump its count instead
+   of adding one.
+2. **Otherwise add a Shields.io static badge** in the same format as the others, count `1`, with a colour
+   pair and style of your own. Percent-encode the label with
+   `py -3 -c "import urllib.parse; print(urllib.parse.quote('<name>', safe=''))"`.
+3. **Set the counter to the sum of every badge's count, not the number of badges, and not the old number + 1.**
+   Recompute it from the roster:
+
+   ```bash
+   grep -o 'badge/[^)]*' "AI Agent Help/README.md" | grep -v 'badge/Claude' | sed -E 's/.*-([0-9]+)-%23.*/\1/' | awk '{s+=$1} END {print s}'
+   ```
+
+   Write it into BOTH `Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg` and
+   `TheCouncilofClaudeAgentsBadgeMiniWithCount.svg`, in two places in each: the last `<text>` element and
+   the root `aria-label`.
+
+Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
+`<img align="top">` tags on purpose; do not convert them to markdown.**
+
+Members: the Mirror Mason (the repo's scaffolding, 2026-10-05) and the Parity Porter (both generators
+ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10). Total on 2026-10-10: 2.

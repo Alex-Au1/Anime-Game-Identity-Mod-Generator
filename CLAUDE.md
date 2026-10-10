@@ -21,6 +21,17 @@ setup/test/doc pipelines from scratch when they're already written down.
 | Downloads | [`AI Agent Help/Downloads/CLAUDE.md`](AI%20Agent%20Help/Downloads/CLAUDE.md) | working on `Data/Mod Downloads`, `ModDownloader`, `generateFromRepo` / `--download`, or the `Tools/Downloads` tools: **files come from AGRemap's GitHub first and this repo's second, so nothing is stored twice**; the generated manifest; the newest-version rule; what cannot be generated from downloads yet |
 | Identity Mods | [`AI Agent Help/IdentityMods/CLAUDE.md`](AI%20Agent%20Help/IdentityMods/CLAUDE.md) | working on the generators themselves — what an identity mod is and what AGRemap uses it for, the **GIMI and WWMI generators in AGRemap that this library is ported from** (inputs, algorithm, output layout), and every lesson AGRemap's agents recorded about them |
 
+**BEFORE A FEATURE OR BUG REQUEST, READ [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s "Working a feature or bug
+request here" (2026-10-10).** It has:
+
+- the change checklist: which check to rerun, and which COMMITTED generated files (the manifest, `Mods/`) to
+  regenerate, after each kind of change;
+- where the asset repos and AGRemap's data live on this machine;
+- this machine's tooling quirks: pushing, a slow git after `Mods/` changes, no `gh` login, searches to keep
+  out of `Mods/` and `Data/`.
+
+Commit and push only when asked, and then straight to `main`.
+
 **THIS IS A PYTHON LIBRARY, AND STAYS ONE UNTIL A MEASUREMENT SAYS OTHERWISE (2026-10-05).** The
 maintainer's decision: no C++ / pybind11 / Cython layer until some part is *measured* too slow, or is
 plainly better done in C++. When that happens it goes beside the Python source as `src/cpp` /

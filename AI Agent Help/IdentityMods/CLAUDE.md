@@ -312,9 +312,10 @@ These are AGRemap's, dated as recorded there (in `AI Agent Help/CreatingRemaps`,
 
 ## Where the test material is
 
-- **No generated identity mods are committed anywhere.** They live on the maintainer's machine
-  (`Mods/Yelan4`, `Mods/YelanTranquilIdentity`, `WWMI/SanhuaIdentity`, `ChisaParfaitIdentity`,
-  `CharlotteIdentity`, ...).
+- **Every character's generated identity mod is committed in this repo's `Mods/` (2026-10-06)**, and
+  `modsCheck.py` compares against them. They are this library's own output, so they catch a CHANGE, not
+  a wrong byte. The maintainer's hand-made identity mods (`Mods/Yelan4`, `Mods/YelanTranquilIdentity`,
+  `WWMI/SanhuaIdentity`, `ChisaParfaitIdentity`, `CharlotteIdentity`, ...) live on their machine.
 - **WWMI-Assets is at `E:\Computer\Games\Wuthering Waves Mods\Repos\WWMI-Assets`**. The maintainer pulled it
   on 2026-10-05; it is now at commit `eff456b` (2025-10-10).
   - It has 50 characters under `PlayerCharacterData`, all with `export_format`.
