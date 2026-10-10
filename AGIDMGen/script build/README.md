@@ -16,8 +16,11 @@ installing it as a Python package.
 1. Install [Python](https://www.python.org/downloads/) 3.9 to 3.13 (on Windows, tick *"Add python.exe to PATH"* in the
    installer).
 2. Download [AGIDMGen.py](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py)
-   and put it in an empty folder.
-3. Open [CMD](https://www.google.com/search?q=how+to+open+cmd+in+a+folder) in that folder and enter, for example:
+   and put it in your GIMI or WWMI `Mods` folder.
+3. **Double-click it.** It asks which game (`gimi` or `wwmi`) and which characters (their names with a space between
+   each, or `all`), makes their mods, then waits for ENTER so you can read what it did.
+
+Or open [CMD](https://www.google.com/search?q=how+to+open+cmd+in+a+folder) in that folder and enter, for example:
 
 ```bash
 python AGIDMGen.py gimi Albedo --download
@@ -27,8 +30,7 @@ python AGIDMGen.py gimi Albedo --download
 python AGIDMGen.py wwmi Aalto --download
 ```
 
-The identity mod is written into a folder named after the character, **beside the script**. Copy that folder into
-your GIMI or WWMI `Mods` folder.
+Either way, the identity mod is written into a folder named after the character, **beside the script**.
 
 <br>
 

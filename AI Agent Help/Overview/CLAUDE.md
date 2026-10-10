@@ -119,6 +119,13 @@ the detail.
 - **numpy and FixRaidenBoss2 are not in it.** The script pip-installs them on its first run, when they are missing or
   older than `pyproject.toml`'s `dependencies`. The script runs from its own folder (AGRemap's `os.chdir`), so it
   works when double-clicked.
+- **A double-click ASKS (the maintainer's request, 2026-10-10).** AGRemap's script needs no input (it fixes the folder
+  it is in), but an identity mod needs a game and characters. So `main()` with NO arguments runs `askArgs()`: which
+  game, which characters (or `all`), always `--download`, into the current folder. It then ends with AGRemap's
+  `logger.waitExit()` ("== Press ENTER to exit ==") so the window stays open. Both go through the logger's
+  `input()`, never the builtin, so a server's logger can answer. A run WITH arguments never asks or waits
+  (AGRemap's CLI always waits; ours does not, so CMD runs, CI and the testers never block). No stdin (EOF) exits 1.
+  This is the README's and tutorial's Quickstart (Choice A).
 - **It runs on AGRemapUtils' `ScriptBuilder`**, subclassed in `Tools/ScriptBuilder/ScriptBuilder/IDModGenScriptBuilder.py`.
   The subclass never writes to the library's source: the base class rewrites a module whose `##### Credits` are not
   AGRemap's, which would stamp AGRemap's credits over AGIDMGen's.

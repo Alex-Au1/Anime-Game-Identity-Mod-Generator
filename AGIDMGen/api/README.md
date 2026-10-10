@@ -54,7 +54,7 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 
   - **Choice A:** &nbsp; [Quickstart!](#choice-a-lets-start--) 🟢 &nbsp;&nbsp; (for beginners)
   - **Choice B:** &nbsp; [CMD WITHOUT a Script](#choice-b-run-on-cmd-without-a-script-) 🟡 &nbsp;&nbsp; (recommended if you run by CMD)
-  - **Choice C:** &nbsp; [From an Asset Folder](#choice-c-from-an-asset-folder-) 🟡 &nbsp;&nbsp; (if you already have GI-Model-Importer-Assets or WWMI-Assets)
+  - **Choice C:** &nbsp; [CMD with a Script](#choice-c-run-on-cmd-with-a-script-) 🟡 &nbsp;&nbsp; (the convention that other GIMI scripts follow)
   - **Choice D:** &nbsp; [API](#choice-d-api-usage-) 🟠 &nbsp;&nbsp; (for expert coders)
 
 <br>
@@ -64,26 +64,15 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 - Right-click [AGIDMGen.py](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py), choose **"Save link as..."**, and save the script into GIMI's or WWMI's `Mods` folder.
 
 ### STEP 2:
-- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in that `Mods` folder and type `python AGIDMGen.py`, the game's word, the character's name, then `--download`.
+- Double click on the script, and answer its two questions:
+  - **Which game?** Type `gimi` for GI or `wwmi` for WuWa, then enter
+  - **Which characters?** Type the character's name (eg. `Yelan`), then enter. For several characters, put a space between their names. For every character, type `all`.
 
-  *eg. for Yelan in GI:*
-```bash
-python AGIDMGen.py gimi Yelan --download
-```
-then enter
-
-  *eg. for Sanhua in WuWa:*
-```bash
-python AGIDMGen.py wwmi Sanhua --download
-```
-
-- A new folder with the character's name (eg. `Yelan`) appears beside the script, holding the mod.
+- A new folder with the character's name (eg. `Yelan`) appears beside the script, holding the mod. When the script says `== Press ENTER to exit ==`, press enter.
 
 > [!TIP]
-> - Copy the character's name as it is written in the [Mods list](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md).
->   The new folder is named exactly as you typed it.
-> - Want several characters? Put a space between their names: `python AGIDMGen.py gimi Yelan YelanTranquil --download`
-> - Want every character? Use `--all` instead of a name: `python AGIDMGen.py gimi --download --all`
+> Copy the character's name as it is written in the [Mods list](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md).
+> The new folder is named exactly as you typed it.
 
 > [!NOTE]
 > The first run installs what the script needs (numpy, and [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)), so it
@@ -105,32 +94,43 @@ then enter
 *( you can now run the program anywhere without copying a script! )*
 
 ### STEP 2:
-- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type the game's word, the character's name, then `--download`:
 ```bash
 python -m AGIDMGen gimi Yelan --download
 ```
 then enter
+
+*( or type only `python -m AGIDMGen`, and it asks you, as in [Choice A](#choice-a-lets-start--) )*
 
 ### STEP 3:
 - Open the game and enjoy it
 
 <br>
 
-## Choice C: From an Asset Folder 🟡
-For people who already have a copy of [GI-Model-Importer-Assets](https://github.com/SilentNightSound/GI-Model-Importer-Assets)
-or [WWMI-Assets](https://github.com/SpectrumQT/WWMI-Assets) on their computer.
-
+## Choice C: Run on CMD With a Script 🟡
 ### STEP 1:
 - Get the script, as in [Choice A's STEP 1](#choice-a-lets-start--)
 
 ### STEP 2:
-- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type the game's word, then the **full** path to the character's folder inside `PlayerCharacterData`:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in that `Mods` folder and type `python AGIDMGen.py`, the game's word, the character's name, then `--download`.
+
+  *eg. for Yelan in GI:*
 ```bash
-python AGIDMGen.py gimi "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"
+python AGIDMGen.py gimi Yelan --download
 ```
 then enter
 
-*( if you installed the generator as in Choice B, type `python -m AGIDMGen` instead of `python AGIDMGen.py` )*
+  *eg. for Sanhua in WuWa:*
+```bash
+python AGIDMGen.py wwmi Sanhua --download
+```
+
+> [!TIP]
+> - Want several characters? Put a space between their names: `python AGIDMGen.py gimi Yelan YelanTranquil --download`
+> - Want every character? Use `--all` instead of a name: `python AGIDMGen.py gimi --download --all`
+> - Already have [GI-Model-Importer-Assets](https://github.com/SilentNightSound/GI-Model-Importer-Assets) or
+>   [WWMI-Assets](https://github.com/SpectrumQT/WWMI-Assets)? Give the **full** path to the character's folder instead of
+>   its name, without `--download`: `python AGIDMGen.py gimi "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"`
 
 ### STEP 3:
 - Open the game and enjoy it
