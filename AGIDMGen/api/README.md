@@ -1,51 +1,177 @@
-# AGIDMGen
+# Anime Game Identity Mod Generator (AGIDMGen)
+[![Static Badge](https://img.shields.io/badge/3.9%2B-3776AB?style=for-the-badge&label=Python)](https://www.python.org/downloads/)
+[![Static Badge](https://img.shields.io/badge/GIMI%20%7C%20WWMI-6E4FA3?style=for-the-badge&label=Mod%20Loaders)](#supported-games)
+[![Static Badge](https://img.shields.io/badge/MIT-green?style=for-the-badge&label=License)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AGIDMGen/api/LICENSE)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Alex-Au1/Anime-Game-Identity-Mod-Generator/tests.yml?branch=main&label=Unit%2FIntegration%20Tests&style=for-the-badge)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/actions/workflows/tests.yml)
 
-**Anime Game Identity Mod Generator** -- generates *identity mods*: a character's own, unmodified model
-written out as a mod (every object, vertex group, texture and material band of the real model in one
-folder), for 3DMigoto-based mod loaders.
+<br>
+
+Makes ***identity mods***: a mod of a character that looks **exactly like the character already does in the game**.
+
+<br>
+
+An identity mod changes nothing you can see. It is the character's own model, textures and colours, written out as a mod
+folder. That makes it the perfect starting point for making your own mod, or for checking that a mod loader works.
 
 A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime-Game-Remap).
 
-## Supported mod loaders
+<br>
 
-| Loader | Game |
-| --- | --- |
-| GIMI | Genshin Impact |
-| WWMI | Wuthering Waves |
+## Contributors
 
-## Installation
+|   |   |
+|---|---|
+| **[Albert Gold](https://github.com/Alex-Au1)** *(Active Lead Maintainer)* | [![@albertgold](https://dcbadge.limes.pink/api/shield/367087171154214914?theme=discord-inverted)](https://discord.com/users/367087171154214914) |
+| [![The Council](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeMini.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) *(Maintainer Team)* | [![The Council Badge](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) |
 
+<br>
+
+## Requirements
+- [Python (version 3.9 and up)](https://www.python.org/downloads/)
+  - *When installing Python, tick the box **"Add python.exe to PATH"** at the bottom of the first screen.*
+- An internet connection (the character's files are downloaded for you)
+
+<br>
+
+## Supported Games
+
+| Game | Mod Loader | The word to type |
+| --- | --- | --- |
+| GI | GIMI | `gimi` |
+| WuWa | WWMI | `wwmi` |
+
+<br>
+
+> [!TIP]
+> **Just want the mod?** Every character's identity mod is already made for you in the
+> [Mods](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md) folder.
+> That page also lists every character's name you can type below.
+
+<br>
+
+## How to Run
+- Choose your pick of which way to run it:
+
+  - **Choice A:** &nbsp; [Quickstart!](#choice-a-lets-start--) 🟢 &nbsp;&nbsp; (for beginners)
+  - **Choice B:** &nbsp; [CMD WITHOUT a Script](#choice-b-run-on-cmd-without-a-script-) 🟡 &nbsp;&nbsp; (recommended if you run by CMD)
+  - **Choice C:** &nbsp; [From an Asset Folder](#choice-c-from-an-asset-folder-) 🟡 &nbsp;&nbsp; (if you already have GI-Model-Importer-Assets or WWMI-Assets)
+  - **Choice D:** &nbsp; [API](#choice-d-api-usage-) 🟠 &nbsp;&nbsp; (for expert coders)
+
+<br>
+
+## Choice A: Let's Start ! 🟢
+### STEP 1:
+- Right-click [AGIDMGen.py](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py), choose **"Save link as..."**, and save the script into GIMI's or WWMI's `Mods` folder.
+
+### STEP 2:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in that `Mods` folder and type `python AGIDMGen.py`, the game's word, the character's name, then `--download`.
+
+  *eg. for Yelan in GI:*
 ```bash
-pip install AGIDMGen
+python AGIDMGen.py gimi Yelan --download
+```
+then enter
+
+  *eg. for Sanhua in WuWa:*
+```bash
+python AGIDMGen.py wwmi Sanhua --download
 ```
 
-Requires Python 3.9 or newer.
+- A new folder with the character's name (eg. `Yelan`) appears beside the script, holding the mod.
 
-## Usage
+> [!TIP]
+> - Copy the character's name as it is written in the [Mods list](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md).
+>   The new folder is named exactly as you typed it.
+> - Want several characters? Put a space between their names: `python AGIDMGen.py gimi Yelan YelanTranquil --download`
+> - Want every character? Use `--all` instead of a name: `python AGIDMGen.py gimi --download --all`
 
-### The service: `IDModGenService`
+> [!NOTE]
+> The first run installs what the script needs (numpy, and [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)), so it
+> takes a little longer. Later runs skip that.
 
-The library's entry point, as Anime Game Remap's is `RemapService`: it generates several characters' identity mods
-at once, each into `<outputFolder>/<name>`, from their **asset folders** or from their **download folders**. A
-character that cannot be generated does not stop the others; `service.stats` holds every mod generated and every
-exception, and nothing is printed unless you give it a logger.
+### STEP 3:
+- Open the game and enjoy it
+
+<br>
+
+## Choice B: Run on CMD Without a Script 🟡
+### STEP 1:
+- Install the generator onto your computer by [opening cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) and typing:
+```bash
+python -m pip install -U AGIDMGen
+```
+then enter
+
+*( you can now run the program anywhere without copying a script! )*
+
+### STEP 2:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type:
+```bash
+python -m AGIDMGen gimi Yelan --download
+```
+then enter
+
+### STEP 3:
+- Open the game and enjoy it
+
+<br>
+
+## Choice C: From an Asset Folder 🟡
+For people who already have a copy of [GI-Model-Importer-Assets](https://github.com/SilentNightSound/GI-Model-Importer-Assets)
+or [WWMI-Assets](https://github.com/SpectrumQT/WWMI-Assets) on their computer.
+
+### STEP 1:
+- Get the script, as in [Choice A's STEP 1](#choice-a-lets-start--)
+
+### STEP 2:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type the game's word, then the **full** path to the character's folder inside `PlayerCharacterData`:
+```bash
+python AGIDMGen.py gimi "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"
+```
+then enter
+
+*( if you installed the generator as in Choice B, type `python -m AGIDMGen` instead of `python AGIDMGen.py` )*
+
+### STEP 3:
+- Open the game and enjoy it
+
+<br>
+<br>
+
+## Choice D: API Usage 🟠
+
+Tool developers can make identity mods within their own code!
+
+### API Setup
+
+*Make sure you first install the module by typing into [cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd):*
+```bash
+python -m pip install -U AGIDMGen
+```
+<br>
+
+### API Example
 
 ```python
 import AGIDMGen as IDMG
-import FixRaidenBoss2 as FRB          # Anime Game Remap's API: its logger serves both libraries
+import FixRaidenBoss2 as FRB          # AG Remap's API: its logger works for both libraries
 
-# from download folders: no asset repo needed
 service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan", "YelanTranquil"], outputFolder = "Mods", logger = FRB.Logger())
 service.generate()
-print(sorted(service.stats.generated), service.stats.skipped)
 
-# from asset folders
-service = IDMG.IDModGenService(IDMG.ModLoaders.WWMI, assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
-service.generate()
+print("Made:", sorted(service.stats.generated))
 ```
 
-**In a server**, give each request its own logger, and either read the transcript afterwards or forward each line as
-it is written:
+`IDModGenService` makes each mod into `<outputFolder>/<name>`, from download folders (`names = [...]`) or from asset
+folders (`assetsFolders = [...]`). A character that fails does not stop the others: it is recorded in `service.stats`,
+and nothing is printed unless you give it a logger.
+
+<details>
+<summary>More API examples</summary>
+<br>
+
+**In a server**, give each request its own logger, and either read what it wrote afterwards or forward each line as it
+is written:
 
 ```python
 class ForwardingLogger(FRB.BaseLogger):
@@ -61,62 +187,14 @@ service.generate()
 transcript = logger.loggedTxt
 ```
 
-The logger is Anime Game Remap's own (`FixRaidenBoss2.BaseLogger` / `Logger`), so one logger serves both libraries.
+**From asset folders:**
 
-### Download folders
-
-Each download folder file is taken from [Anime Game Remap](https://github.com/nhok0169/Anime-Game-Remap)'s
-`Data/Mod Downloads` if it has it, and from this repository's otherwise; the newest game version is used unless you
-ask for one (`version = "4.0"`). `IDMG.ModDownloader.getCharacters(IDMG.ModLoaders.GIMI)` lists every character.
-Downloading uses Anime Game Remap's `FixRaidenBoss2` package.
-
-### The command line
-
-```bash
-python -m AGIDMGen gimi Yelan YelanTranquil --download --out Mods
-python -m AGIDMGen wwmi --download --all --out Mods --log Mods
-python -m AGIDMGen gimi "GI-Model-Importer-Assets/PlayerCharacterData/Yelan" --out Mods
-python -m AGIDMGen wwmi "WWMI-Assets/PlayerCharacterData/Sanhua" --out Mods --noTextures
+```python
+service = IDMG.IDModGenService(IDMG.ModLoaders.WWMI, assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
+service.generate()
 ```
 
-The sources are asset folders, or with `--download` characters' names. Every mod is written into `<out>/<name>`.
-
-| Option | Does |
-| --- | --- |
-| `--out F` | the folder the mods are written into (default: the current folder) |
-| `--download` | the sources are characters' names: generate from their download folders |
-| `--all` | with `--download`: every character that has a download folder |
-| `--version V` | with `--download`: the game version wanted (default: the newest) |
-| `--localData REPO=F` | with `--download`: copy `AGRemap` / `AGIDMGen`'s files from a local copy of its `Data/Mod Downloads` (repeatable) |
-| `--downloadFolder F` | with `--download`: keep the downloaded files in `F/<name>` |
-| `--proxy P` | with `--download`: the proxy to download through |
-| `--name N` | the character's name in the mod (one character only) |
-| `--log F` | also write everything printed into `F/IDModGenLog.txt` |
-| `--quiet` | print only errors |
-
-GIMI only:
-
-| Option | Does |
-| --- | --- |
-| `--assetPrefix P` | what the asset folder's files start with, when that is not the folder's name (one asset folder only) |
-| `--noFix` | leave the `ORFix` / `NNFix` `run =` lines out |
-| `--faceRegister R` | the register the face diffuse is bound to (default `ps-t0`; some 6.x skins use `ps-t1`) |
-| `--textureFrom B=C:O[:plain\|normalMap]` | component `B`, which has no textures of its own, binds object `O` of component `C`'s textures (repeatable) |
-
-WWMI only:
-
-| Option | Does |
-| --- | --- |
-| `--author A` | the mod author WWMI shows (default: `Anime Game Remap`) |
-| `--noTextures` | leave the textures out |
-| `--rawBones` | write bone indices as `vg_offset` + local index instead of through the `vg_map` |
-
-The command exits with 0 when every mod was generated, 1 when one could not be (or the arguments are not valid), and
-2 when a WWMI mod's shape keys do not match its `Metadata.json`.
-
-### One character, directly
-
-The generators can also be used on their own; unlike the service, they raise when they fail:
+**One character, directly.** Unlike the service, the generators raise an error when they fail:
 
 ```python
 mod = IDMG.GIMIIdentityModGenerator().generate("GI-Model-Importer-Assets/PlayerCharacterData/Yelan", "Mods/Yelan")
@@ -124,5 +202,41 @@ mod = IDMG.WWMIIdentityModGenerator().generateFromRepo("Sanhua", "Mods/Sanhua", 
 print("\n".join(mod.getSummary()))
 ```
 
-The asset folders are laid out as [GI-Model-Importer-Assets](https://github.com/SilentNightSound/GI-Model-Importer-Assets)'
-and [WWMI-Assets](https://github.com/SpectrumQT/WWMI-Assets)' `PlayerCharacterData/<Name>` folders are.
+**Every character with a download folder:** `IDMG.ModDownloader.getCharacters(IDMG.ModLoaders.GIMI)`
+
+</details>
+
+<br>
+<br>
+
+## Command Options
+Add these after the character's name. The **Game** column says which game has the option.
+
+| Options | Game | Description |
+| --- | --- | --- |
+| -h, --help | All | show the help message and exit |
+| --download | All | the names typed are characters' names: download their files and make their mods from them |
+| --all | All | with `--download`: make the mod of every character |
+| --out folder | All | the folder the mods are made in, as `<folder>/<name>`. If this option is not specified, then the mods are made in the current folder. |
+| --version str | All | with `--download`: the game version wanted, eg. `4.0`. If this option is not specified, then the newest version is used. |
+| --name str | All | the character's name inside the mod (one character only) |
+| --log folder | All | also write everything printed into `<folder>/IDModGenLog.txt` |
+| --quiet | All | print only errors |
+| --proxy str | All | with `--download`: the link to the proxy server, for those whose internet access must go through a proxy |
+| --downloadFolder folder | All | with `--download`: keep the downloaded files in `<folder>/<name>`. If this option is not specified, then they are deleted afterwards. |
+| --localData REPO=folder | All | with `--download`: copy the files of `AGRemap` or `AGIDMGen` from a copy of its `Data/Mod Downloads` folder on your computer, instead of downloading them (can be given more than once) |
+| --noFix | GI | leave the `ORFix` / `NNFix` lines out of the mod |
+| --faceRegister str | GI | the slot the face texture is bound to. If this option is not specified, then `ps-t0` is used (some 6.x skins need `ps-t1`). |
+| --assetPrefix str | GI | what the asset folder's files start with, when that is not the folder's name (one asset folder only) |
+| --textureFrom B=C:O[:plain\|normalMap] | GI | part `B`, which has no textures of its own, uses object `O` of part `C`'s textures, eg. `Bang=Body:A` (can be given more than once) |
+| --author str | WuWa | the mod author WWMI shows. If this option is not specified, then `Anime Game Remap` is used. |
+| --noTextures | WuWa | leave the textures out |
+| --rawBones | WuWa | write bone indices as `vg_offset` + local index, instead of through the `vg_map` |
+
+<br>
+
+> [!NOTE]
+> The command ends with exit code **0** when every mod was made, **1** when one could not be (or the options are not
+> valid), and **2** when a WWMI mod's shape keys do not match its `Metadata.json`.
+
+<br>
