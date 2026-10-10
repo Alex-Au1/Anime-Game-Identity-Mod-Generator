@@ -14,7 +14,7 @@ import argparse
 import os
 import sys
 from typing import List, Optional
-from FixRaidenBoss2 import Logger
+from FixRaidenBoss2 import BaseLogger, Logger
 ##### EndExtImports
 
 
@@ -35,6 +35,9 @@ from .tools.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
 #: The name of the log file the command line writes with ``--log``
 LogFileName = "IDModGenLog.txt"
 
+#: Where the names of the characters that can be made are listed, for a run that asks for them
+CharacterListLink = "https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md"
+
 
 def makeArgParser() -> argparse.ArgumentParser:
     """
@@ -49,13 +52,13 @@ def makeArgParser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog = "AGIDMGen", description = "Generates the identity mods of characters: the game's own models, written out as mods")
     loaders = parser.add_subparsers(dest = "loader", required = True)
 
-    wwmi = loaders.add_parser(ModLoaders.WWMI.value.lower(), aliases = [ModLoaders.WWMI.value], help = "Wuthering Waves characters, from WWMI-Assets folders or download folders")
+    wwmi = loaders.add_parser(ModLoaders.WWMI.value.lower(), aliases = [ModLoaders.WWMI.value], help = "WuWa characters, from WWMI-Assets folders or download folders")
     wwmi.add_argument("sources", nargs = "*", help = "the asset folders (Metadata.json, Component N.fmt/.vb/.ib, *.dds), or with --download the characters' names")
     wwmi.add_argument("--author", default = "Anime Game Remap", help = "the mod author WWMI shows")
     wwmi.add_argument("--noTextures", action = "store_true", help = "leave the textures out (geometry, skeleton and shape keys only)")
     wwmi.add_argument("--rawBones", action = "store_true", help = "write bone indices as vg_offset + local instead of through the vg_map (the merged skeleton's duplicate slots; every real mod uses the vg_map)")
 
-    gimi = loaders.add_parser(ModLoaders.GIMI.value.lower(), aliases = [ModLoaders.GIMI.value], help = "Genshin Impact characters, from GI-Model-Importer-Assets folders or download folders")
+    gimi = loaders.add_parser(ModLoaders.GIMI.value.lower(), aliases = [ModLoaders.GIMI.value], help = "GI characters, from GI-Model-Importer-Assets folders or download folders")
     gimi.add_argument("sources", nargs = "*", help = "the asset folders (hash.json, *-vb0=*.txt, *-ib=*.txt, *.dds), or with --download the characters' names")
     gimi.add_argument("--assetPrefix", default = None, help = "what the asset folder's files start with, when that is not the folder's name (one asset folder only)")
     gimi.add_argument("--noFix", action = "store_true", help = "leave the ORFix / NNFix run lines out of the object sections")
@@ -131,25 +134,68 @@ def makeService(args: argparse.Namespace, logger: Logger) -> IDModGenService:
                            generator = generator, modName = args.name, assetPrefix = getattr(args, "assetPrefix", None), handleExceptions = True, logger = logger)
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def askArgs(logger: BaseLogger) -> List[str]:
     """
-    Runs the command line: ``python -m AGIDMGen <gimi|wwmi> SOURCE ... [--out FOLDER] [options]``
+    Asks the user which game and which characters to make the identity mods of, for a run with no arguments
+    (eg. the script double-clicked)
+
+    :raw-html:`<br />`
+
+    The mods are made from the characters' download folders, into the current folder
 
     Parameters
     ----------
-    argv: Optional[List[:class:`str`]]
-        The arguments, without the program name. If this value is ``None``, the arguments of the running program are used :raw-html:`<br />` :raw-html:`<br />`
+    logger: :class:`BaseLogger`
+        Where the questions are asked
 
-        **Default**: ``None``
+    Returns
+    -------
+    List[:class:`str`]
+        The arguments the answers stand for, eg. ``["gimi", "Yelan", "--download"]``
+    """
+
+    loaders = {loader.value.lower(): loader for loader in ModLoaders}
+    loaderNames = {ModLoaders.GIMI: "GI", ModLoaders.WWMI: "WuWa"}
+    loaderChoices = " or ".join(f"{name} ({loaderNames[loader]})" for name, loader in loaders.items())
+
+    # the questions are shown without the logger's '# prefix -->', as BaseLogger.waitExit shows its own
+    prevIncludePrefix = logger.includePrefix
+    logger.includePrefix = False
+    try:
+        loader = None
+        while (loader is None):
+            loader = loaders.get(logger.input(f"Which game? Type {loaderChoices}: ").strip().lower())
+
+        logger.log(f"\nThe characters' names are listed at {CharacterListLink}")
+        names = []
+        while (not names):
+            names = logger.input("Which characters? Type their names with a space between each, or 'all' for every character: ").split()
+        logger.log("")
+    finally:
+        logger.includePrefix = prevIncludePrefix
+
+    if (len(names) == 1 and names[0].lower() == "all"):
+        return [loader.value.lower(), "--download", "--all"]
+    return [loader.value.lower()] + names + ["--download"]
+
+
+def run(args: argparse.Namespace, logger: BaseLogger) -> int:
+    """
+    Makes the identity mods the parsed arguments ask for
+
+    Parameters
+    ----------
+    args: :class:`argparse.Namespace`
+        The parsed arguments, from :func:`makeArgParser`
+
+    logger: :class:`BaseLogger`
+        Where the service reports what it does
 
     Returns
     -------
     :class:`int`
-        The exit code: 0 when every mod was generated, 1 when one could not be (or the arguments are not valid), 2 when a WWMI mod's shape keys do not match its ``Metadata.json``
+        The exit code, as :func:`main` returns it
     """
-
-    args = makeArgParser().parse_args(argv)
-    logger = Logger(logTxt = args.log is not None, verbose = not args.quiet)
 
     try:
         service = makeService(args, logger)
@@ -169,4 +215,58 @@ def main(argv: Optional[List[str]] = None) -> int:
     if (any(getattr(mod, "checksumMatches", None) is False or getattr(mod, "dispatchYMatches", None) is False for mod in stats.generated.values())):
         return 2
     return 0
+
+
+def main(argv: Optional[List[str]] = None, logger: Optional[BaseLogger] = None) -> int:
+    """
+    Runs the command line: ``python -m AGIDMGen <gimi|wwmi> SOURCE ... [--out FOLDER] [options]``
+
+    :raw-html:`<br />`
+
+    With no arguments (eg. the script double-clicked), asks which game and which characters to make the mods of
+    (see :func:`askArgs`), then waits for ENTER before it ends, so the window stays open to be read
+
+    Parameters
+    ----------
+    argv: Optional[List[:class:`str`]]
+        The arguments, without the program name. If this value is ``None``, the arguments of the running program are used :raw-html:`<br />` :raw-html:`<br />`
+
+        **Default**: ``None``
+
+    logger: Optional[:class:`BaseLogger`]
+        Where everything is printed and asked. If this value is ``None``, a console :class:`Logger` is used :raw-html:`<br />` :raw-html:`<br />`
+
+        **Default**: ``None``
+
+    Returns
+    -------
+    :class:`int`
+        The exit code: 0 when every mod was generated, 1 when one could not be (or the arguments are not valid), 2 when a WWMI mod's shape keys do not match its ``Metadata.json``
+    """
+
+    if (argv is None):
+        argv = sys.argv[1:]
+
+    interactive = not argv
+    if (interactive):
+        if (logger is None):
+            logger = Logger()
+
+        try:
+            argv = askArgs(logger)
+        except EOFError:
+            return 1
+
+    args = makeArgParser().parse_args(argv)
+    if (logger is None):
+        logger = Logger(logTxt = args.log is not None, verbose = not args.quiet)
+
+    exitCode = run(args, logger)
+    if (interactive):
+        try:
+            logger.waitExit()
+        except EOFError:
+            pass
+
+    return exitCode
 ##### EndScript

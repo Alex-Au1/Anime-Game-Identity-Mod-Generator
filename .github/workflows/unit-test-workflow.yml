@@ -22,12 +22,12 @@ jobs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    # pip installs the package from AGIDMGen/pyproject.toml, so its declared dependencies (numpy,
+    # pip installs the package from AGIDMGen/api/pyproject.toml, so its declared dependencies (numpy,
     #   FixRaidenBoss2 from PyPI) are what the tests run against, and the packaging itself is proved. The
     #   tester still imports the package from the SOURCE tree: test_ImportCheck fails if the installed copy
     #   is the one imported.
     - name: Install the package and its dependencies
-      run: python -m pip install ./AGIDMGen
+      run: python -m pip install ./AGIDMGen/api
 
     - name: Install Tester Dependencies
       run: python -m pip install -r requirements.txt
@@ -40,3 +40,8 @@ jobs:
     - name: Run Unit Tests
       run: python main.py
       working-directory: './Testing/Unit Tester'
+
+    # the single-file script is compiled from the library's source and committed: a library change that was
+    #   not rebuilt into it fails here. It runs on the AGRemapUtils the tester's requirements installed
+    - name: Check the script build is up to date
+      run: python Tools/ScriptBuilder/main.py --check
