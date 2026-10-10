@@ -23,7 +23,7 @@ from ...constants.GIMIBuffers import GIMIBuffers
 ##### Script
 class GIMIComponent():
     """
-    Class for one component of a Genshin Impact character's GIMI identity mod: one skinned mesh with its
+    Class for one component of a GI character's GIMI identity mod: one skinned mesh with its
     own vertex buffers, index buffer and objects (eg. YelanTranquil's Body, Bang and Eye). An older
     character is a single component whose name is the empty string
 

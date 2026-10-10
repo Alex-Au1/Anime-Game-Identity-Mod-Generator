@@ -27,7 +27,7 @@ from ...tools.FormatTools import FormatTools
 ##### Script
 class WWMIComponent(WWMIDrawRange):
     """
-    Class for one ``Component N`` of a Wuthering Waves character's asset folder: one draw range of the
+    Class for one ``Component N`` of a WuWa character's asset folder: one draw range of the
     character's mesh, with its own interleaved vertex buffer (``Component N.vb``), its layout
     (``Component N.fmt``) and its index buffer (``Component N.ib``)
 

@@ -25,7 +25,7 @@ from ...constants.WWMIBuffers import WWMIBuffers
 ##### Script
 class WWMIMesh():
     """
-    Class for a Wuthering Waves character's mesh, as a WWMI mod carries it: the contents of every buffer of
+    Class for a WuWa character's mesh, as a WWMI mod carries it: the contents of every buffer of
     the mod's ``Meshes`` folder, and what the mod's ``mod.ini`` needs to know about them
 
     Parameters

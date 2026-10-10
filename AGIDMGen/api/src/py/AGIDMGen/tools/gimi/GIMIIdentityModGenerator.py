@@ -41,7 +41,7 @@ from ...model.gimi.GIMITextureSource import GIMITextureSource
 ##### Script
 class GIMIIdentityModGenerator(Model):
     """
-    Generates the identity mod of a Genshin Impact character: the game's own model, written out as a
+    Generates the identity mod of a GI character: the game's own model, written out as a
     GIMI mod from the character's asset folder
 
     The asset folder is laid out as `GI-Model-Importer-Assets <https://github.com/SilentNightSound/GI-Model-Importer-Assets>`_'s

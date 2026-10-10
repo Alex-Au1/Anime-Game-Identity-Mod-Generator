@@ -44,7 +44,7 @@ WWMITexturePattern = re.compile(r"^Components-[0-9-]+ t=(?P<hash>[0-9a-fA-F]{8})
 
 class WWMIIdentityModGenerator(Model):
     """
-    Generates the identity mod of a Wuthering Waves character: the game's own model, written out as a
+    Generates the identity mod of a WuWa character: the game's own model, written out as a
     WWMI mod from the character's asset folder
 
     The asset folder is laid out as `WWMI-Assets <https://github.com/SpectrumQT/WWMI-Assets>`_'s

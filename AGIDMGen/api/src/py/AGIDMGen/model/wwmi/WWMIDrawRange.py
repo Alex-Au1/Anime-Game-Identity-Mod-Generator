@@ -22,7 +22,7 @@ from ...exceptions.BadAssetData import BadAssetData
 ##### Script
 class WWMIDrawRange():
     """
-    Class for where one component of a Wuthering Waves character lies in the character's mesh: its range of
+    Class for where one component of a WuWa character lies in the character's mesh: its range of
     vertices and its range of the mesh's index buffer, as the ``components`` list of the character's
     ``Metadata.json`` records them
 

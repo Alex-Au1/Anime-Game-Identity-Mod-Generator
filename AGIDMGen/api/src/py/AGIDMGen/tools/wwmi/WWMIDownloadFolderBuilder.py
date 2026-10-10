@@ -26,7 +26,7 @@ from ...exceptions.BadAssetData import BadAssetData
 ##### Script
 class WWMIDownloadFolderBuilder():
     """
-    Writes a Wuthering Waves character's download folder from its asset folder, laid out as Anime Game
+    Writes a WuWa character's download folder from its asset folder, laid out as Anime Game
     Remap's ``Data/Mod Downloads/WuWa/<Name>/<version>`` folders are (the same files Anime Game Remap's
     ``wwmiDownloadFolder.py`` writes):
 

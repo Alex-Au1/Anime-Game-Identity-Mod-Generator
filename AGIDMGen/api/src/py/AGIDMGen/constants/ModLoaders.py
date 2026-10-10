@@ -22,10 +22,10 @@ class ModLoaders(Enum):
     Attributes
     ----------
     GIMI: :class:`str`
-        The `Genshin Impact Model Importer <https://github.com/SilentNightSound/GI-Model-Importer>`_ for Genshin Impact
+        The `GIMI <https://github.com/SilentNightSound/GI-Model-Importer>`_ mod loader for GI
 
     WWMI: :class:`str`
-        The `Wuthering Waves Model Importer <https://github.com/SpectrumQT/WWMI-Package>`_ for Wuthering Waves
+        The `WWMI <https://github.com/SpectrumQT/WWMI-Package>`_ mod loader for WuWa
     """
 
     GIMI = "GIMI"

@@ -29,7 +29,7 @@ from ...model.files.IbDumpFile import IbDumpFile
 ##### Script
 class GIMIDownloadFolderBuilder():
     """
-    Writes a Genshin Impact character's download folder from its asset folder, laid out as Anime Game
+    Writes a GI character's download folder from its asset folder, laid out as Anime Game
     Remap's ``Data/Mod Downloads/GI/<Name>/<version>`` folders are (the same files Anime Game Remap's
     ``giDownloadFolder.py`` writes), plus a copy of the asset folder's ``hash.json``:
 
