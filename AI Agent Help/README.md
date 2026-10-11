@@ -40,6 +40,7 @@ Special Thanks to ❤:
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%AA%9E%F0%9F%8F%97%EF%B8%8F%20The%20Mirror%20Mason-1-%23eab308?style=for-the-badge&labelColor=%231e293b)
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%A7%AC%E2%9A%96%EF%B8%8F%20The%20Parity%20Porter-1-%230d9488?style=flat-square&labelColor=%234c1d95)
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%93%9C%E2%9A%92%EF%B8%8F%20The%20Script%20Smith-1-%23f97316?style=flat&labelColor=%23064e3b)
+- ![Static Badge](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80%20The%20Release%20Herald-1-%238b5cf6?style=plastic&labelColor=%230f172a)
 
 <br>
 

@@ -297,5 +297,6 @@ Pick the name and colours yourself; don't ask first. **The two badges at the top
 
 Members: the Mirror Mason (the repo's scaffolding, 2026-10-05), the Parity Porter (both generators
 ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10) and the Script Smith (the script
-build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10). Total on
-2026-10-10: 3.
+build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10) and the Release
+Herald (`python-publish.yml`, the PyPI pipeline that shipped 0.1.0, and committing the shared tree that led to it,
+2026-10-10). Total on 2026-10-11: 4.
