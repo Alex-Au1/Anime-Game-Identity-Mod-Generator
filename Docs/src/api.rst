@@ -82,12 +82,42 @@ GIMIComponent
 
 :raw-html:`<br />`
 
+GIMIDownloadFolderBuilder
+=========================
+
+.. attributetable:: AGIDMGen.GIMIDownloadFolderBuilder
+
+.. autoclass:: AGIDMGen.GIMIDownloadFolderBuilder
+    :members:
+
+:raw-html:`<br />`
+
 GIMIIdentityMod
 ===============
 
 .. attributetable:: AGIDMGen.GIMIIdentityMod
 
 .. autoclass:: AGIDMGen.GIMIIdentityMod
+    :members:
+
+:raw-html:`<br />`
+
+GIMIIdentityModGenerator
+========================
+
+.. attributetable:: AGIDMGen.GIMIIdentityModGenerator
+
+.. autoclass:: AGIDMGen.GIMIIdentityModGenerator
+    :members:
+
+:raw-html:`<br />`
+
+GIMIIniBuilder
+==============
+
+.. attributetable:: AGIDMGen.GIMIIniBuilder
+
+.. autoclass:: AGIDMGen.GIMIIniBuilder
     :members:
 
 :raw-html:`<br />`
@@ -132,6 +162,16 @@ ModDownload
 
 :raw-html:`<br />`
 
+ModDownloader
+=============
+
+.. attributetable:: AGIDMGen.ModDownloader
+
+.. autoclass:: AGIDMGen.ModDownloader
+    :members:
+
+:raw-html:`<br />`
+
 VbDumpFile
 ==========
 
@@ -162,6 +202,16 @@ WWMIComponent
 
 :raw-html:`<br />`
 
+WWMIDownloadFolderBuilder
+=========================
+
+.. attributetable:: AGIDMGen.WWMIDownloadFolderBuilder
+
+.. autoclass:: AGIDMGen.WWMIDownloadFolderBuilder
+    :members:
+
+:raw-html:`<br />`
+
 WWMIDrawRange
 =============
 
@@ -178,6 +228,26 @@ WWMIIdentityMod
 .. attributetable:: AGIDMGen.WWMIIdentityMod
 
 .. autoclass:: AGIDMGen.WWMIIdentityMod
+    :members:
+
+:raw-html:`<br />`
+
+WWMIIdentityModGenerator
+========================
+
+.. attributetable:: AGIDMGen.WWMIIdentityModGenerator
+
+.. autoclass:: AGIDMGen.WWMIIdentityModGenerator
+    :members:
+
+:raw-html:`<br />`
+
+WWMIIniBuilder
+==============
+
+.. attributetable:: AGIDMGen.WWMIIniBuilder
+
+.. autoclass:: AGIDMGen.WWMIIniBuilder
     :members:
 
 :raw-html:`<br />`
@@ -199,6 +269,13 @@ WWMIShapeKeys
 
 .. autoclass:: AGIDMGen.WWMIShapeKeys
     :members:
+
+:raw-html:`<br />`
+
+WWMITexturePattern
+==================
+
+.. autodata:: AGIDMGen.model.wwmi.WWMIIdentityModGenerator.WWMITexturePattern
 
 :raw-html:`<br />`
 
@@ -458,46 +535,6 @@ FormatTools
 
 :raw-html:`<br />`
 
-GIMIDownloadFolderBuilder
-=========================
-
-.. attributetable:: AGIDMGen.GIMIDownloadFolderBuilder
-
-.. autoclass:: AGIDMGen.GIMIDownloadFolderBuilder
-    :members:
-
-:raw-html:`<br />`
-
-GIMIIdentityModGenerator
-========================
-
-.. attributetable:: AGIDMGen.GIMIIdentityModGenerator
-
-.. autoclass:: AGIDMGen.GIMIIdentityModGenerator
-    :members:
-
-:raw-html:`<br />`
-
-GIMIIniBuilder
-==============
-
-.. attributetable:: AGIDMGen.GIMIIniBuilder
-
-.. autoclass:: AGIDMGen.GIMIIniBuilder
-    :members:
-
-:raw-html:`<br />`
-
-ModDownloader
-=============
-
-.. attributetable:: AGIDMGen.ModDownloader
-
-.. autoclass:: AGIDMGen.ModDownloader
-    :members:
-
-:raw-html:`<br />`
-
 VersionTools
 ============
 
@@ -505,42 +542,5 @@ VersionTools
 
 .. autoclass:: AGIDMGen.VersionTools
     :members:
-
-:raw-html:`<br />`
-
-WWMIDownloadFolderBuilder
-=========================
-
-.. attributetable:: AGIDMGen.WWMIDownloadFolderBuilder
-
-.. autoclass:: AGIDMGen.WWMIDownloadFolderBuilder
-    :members:
-
-:raw-html:`<br />`
-
-WWMIIdentityModGenerator
-========================
-
-.. attributetable:: AGIDMGen.WWMIIdentityModGenerator
-
-.. autoclass:: AGIDMGen.WWMIIdentityModGenerator
-    :members:
-
-:raw-html:`<br />`
-
-WWMIIniBuilder
-==============
-
-.. attributetable:: AGIDMGen.WWMIIniBuilder
-
-.. autoclass:: AGIDMGen.WWMIIniBuilder
-    :members:
-
-:raw-html:`<br />`
-
-WWMITexturePattern
-==================
-
-.. autodata:: AGIDMGen.model.wwmi.WWMIIdentityModGenerator.WWMITexturePattern
 
 :raw-html:`<br />`
