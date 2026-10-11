@@ -6,12 +6,13 @@ from types import ModuleType
 from .AGRemapUtils import ScriptBuilder, PyFile, FromImport, PyPathTools
 
 
-# IDModGenScriptBuilder: Compiles AGIDMGen's source into a single script, with AGRemapUtils' ScriptBuilder
+# IDModGenScriptBuilder: Compiles the script's source (Tools/Script) into a single script, with AGRemapUtils'
+#   ScriptBuilder
 #
 # Differences from AG Remap's use of it:
 #   - every module the package's '__init__.py' exports goes into the script, not only the ones the main
-#       module reaches, so the script build's '__init__.py' can re-export the whole library
-#   - the library's source files are only read, never written: AGRemapUtils' builder rewrites a module whose
+#       module reaches, so the script build's '__init__.py' can re-export all of them
+#   - the source files are only read, never written: AGRemapUtils' builder rewrites a module whose
 #       credits differ from AG Remap's, and AGIDMGen's credits are its own
 #   - the main function is 'main', and '__main__.py' keeps its own imports
 #   - two modules defining the same top-level name would silently overwrite each other once flattened into

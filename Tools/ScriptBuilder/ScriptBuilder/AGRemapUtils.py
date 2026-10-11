@@ -12,6 +12,7 @@ try:
     from AGRemapUtils.Utils.python.FromImport import FromImport
     from AGRemapUtils.Utils.path.PyPathTools import PyPathTools
     from AGRemapUtils.Utils.softwareStats.BuildMetadata import BuildMetadata
+    from AGRemapUtils.Utils.commands.BuildEnvCommandBuilder import BuildEnvCommandBuilder
     from AGRemapUtils.Utils.constants.BoilerPlate import ScriptChangeDir, ScriptPostamble
     from AGRemapUtils.Utils.constants.StrReplacements import VersionReplace, RanDateTimeReplace, RanHashReplace, BuiltDateTimeReplace, BuildHashReplace
 except ImportError:
@@ -25,5 +26,6 @@ except ImportError:
     from Utils.python.FromImport import FromImport
     from Utils.path.PyPathTools import PyPathTools
     from Utils.softwareStats.BuildMetadata import BuildMetadata
+    from Utils.commands.BuildEnvCommandBuilder import BuildEnvCommandBuilder
     from Utils.constants.BoilerPlate import ScriptChangeDir, ScriptPostamble
     from Utils.constants.StrReplacements import VersionReplace, RanDateTimeReplace, RanHashReplace, BuiltDateTimeReplace, BuildHashReplace
