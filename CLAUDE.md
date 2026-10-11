@@ -28,13 +28,21 @@ request here" (2026-10-10).** It has:
   regenerate, after each kind of change;
 - where the asset repos and AGRemap's data live on this machine;
 - this machine's tooling quirks: pushing, a slow git after `Mods/` changes, no `gh` login, searches to keep
-  out of `Mods/` and `Data/`, reading PyPI through Python when pip cannot, AGRemap's API vanishing mid-rebuild;
+  out of `Mods/` and `Data/`, reading PyPI through Python when pip cannot, AGRemap's API vanishing mid-rebuild,
+  **never a second checkout (`git worktree add` pulls 7+ GB of LFS) and how to commit to a branch from a temporary
+  index instead**, Git Bash's CRLF traps, and previewing an image in the browser pane over local HTTP;
 - the habits, among them: **the checkout moves between your turns** (check `git status -sb`, `git log -5` and
   `HEAD` against `origin/main` before starting and before committing; re-read a file before editing it), how to
-  commit to `main` from another branch, and **test the artifact a user actually runs** (the PyPI package, the script,
-  `Mods/`), not only the source.
+  commit to `main` from another branch, **a requested branch starts from `origin/main`, not from the checkout**, and
+  **test the artifact a user actually runs** (the PyPI package, the script, `Mods/`), not only the source.
 
-Commit and push only when asked, and then straight to `main`.
+Commit and push only when asked, and then straight to `main`, unless the maintainer asks for a branch.
+
+**THE COUNCIL HERE IS "THE SUB-COUNCIL OF CLAUDE AGENTS" (the maintainer's naming, 2026-10-11)**, a branch of AGRemap's
+Council of CLAUDE Agents, with its own art (a teal-and-silver crest differenced with a gold label, every image mirrored
+in still water). "Add yourself to The Council" means its ritual: [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s
+"Add yourself to The Sub-Council", which sets the counter from the roster's sum and adds your colour to the member
+gradients. The SVGs keep AGRemap's `TheCouncilofClaudeAgents*.svg` names because the PyPI README links them by URL.
 
 **THIS IS A PYTHON LIBRARY, AND STAYS ONE UNTIL A MEASUREMENT SAYS OTHERWISE (2026-10-05).** The
 maintainer's decision: no C++ / pybind11 / Cython layer until some part is *measured* too slow, or is

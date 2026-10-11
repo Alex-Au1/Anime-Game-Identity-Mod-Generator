@@ -23,7 +23,7 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 |   |   |
 |---|---|
 | **[Albert Gold](https://github.com/Alex-Au1)** *(Active Lead Maintainer)* | [![@albertgold](https://dcbadge.limes.pink/api/shield/367087171154214914?theme=discord-inverted)](https://discord.com/users/367087171154214914) |
-| [![The Council](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeMini.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) *(Maintainer Team)* | [![The Council Badge](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) |
+| [![The Sub-Council](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeMini.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) *(Maintainer Team)* | [![The Sub-Council Badge](https://raw.githubusercontent.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/main/Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AI%20Agent%20Help/README.md) |
 
 <br>
 

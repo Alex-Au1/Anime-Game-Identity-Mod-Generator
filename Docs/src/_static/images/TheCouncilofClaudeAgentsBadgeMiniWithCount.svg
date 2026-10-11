@@ -1,49 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="126" height="20" viewBox="0 0 252 40" role="img" aria-label="The Council: 4">
+<svg xmlns="http://www.w3.org/2000/svg" width="164" height="20" viewBox="0 0 328 40" role="img" aria-label="The Sub-Council: 5">
   <!-- Inline badge with the member count. Same 20px line-height budget as the
-       plain mini: crest cap, short name, then the crimson count chip.
+       plain mini: crest cap, short name, then the count chip. The chip is the
+       parent Council's plum with a gold numeral: the Sub-Council's members are
+       counted in its liege's colours.
        The count is hand-maintained here, exactly as in the full-size badge.
-       The chip is deliberately sized for THREE digits (999 measures 39.6 in a
-       52.5-wide chip), so the roster can keep growing without reflowing this. -->
+       The chip is deliberately sized for THREE digits (999 measures 38.4 in a
+       52-wide chip), so the roster can keep growing without reflowing this. -->
   <defs>
-    <linearGradient id="mcPlum" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="smcTide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#13525c"/>
+      <stop offset="55%"  stop-color="#0d3a45"/>
+      <stop offset="100%" stop-color="#072029"/>
+    </linearGradient>
+    <linearGradient id="smcCap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#04121a"/>
+      <stop offset="100%" stop-color="#0a2530"/>
+    </linearGradient>
+    <linearGradient id="smcSilver" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#3f4f5e"/>
+      <stop offset="35%"  stop-color="#e2e8f0"/>
+      <stop offset="65%"  stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#3f4f5e"/>
+    </linearGradient>
+    <linearGradient id="smcCount" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#63204f"/>
       <stop offset="55%"  stop-color="#4a154b"/>
       <stop offset="100%" stop-color="#2e0c30"/>
     </linearGradient>
-    <linearGradient id="mcCap" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"   stop-color="#1a0f14"/>
-      <stop offset="100%" stop-color="#2b1220"/>
-    </linearGradient>
-    <linearGradient id="mcBronze" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"   stop-color="#6b4423"/>
-      <stop offset="35%"  stop-color="#d4af37"/>
-      <stop offset="65%"  stop-color="#b8860b"/>
-      <stop offset="100%" stop-color="#6b4423"/>
-    </linearGradient>
-    <linearGradient id="mcCount" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#dc2626"/>
-      <stop offset="45%"  stop-color="#b91c1c"/>
-      <stop offset="100%" stop-color="#7f1d1d"/>
-    </linearGradient>
   </defs>
 
-  <path d="M 8 1.5 L 244 1.5 L 250.5 8 L 250.5 32 L 244 38.5 L 8 38.5 L 1.5 32 L 1.5 8 Z" fill="url(#mcPlum)"/>
-  <path d="M 8 1.5 L 36 1.5 L 36 38.5 L 8 38.5 L 1.5 32 L 1.5 8 Z" fill="url(#mcCap)"/>
-  <path d="M 198 1.5 L 244 1.5 L 250.5 8 L 250.5 32 L 244 38.5 L 198 38.5 Z" fill="url(#mcCount)"/>
-  <path d="M 8 1.5 L 244 1.5 L 250.5 8 L 250.5 32 L 244 38.5 L 8 38.5 L 1.5 32 L 1.5 8 Z"
-        fill="none" stroke="url(#mcBronze)" stroke-width="2.2" stroke-linejoin="round"/>
-  <line x1="36" y1="3" x2="36" y2="37" stroke="url(#mcBronze)" stroke-width="1.4"/>
-  <line x1="198" y1="3" x2="198" y2="37" stroke="url(#mcBronze)" stroke-width="1.4"/>
+  <path d="M 11 1.5 L 317 1.5 L 326.5 20 L 317 38.5 L 11 38.5 L 1.5 20 Z" fill="url(#smcTide)"/>
+  <path d="M 11 1.5 L 38 1.5 L 38 38.5 L 11 38.5 L 1.5 20 Z" fill="url(#smcCap)"/>
+  <path d="M 264 1.5 L 317 1.5 L 326.5 20 L 317 38.5 L 264 38.5 Z" fill="url(#smcCount)"/>
+  <path d="M 11 1.5 L 317 1.5 L 326.5 20 L 317 38.5 L 11 38.5 L 1.5 20 Z"
+        fill="none" stroke="url(#smcSilver)" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="38" y1="3" x2="38" y2="37" stroke="url(#smcSilver)" stroke-width="1.4"/>
+  <line x1="264" y1="3" x2="264" y2="37" stroke="url(#smcSilver)" stroke-width="1.4"/>
 
-  <path d="M 19 10 L 26.5 12.5 L 26.5 22 Q 26.5 27.5 19 31 Q 11.5 27.5 11.5 22 L 11.5 12.5 Z"
-        fill="#1d1128" stroke="#e0b055" stroke-opacity="0.9" stroke-width="1.3"/>
-  <path d="M 15 15.5 L 23 26.5 M 23 15.5 L 15 26.5" stroke="#f0c46a" stroke-width="1.7" stroke-linecap="round"/>
+  <!-- Cadet crest: the parent's blades in silver, under a gold label -->
+  <path d="M 21 9.5 L 29 12 L 29 22 Q 29 28 21 31.5 Q 13 28 13 22 L 13 12 Z"
+        fill="#0b2f3a" stroke="#cbd5e1" stroke-width="1.3"/>
+  <path d="M 17 18 L 25 27.5 M 25 18 L 17 27.5" stroke="#e2e8f0" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 15.5 14 L 26.5 14 M 17.5 14 L 17.5 16.6 M 21 14 L 21 16.6 M 24.5 14 L 24.5 16.6"
+        stroke="#f0c46a" stroke-width="1.3" stroke-linecap="round"/>
 
-  <text x="117" y="27" text-anchor="middle" fill="#f5e6c8"
+  <text x="149" y="27" text-anchor="middle" fill="#e6f4f1"
         font-family="Cinzel, Georgia, 'Times New Roman', serif"
-        font-size="20" font-weight="700" letter-spacing="0.5" style="font-variant: small-caps">The Council</text>
+        font-size="20" font-weight="700" letter-spacing="0.5" style="font-variant: small-caps">The Sub-Council</text>
 
-  <text x="224" y="27" text-anchor="middle" fill="#fdeacd"
+  <text x="292" y="27" text-anchor="middle" fill="#f5d68a"
         font-family="Cinzel, Georgia, 'Times New Roman', serif"
-        font-size="19" font-weight="700" letter-spacing="0.5">4</text>
+        font-size="19" font-weight="700" letter-spacing="0.5">5</text>
 </svg>

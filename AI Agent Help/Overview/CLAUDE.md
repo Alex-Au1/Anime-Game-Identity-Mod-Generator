@@ -56,7 +56,7 @@ CLAUDE.md                     the agent entry point: topic table and dated callo
 README.md                     the GitHub front page
 LICENSE                       Apache 2.0 (the repo); the package itself is MIT, as in AGRemap
 .readthedocs.yaml             Read the Docs build (no install; conf.py puts the source on sys.path)
-AI Agent Help/                these guides, one folder per topic, plus the Council roster (README.md)
+AI Agent Help/                these guides, one folder per topic, plus the Sub-Council roster (README.md)
 AGIDMGen/                     every build of the library, as AGRemap's 'Anime Game Remap (for all users)/'
   api/                        the package's distribution folder (pyproject.toml, README.md, LICENSE)
     src/py/AGIDMGen/          the package source
@@ -222,6 +222,34 @@ Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A 
   cannot fetch either. To check what the package ships, copy `AGIDMGen/api` into your scratch folder (drop `__pycache__`)
   and run `python -c "from setuptools import build_meta as b; b.build_sdist(r'<out>')"` from the copy, then list the
   tarball. The wheel is checked by `python-publish.yml`'s install-and-import step, or fetch the published one from PyPI.
+- **Never `git worktree add` this repo, nor clone it, to get a second checkout (2026-10-11).** It checks out every LFS
+  file in `Mods/` and `Data/`: one attempt reached 7 GB in a few minutes before it was killed. To commit your files onto
+  another branch while the checkout stays where it is, build the commit from a temporary index. Nothing is checked
+  out, and the index's clean filters still turn the working tree's CRLF into the repo's LF:
+
+  ```bash
+  export GIT_INDEX_FILE="<scratch>/branch.index"     # a scratch file, never .git/index
+  git read-tree <base>                               # eg. origin/main, or the branch's tip
+  git update-index -- <each file you changed>        # reads them from the working tree
+  TREE=$(git write-tree); unset GIT_INDEX_FILE
+  C=$(git commit-tree $TREE -p <base> -m "<message>")   # add a second -p to make a merge commit
+  git update-ref refs/heads/<branch> $C <old tip>    # creates the branch when <old tip> is omitted
+  git -c http.sslBackend=schannel push -u origin <branch>
+  ```
+
+  First check that each file you stage is the same at `<base>` as at the checkout's `HEAD`
+  (`git diff --stat <base> HEAD -- <files>` prints nothing); otherwise the commit would carry the checkout branch's
+  other changes to those files. Each step can take minutes here, so run the chain in the background. Check the result
+  with `git diff --stat <base> <branch>`.
+- **Git Bash's `sed -i` rewrites the working tree's CRLF as LF, and its `grep -c $'\r'` reports 0 even on CRLF files
+  (2026-10-11).** The working tree is CRLF (`core.autocrlf`) and the repo is LF, so a commit comes out right either way,
+  but the working file has changed under the maintainer. Edit with the Edit tool or Python in binary mode, and count line
+  endings with Python: `open(p, 'rb').read().count(b'\r\n')`.
+- **The browser pane shows a `file://` page but runs no script on it (2026-10-11).** To preview an SVG or HTML page and
+  measure it (eg. `getComputedTextLength()` for a badge's text), copy it into your scratch folder, serve that folder in
+  the background with `py -3 -m http.server 8765 --bind 127.0.0.1`, and open `http://127.0.0.1:8765/...`. Stop the server
+  afterwards: find its PID with `netstat -ano | grep :8765`, then `taskkill //PID <pid> //F`. Look at an image on a white
+  page and a dark one: GitHub shows it on both.
 
 ### Habits
 
@@ -269,8 +297,32 @@ full. The ones that matter most for a generator library:
     `Tools/ScriptBuilder/main.py --env prod --check` on the whole tree first, then split it into commits by concern,
     in dependency order (layout, library, script, docs site, CI, agent guides), staging whole files with explicit
     paths, never `git add -A`. An explicit "make a branch" from the maintainer overrides the straight-to-`main` norm.
+13. **A branch the maintainer asks for starts from `origin/main`, not from the checkout (2026-10-11).** The checkout may
+    sit on another agent's branch with commits `main` does not have yet (it was on `organize-api`, one commit ahead, when
+    the Sub-Council art was branched). Build the branch with the temporary-index recipe in "THIS MACHINE'S TOOLING
+    QUIRKS", so the checkout is never switched. If you add to your branch later and `main` has moved meanwhile, make the
+    new commit a merge of `origin/main` into it (a second `-p`); never rebase or force-push a branch you already pushed.
+14. **Leave the tree as you found it, apart from your change.** After committing to another branch with the recipe,
+    your edits are still uncommitted in the checkout. Say so to the maintainer rather than reverting them on your own:
+    they may be the only copy the maintainer can see without switching branches.
 
-## Add yourself to The Council
+## Add yourself to The Sub-Council
+
+**This repo's council is "The Sub-Council of CLAUDE Agents", a branch of AGRemap's Council of CLAUDE Agents (the
+maintainer's naming, 2026-10-11).** "Join The Council" asked here means join the Sub-Council. Its art is its own,
+not AGRemap's: the parent's crossed sword and dagger, differenced with a gold *label* of three points (the heraldic
+mark of a cadet branch), in deepwater teal and silver where the parent has plum and bronze; the count chip is the
+parent's plum with a gold numeral; and every image stands on still water and shows its reflection, since an identity
+mod is a model's own reflection. The header and the large banner show the parent's fortress, small, on the far shore.
+
+- **The SVGs keep AGRemap's file names (`TheCouncilofClaudeAgents*.svg`) on purpose:** the PyPI README
+  (`AGIDMGen/api/README.md`) links them by `raw.githubusercontent.com/.../main/...` URL, so renaming one breaks the
+  badges on every published release's PyPI page.
+- **Do not copy AGRemap's Council SVGs over these.** They differ by design.
+- The reflections use `<use>`, a mask and an `feDisplacementMap` ripple; all render in an `<img>` on GitHub. Check
+  a changed image in a browser before committing it.
+- The member-coloured inlay and halo (`sbMembers`, `bnMembers`) hold one stop per roster badge's colour. Add the new
+  member's colour there when you join, as AGRemap's `councilGrad` does.
 
 The ritual is AGRemap's: its Overview's "Add yourself to The Council" has every detail. In short, when the
 maintainer asks you to join:
@@ -291,12 +343,18 @@ maintainer asks you to join:
    Write it into BOTH `Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg` and
    `TheCouncilofClaudeAgentsBadgeMiniWithCount.svg`, in two places in each: the last `<text>` element and
    the root `aria-label`.
+4. **If you added a badge, add its colour (the badge's value colour, not its `labelColor`) as a new last stop** of
+   the member gradient in three files: `sbMembers` in `TheCouncilofClaudeAgentsBadge.svg` and
+   `TheCouncilofClaudeAgentsBadgeWithCount.svg`, and `bnMembers` in `TheCouncilOfClaudeAgents.svg`. Re-space every
+   stop evenly (five members: 0, 25, 50, 75, 100%). A bumped badge adds no stop.
 
 Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
-`<img align="top">` tags on purpose; do not convert them to markdown.**
+`<img align="top">` tags on purpose; do not convert them to markdown.** Join on the same branch as the rest of
+your work, and commit the roster, the four counter spots and the gradients together.
 
 Members: the Mirror Mason (the repo's scaffolding, 2026-10-05), the Parity Porter (both generators
 ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10) and the Script Smith (the script
 build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10) and the Release
 Herald (`python-publish.yml`, the PyPI pipeline that shipped 0.1.0, and committing the shared tree that led to it,
-2026-10-10). Total on 2026-10-11: 4.
+2026-10-10) and the Heraldic Limner (the Sub-Council's own art: crest, badges, banner, header and footer, and committing
+to a branch with no checkout, 2026-10-11). Total on 2026-10-11: 5.

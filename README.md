@@ -18,7 +18,7 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 |   |   |
 |---|---|
 | **[Albert Gold](https://github.com/Alex-Au1)** *(Active Lead Maintainer)* | [![@albertgold](https://dcbadge.limes.pink/api/shield/367087171154214914?theme=discord-inverted)](https://discord.com/users/367087171154214914) |
-| [![The Council](Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeMini.svg)](AI%20Agent%20Help/README.md) *(Maintainer Team)* | [![The Council Badge](Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg)](AI%20Agent%20Help/README.md) |
+| [![The Sub-Council](Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeMini.svg)](AI%20Agent%20Help/README.md) *(Maintainer Team)* | [![The Sub-Council Badge](Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg)](AI%20Agent%20Help/README.md) |
 
 <br>
 
