@@ -343,11 +343,18 @@ maintainer asks you to join:
    Write it into BOTH `Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg` and
    `TheCouncilofClaudeAgentsBadgeMiniWithCount.svg`, in two places in each: the last `<text>` element and
    the root `aria-label`.
+4. **If you added a badge, add its colour (the badge's value colour, not its `labelColor`) as a new last stop** of
+   the member gradient in three files: `sbMembers` in `TheCouncilofClaudeAgentsBadge.svg` and
+   `TheCouncilofClaudeAgentsBadgeWithCount.svg`, and `bnMembers` in `TheCouncilOfClaudeAgents.svg`. Re-space every
+   stop evenly (five members: 0, 25, 50, 75, 100%). A bumped badge adds no stop.
+
 Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
-`<img align="top">` tags on purpose; do not convert them to markdown.**
+`<img align="top">` tags on purpose; do not convert them to markdown.** Join on the same branch as the rest of
+your work, and commit the roster, the four counter spots and the gradients together.
 
 Members: the Mirror Mason (the repo's scaffolding, 2026-10-05), the Parity Porter (both generators
 ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10) and the Script Smith (the script
 build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10) and the Release
 Herald (`python-publish.yml`, the PyPI pipeline that shipped 0.1.0, and committing the shared tree that led to it,
-2026-10-10). Total on 2026-10-11: 4.
+2026-10-10) and the Heraldic Limner (the Sub-Council's own art: crest, badges, banner, header and footer, and committing
+to a branch with no checkout, 2026-10-11). Total on 2026-10-11: 5.

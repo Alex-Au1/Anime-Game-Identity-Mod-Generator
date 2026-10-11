@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="164" height="20" viewBox="0 0 328 40" role="img" aria-label="The Sub-Council: 4">
+<svg xmlns="http://www.w3.org/2000/svg" width="164" height="20" viewBox="0 0 328 40" role="img" aria-label="The Sub-Council: 5">
   <!-- Inline badge with the member count. Same 20px line-height budget as the
        plain mini: crest cap, short name, then the count chip. The chip is the
        parent Council's plum with a gold numeral: the Sub-Council's members are
@@ -50,5 +50,5 @@
 
   <text x="292" y="27" text-anchor="middle" fill="#f5d68a"
         font-family="Cinzel, Georgia, 'Times New Roman', serif"
-        font-size="19" font-weight="700" letter-spacing="0.5">4</text>
+        font-size="19" font-weight="700" letter-spacing="0.5">5</text>
 </svg>
