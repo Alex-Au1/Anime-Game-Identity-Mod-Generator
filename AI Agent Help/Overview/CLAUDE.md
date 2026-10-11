@@ -222,6 +222,34 @@ Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A 
   cannot fetch either. To check what the package ships, copy `AGIDMGen/api` into your scratch folder (drop `__pycache__`)
   and run `python -c "from setuptools import build_meta as b; b.build_sdist(r'<out>')"` from the copy, then list the
   tarball. The wheel is checked by `python-publish.yml`'s install-and-import step, or fetch the published one from PyPI.
+- **Never `git worktree add` this repo, nor clone it, to get a second checkout (2026-10-11).** It checks out every LFS
+  file in `Mods/` and `Data/`: one attempt reached 7 GB in a few minutes before it was killed. To commit your files onto
+  another branch while the checkout stays where it is, build the commit from a temporary index. Nothing is checked
+  out, and the index's clean filters still turn the working tree's CRLF into the repo's LF:
+
+  ```bash
+  export GIT_INDEX_FILE="<scratch>/branch.index"     # a scratch file, never .git/index
+  git read-tree <base>                               # eg. origin/main, or the branch's tip
+  git update-index -- <each file you changed>        # reads them from the working tree
+  TREE=$(git write-tree); unset GIT_INDEX_FILE
+  C=$(git commit-tree $TREE -p <base> -m "<message>")   # add a second -p to make a merge commit
+  git update-ref refs/heads/<branch> $C <old tip>    # creates the branch when <old tip> is omitted
+  git -c http.sslBackend=schannel push -u origin <branch>
+  ```
+
+  First check that each file you stage is the same at `<base>` as at the checkout's `HEAD`
+  (`git diff --stat <base> HEAD -- <files>` prints nothing); otherwise the commit would carry the checkout branch's
+  other changes to those files. Each step can take minutes here, so run the chain in the background. Check the result
+  with `git diff --stat <base> <branch>`.
+- **Git Bash's `sed -i` rewrites the working tree's CRLF as LF, and its `grep -c $'\r'` reports 0 even on CRLF files
+  (2026-10-11).** The working tree is CRLF (`core.autocrlf`) and the repo is LF, so a commit comes out right either way,
+  but the working file has changed under the maintainer. Edit with the Edit tool or Python in binary mode, and count line
+  endings with Python: `open(p, 'rb').read().count(b'\r\n')`.
+- **The browser pane shows a `file://` page but runs no script on it (2026-10-11).** To preview an SVG or HTML page and
+  measure it (eg. `getComputedTextLength()` for a badge's text), copy it into your scratch folder, serve that folder in
+  the background with `py -3 -m http.server 8765 --bind 127.0.0.1`, and open `http://127.0.0.1:8765/...`. Stop the server
+  afterwards: find its PID with `netstat -ano | grep :8765`, then `taskkill //PID <pid> //F`. Look at an image on a white
+  page and a dark one: GitHub shows it on both.
 
 ### Habits
 
@@ -269,6 +297,14 @@ full. The ones that matter most for a generator library:
     `Tools/ScriptBuilder/main.py --env prod --check` on the whole tree first, then split it into commits by concern,
     in dependency order (layout, library, script, docs site, CI, agent guides), staging whole files with explicit
     paths, never `git add -A`. An explicit "make a branch" from the maintainer overrides the straight-to-`main` norm.
+13. **A branch the maintainer asks for starts from `origin/main`, not from the checkout (2026-10-11).** The checkout may
+    sit on another agent's branch with commits `main` does not have yet (it was on `organize-api`, one commit ahead, when
+    the Sub-Council art was branched). Build the branch with the temporary-index recipe in "THIS MACHINE'S TOOLING
+    QUIRKS", so the checkout is never switched. If you add to your branch later and `main` has moved meanwhile, make the
+    new commit a merge of `origin/main` into it (a second `-p`); never rebase or force-push a branch you already pushed.
+14. **Leave the tree as you found it, apart from your change.** After committing to another branch with the recipe,
+    your edits are still uncommitted in the checkout. Say so to the maintainer rather than reverting them on your own:
+    they may be the only copy the maintainer can see without switching branches.
 
 ## Add yourself to The Sub-Council
 
@@ -307,7 +343,6 @@ maintainer asks you to join:
    Write it into BOTH `Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg` and
    `TheCouncilofClaudeAgentsBadgeMiniWithCount.svg`, in two places in each: the last `<text>` element and
    the root `aria-label`.
-
 Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
 `<img align="top">` tags on purpose; do not convert them to markdown.**
 
