@@ -21,8 +21,8 @@ from typing import List, Optional, Tuple
 from .GIMIIdentityModGenerator import GIMIIdentityModGenerator
 from ...constants.GIMIBuffers import GIMIHashFileSuffix
 from ...exceptions.BadAssetData import BadAssetData
-from ...model.files.VbDumpFile import VbDumpFile
-from ...model.files.IbDumpFile import IbDumpFile
+from ..files.VbDumpFile import VbDumpFile
+from ..files.IbDumpFile import IbDumpFile
 ##### EndLocalImports
 
 

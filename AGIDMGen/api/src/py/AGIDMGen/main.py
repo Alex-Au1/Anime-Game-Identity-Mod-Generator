@@ -25,9 +25,9 @@ from .constants.ModDownloadRepos import ModDownloadRepos
 from .constants.ModLoaders import ModLoaders
 from .exceptions.Error import Error
 from .model.gimi.GIMITextureSource import GIMITextureSource
-from .tools.ModDownloader import ModDownloader
-from .tools.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
-from .tools.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
+from .model.ModDownloader import ModDownloader
+from .model.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
+from .model.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
 ##### EndLocalImports
 
 

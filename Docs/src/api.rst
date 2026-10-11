@@ -541,6 +541,6 @@ WWMIIniBuilder
 WWMITexturePattern
 ==================
 
-.. autodata:: AGIDMGen.tools.wwmi.WWMIIdentityModGenerator.WWMITexturePattern
+.. autodata:: AGIDMGen.model.wwmi.WWMIIdentityModGenerator.WWMITexturePattern
 
 :raw-html:`<br />`
