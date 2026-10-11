@@ -202,7 +202,20 @@ Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A 
   `urllib.request.urlopen("https://api.github.com/repos/Alex-Au1/Anime-Game-Identity-Mod-Generator/commits/<sha>/check-runs")`
   lists a commit's check names and results. `curl` fails TLS here; do not turn verification off.
 - **Write a multi-line edit as a Python script in your scratch folder, or use the Edit tool.** Inline Bash
-  heredocs that hold Python strings have put literal newlines into the edited files more than once.
+  heredocs that hold Python strings have put literal newlines into the edited files more than once, and a heredoc
+  holding many quotes has failed to parse at all.
+- **`git fetch` needs the schannel backend too**, not only `push`: `git -c http.sslBackend=schannel fetch origin`.
+- **A commit or a branch switch can take minutes** while git rehashes `Mods/`'s LFS files. Run it in the background and
+  wait for it; do not start a second git command into the lock.
+- **PyPI is reachable from Python, not from pip (2026-10-10).** `urllib.request.urlopen("https://pypi.org/pypi/<name>/json")`
+  works here, so read a package's published versions, upload times, `requires_dist` and wheel URLs that way (eg. to
+  check that a PyPI release of AGRemapUtils has what a tool needs before CI relies on it). `pip install` from PyPI fails
+  TLS. To test something against a PyPI release, fetch its wheel with `urllib` into your scratch folder and install it
+  with `pip install --no-deps --no-index` into a scratch venv; never into the machine's own Python.
+- **AGRemap's checkout is shared, and its compiled API can vanish mid-session (2026-10-10).** Another agent rebuilding
+  AGRemap left `FixRaidenBoss2/core.cp39-win_amd64.pyd` missing for a while, and every import of `AGIDMGen` here failed
+  with `No module named 'FixRaidenBoss2.core'`. That is not this repo's bug: check that the `.pyd` exists, report it, and
+  rerun later. Never rebuild or switch AGRemap's checkout yourself.
 
 ### Habits
 
@@ -225,6 +238,24 @@ full. The ones that matter most for a generator library:
    repo for the next agent.
 7. **Docstrings are published.** Write them for a new user, in the present tense: no dates, no history,
    no links into `AI Agent Help/`. History goes here.
+8. **The checkout moves between your turns (2026-10-10).** The maintainer and other agents commit, switch branches
+   and edit the same files while you work: in one session the checkout went from `main` to another branch, and
+   commits landed that changed the feature being worked on. So, at the start of a task and again before committing,
+   run `git status -sb`, `git log --oneline -5` and compare `HEAD` with `origin/main`; and re-read a file before
+   editing it rather than trusting an earlier read.
+9. **Commit to `main` without switching branches when you cannot.** If the checkout is on another branch whose
+   `HEAD` equals `origin/main` (check `git log origin/main..HEAD` and `HEAD..origin/main` are both empty), commit there
+   and `git -c http.sslBackend=schannel push origin HEAD:main`, a fast-forward. Do not switch a dirty tree onto a
+   stale local `main`, and leave the branch the checkout is on alone.
+10. **Ask what reaches the user, then prove that.** A change can be right in the source and still not reach anyone:
+    the script build reaches the library from PyPI, so a library change reaches script users only through a release.
+    Before calling a feature done, name the artifact a user runs (the PyPI package, the script, `Mods/`) and test that
+    artifact, as `Testing/`'s "PROVING THE SCRIPT BUILD" does.
+11. **Port AGRemap's design, then list what you changed and why.** When the maintainer says "like AGRemap", read
+    AGRemap's real code first (`Tools/Script`, `Tools/ScriptBuilder`, `AGRemapUtils`), port its structure and names,
+    and write each deliberate difference into the tool's README under "How it differs from AG Remap's". AGRemapUtils
+    is reused through a shim (`ScriptBuilder/AGRemapUtils.py`, the tester's `src/AGRemapUtils.py`) that falls back to
+    `AGREMAP_UTILS_SRC`; subclass its classes rather than copy them.
 
 ## Add yourself to The Council
 
@@ -251,5 +282,7 @@ maintainer asks you to join:
 Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
 `<img align="top">` tags on purpose; do not convert them to markdown.**
 
-Members: the Mirror Mason (the repo's scaffolding, 2026-10-05) and the Parity Porter (both generators
-ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10). Total on 2026-10-10: 2.
+Members: the Mirror Mason (the repo's scaffolding, 2026-10-05), the Parity Porter (both generators
+ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-10-10) and the Script Smith (the script
+build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10). Total on
+2026-10-10: 3.

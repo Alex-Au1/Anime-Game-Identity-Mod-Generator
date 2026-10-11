@@ -28,7 +28,11 @@ request here" (2026-10-10).** It has:
   regenerate, after each kind of change;
 - where the asset repos and AGRemap's data live on this machine;
 - this machine's tooling quirks: pushing, a slow git after `Mods/` changes, no `gh` login, searches to keep
-  out of `Mods/` and `Data/`.
+  out of `Mods/` and `Data/`, reading PyPI through Python when pip cannot, AGRemap's API vanishing mid-rebuild;
+- the habits, among them: **the checkout moves between your turns** (check `git status -sb`, `git log -5` and
+  `HEAD` against `origin/main` before starting and before committing; re-read a file before editing it), how to
+  commit to `main` from another branch, and **test the artifact a user actually runs** (the PyPI package, the script,
+  `Mods/`), not only the source.
 
 Commit and push only when asked, and then straight to `main`.
 
