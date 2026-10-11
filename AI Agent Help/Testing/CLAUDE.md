@@ -143,14 +143,16 @@ It runs on a **published release or by hand**, and both do the same three steps:
   version), before releasing; PyPI refuses a version it already has, and the run fails at the last step.
 - **The upload is a plain job of `python-publish.yml`, never in a reusable workflow**: PyPI refuses a trusted-publishing
   token minted inside one (`invalid-publisher`; AGRemap's CI guide, 2026-09-18).
-- **The maintainer's one-time setup on PyPI**: register a trusted publisher for `AGIDMGen` with owner `Alex-Au1`,
-  repository `Anime-Game-Identity-Mod-Generator`, workflow `python-publish.yml`, environment `pypi`. While the project
-  does not exist on PyPI yet, that is a *pending* publisher (PyPI -> Account -> Publishing). Without it the last job
-  fails with `invalid-publisher`.
-- **Checked here before the first run (2026-10-10):** every workflow parses, and an offline sdist of
-  `AGIDMGen/api` (setuptools 68) holds all 11 package folders, `py.typed`, the README and the LICENSE. The wheel
-  could not be built here (no `wheel` package, and PyPI is unreachable from the sandbox); the workflow's own
-  install-and-import step is its check. **It has not run on GitHub yet.**
+- **PyPI's trusted publisher is registered (done by the maintainer before 0.1.0)**: project `AGIDMGen`, owner
+  `Alex-Au1`, repository `Anime-Game-Identity-Mod-Generator`, workflow `python-publish.yml`, environment `pypi`. So
+  **renaming `python-publish.yml`, or its `pypi` environment, breaks publishing** (`invalid-publisher` at the last job)
+  until the maintainer re-registers it on PyPI. Do not rename either.
+- **The first run published 0.1.0 (2026-10-11 UTC):** a manual run on `main` at `d8abdf1` passed every job, and PyPI
+  holds `agidmgen-0.1.0-py3-none-any.whl` and `agidmgen-0.1.0.tar.gz` (`requires_dist` numpy>=1.26.4,
+  FixRaidenBoss2>=5.0.0; `requires_python` >=3.9). Read off PyPI's JSON and GitHub's Actions API.
+- **Releasing is the maintainer's decision, and so is its version number.** An agent prepares it (the version bump
+  and the prod script rebuild, see [Overview](../Overview/CLAUDE.md)'s change checklist) and never starts a release
+  or a manual publish run itself: a published version can never be re-uploaded.
 
 ## PROVING THE SCRIPT BUILD (2026-10-10)
 

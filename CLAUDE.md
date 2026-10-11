@@ -110,9 +110,11 @@ has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Download
 - `Testing/Integration Tester/modsCheck.py`, which regenerates a sample from GitHub and checks it against the
   committed `Mods/` through their LFS pointers' sha256, fetching no LFS.
 
-**`python-publish.yml` publishes `AGIDMGen` to PyPI (2026-10-10)**, on a published release or by hand: both testers
-first, then the sdist and wheel, then a trusted-publishing upload. The version is `pyproject.toml`'s, so bump it before
-a release. See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "PUBLISHING TO PYPI".
+**`python-publish.yml` publishes `AGIDMGen` to PyPI (2026-10-10; 0.1.0 is out, 2026-10-11)**, on a published release or
+by hand: both testers first, then the sdist and wheel, then a trusted-publishing upload (already registered on PyPI).
+The version is `pyproject.toml`'s, so bump it, and rebuild the script, before a release; PyPI refuses a version it has.
+A release is the maintainer's call: never start one unasked. See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s
+"PUBLISHING TO PYPI" and [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s change checklist.
 
 **Job names are branch-protection check names; do not rename them casually.** See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "CI".
 

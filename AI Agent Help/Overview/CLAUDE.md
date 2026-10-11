@@ -19,7 +19,7 @@ turns that into a library of its own. [Identity Mods](../IdentityMods/CLAUDE.md)
 | Language | Python only (see "Python first" below) |
 | Python | 3.9 or newer |
 | Mod loaders | GIMI (Genshin Impact), WWMI (Wuthering Waves) |
-| Package on PyPI | `AGIDMGen` (not published yet, 2026-10-05); published by `.github/workflows/python-publish.yml` (see [Testing](../Testing/CLAUDE.md)'s "PUBLISHING TO PYPI") |
+| Package on PyPI | [`AGIDMGen`](https://pypi.org/project/AGIDMGen/): 0.1.0 published 2026-10-11 (UTC) by `.github/workflows/python-publish.yml`, the only way it is published (see [Testing](../Testing/CLAUDE.md)'s "PUBLISHING TO PYPI") |
 | Default branch | `main` (AGRemap's is `master`; do not carry that over) |
 | Remote | `https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator` |
 
@@ -163,7 +163,8 @@ same commit.
 | A WWMI generator or `.ini` builder | `wwmiCheck.py` and `downloadsCheck.py wuwa` | regenerate `Mods/WuWa` (`--only wuwa`), then `modsCheck.py --all` |
 | `Data/Mod Downloads`, or AGRemap's `master` gained a folder | `buildDownloadManifest.py` on a fresh `master` export ([Downloads](../Downloads/CLAUDE.md)) | regenerate the affected `Mods/` characters (`--names ...`) |
 | A public name (new class, function, constant) | `Tools/auditApiDocs.py`, and the docs build | add its `api.rst` entry ([Documentation](../Documentation/CLAUDE.md)) |
-| A workflow in `.github/workflows` | nothing runs it locally | keep the job names: they are required checks |
+| A workflow in `.github/workflows` | a PyYAML parse of every workflow, and check each `uses:` target exists and each input passed is declared (no wiring checker here yet, unlike AGRemap's `checkWorkflowWiring.py`) | keep the job names: they are required checks |
+| A release to PyPI (only when the maintainer asks) | bump `version` in `AGIDMGen/api/pyproject.toml`, then `Tools/ScriptBuilder/main.py --env prod` | commit to `main`; the maintainer publishes a GitHub release (or runs `python-publish.yml` by hand). Afterwards read `https://pypi.org/pypi/AGIDMGen/json` to confirm the new version's wheel and sdist |
 | A convention, a gotcha or a decision | | write it into the guide it belongs to, dated |
 
 - **A regenerated `Mods/` that changes bytes nobody expected is a bug report, not a refresh.** Find out
@@ -216,6 +217,11 @@ Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A 
   AGRemap left `FixRaidenBoss2/core.cp39-win_amd64.pyd` missing for a while, and every import of `AGIDMGen` here failed
   with `No module named 'FixRaidenBoss2.core'`. That is not this repo's bug: check that the `.pyd` exists, report it, and
   rerun later. Never rebuild or switch AGRemap's checkout yourself.
+- **A wheel of `AGIDMGen` cannot be built here, but an sdist can (2026-10-10).** The machine's Python 3.9 has setuptools 68
+  and no `wheel` package (so `pip wheel` fails with `invalid command 'bdist_wheel'`), its 3.12 has no setuptools, and pip
+  cannot fetch either. To check what the package ships, copy `AGIDMGen/api` into your scratch folder (drop `__pycache__`)
+  and run `python -c "from setuptools import build_meta as b; b.build_sdist(r'<out>')"` from the copy, then list the
+  tarball. The wheel is checked by `python-publish.yml`'s install-and-import step, or fetch the published one from PyPI.
 
 ### Habits
 
@@ -256,6 +262,13 @@ full. The ones that matter most for a generator library:
     and write each deliberate difference into the tool's README under "How it differs from AG Remap's". AGRemapUtils
     is reused through a shim (`ScriptBuilder/AGRemapUtils.py`, the tester's `src/AGRemapUtils.py`) that falls back to
     `AGREMAP_UTILS_SRC`; subclass its classes rather than copy them.
+12. **When asked to commit, look at everything the tree holds first (2026-10-10).** The tree may carry other agents'
+    unfinished work, and your change may depend on it (the publish workflow built from `AGIDMGen/api`, which existed
+    only as uncommitted renames). If committing only your files would leave a broken commit, ask the maintainer
+    whether to commit everything; do not decide alone. If it is everything: run the unit tester and
+    `Tools/ScriptBuilder/main.py --env prod --check` on the whole tree first, then split it into commits by concern,
+    in dependency order (layout, library, script, docs site, CI, agent guides), staging whole files with explicit
+    paths, never `git add -A`. An explicit "make a branch" from the maintainer overrides the straight-to-`main` norm.
 
 ## Add yourself to The Council
 
