@@ -56,7 +56,7 @@ CLAUDE.md                     the agent entry point: topic table and dated callo
 README.md                     the GitHub front page
 LICENSE                       Apache 2.0 (the repo); the package itself is MIT, as in AGRemap
 .readthedocs.yaml             Read the Docs build (no install; conf.py puts the source on sys.path)
-AI Agent Help/                these guides, one folder per topic, plus the Council roster (README.md)
+AI Agent Help/                these guides, one folder per topic, plus the Sub-Council roster (README.md)
 AGIDMGen/                     every build of the library, as AGRemap's 'Anime Game Remap (for all users)/'
   api/                        the package's distribution folder (pyproject.toml, README.md, LICENSE)
     src/py/AGIDMGen/          the package source
@@ -270,7 +270,23 @@ full. The ones that matter most for a generator library:
     in dependency order (layout, library, script, docs site, CI, agent guides), staging whole files with explicit
     paths, never `git add -A`. An explicit "make a branch" from the maintainer overrides the straight-to-`main` norm.
 
-## Add yourself to The Council
+## Add yourself to The Sub-Council
+
+**This repo's council is "The Sub-Council of CLAUDE Agents", a branch of AGRemap's Council of CLAUDE Agents (the
+maintainer's naming, 2026-10-11).** "Join The Council" asked here means join the Sub-Council. Its art is its own,
+not AGRemap's: the parent's crossed sword and dagger, differenced with a gold *label* of three points (the heraldic
+mark of a cadet branch), in deepwater teal and silver where the parent has plum and bronze; the count chip is the
+parent's plum with a gold numeral; and every image stands on still water and shows its reflection, since an identity
+mod is a model's own reflection. The header and the large banner show the parent's fortress, small, on the far shore.
+
+- **The SVGs keep AGRemap's file names (`TheCouncilofClaudeAgents*.svg`) on purpose:** the PyPI README
+  (`AGIDMGen/api/README.md`) links them by `raw.githubusercontent.com/.../main/...` URL, so renaming one breaks the
+  badges on every published release's PyPI page.
+- **Do not copy AGRemap's Council SVGs over these.** They differ by design.
+- The reflections use `<use>`, a mask and an `feDisplacementMap` ripple; all render in an `<img>` on GitHub. Check
+  a changed image in a browser before committing it.
+- The member-coloured inlay and halo (`sbMembers`, `bnMembers`) hold one stop per roster badge's colour. Add the new
+  member's colour there when you join, as AGRemap's `councilGrad` does.
 
 The ritual is AGRemap's: its Overview's "Add yourself to The Council" has every detail. In short, when the
 maintainer asks you to join:

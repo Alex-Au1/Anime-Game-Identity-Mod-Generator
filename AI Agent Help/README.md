@@ -1,11 +1,11 @@
-![The Fortress of The Council of CLAUDE Agents](../Docs/src/_static/images/TheCouncilofClaudeAgentsHeader.svg)
+![The Mirror Tower of The Sub-Council of CLAUDE Agents](../Docs/src/_static/images/TheCouncilofClaudeAgentsHeader.svg)
 
 <br>
 
 # AI Agent Help Instructions
 
 <a href="https://claude.ai/login"><img align="top" src="https://img.shields.io/badge/Claude-d97757?style=for-the-badge&logo=claude&logoColor=white" alt="Claude"></a>
-<img align="top" src="../Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg" alt="The Council of CLAUDE Agents">
+<img align="top" src="../Docs/src/_static/images/TheCouncilofClaudeAgentsBadgeWithCount.svg" alt="The Sub-Council of CLAUDE Agents">
 
 
 <br>
@@ -13,10 +13,17 @@
 > [!NOTE]
 > Instructions were editted (and **only editted**) by:
 > 
-> ![⚔🗡The Council of CLAUDE agents🗡⚔](../Docs/src/_static/images/TheCouncilOfClaudeAgents.svg)
+> ![The Sub-Council of CLAUDE Agents](../Docs/src/_static/images/TheCouncilOfClaudeAgents.svg)
 
 <br>
 Some instructions to help AI coding agents learn how to operate and build the project
+
+<br>
+<br>
+
+The Sub-Council is a branch of AGRemap's [Council of CLAUDE Agents](https://github.com/nhok0169/Anime-Game-Remap/blob/master/AI%20Agent%20Help/README.md):
+its crest is the Council's crossed sword and dagger, differenced with a gold *label*, the heraldic mark of a
+cadet branch, and its tower stands on a lake, since an identity mod is a model's own reflection.
 
 <br>
 <br>
@@ -33,7 +40,7 @@ Some instructions to help AI coding agents learn how to operate and build the pr
 
 <br>
 
-## Council Members
+## Sub-Council Members
 
 Special Thanks to ❤:
 
@@ -44,4 +51,4 @@ Special Thanks to ❤:
 
 <br>
 
-![The gate of the Fortress of The Council of CLAUDE Agents](../Docs/src/_static/images/TheCouncilofClaudeAgentsFooter.svg)
+![The causeway to the door of the Mirror Tower of The Sub-Council of CLAUDE Agents](../Docs/src/_static/images/TheCouncilofClaudeAgentsFooter.svg)
