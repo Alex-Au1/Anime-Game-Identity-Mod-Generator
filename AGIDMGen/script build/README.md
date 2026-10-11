@@ -1,13 +1,13 @@
 # AGIDMGen's Script
 
-The whole library in **one file**, [AGIDMGen.py](src/AGIDMGen/AGIDMGen.py), for running AGIDMGen without
-installing it as a Python package.
+One file, [AGIDMGen.py](src/AGIDMGen/AGIDMGen.py), for running AGIDMGen without knowing how to install a Python
+package: it downloads the library from [PyPI](https://pypi.org/project/AGIDMGen/) for you, then runs it.
 
 <br>
 
 > [!NOTE]
 > The `.py` files under [src/AGIDMGen](src/AGIDMGen) are **generated** by the [ScriptBuilder](../../Tools/ScriptBuilder)
-> from the library's source. Do not edit them; change the library and rebuild.
+> from [the script's source](../../Tools/Script). Do not edit them; change the source and rebuild.
 
 <br>
 
@@ -35,8 +35,10 @@ Either way, the identity mod is written into a folder named after the character,
 <br>
 
 > [!NOTE]
-> The first run installs what the script needs (numpy, and [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)) with
-> `pip`, so it needs an internet connection and takes a little longer. Later runs skip that.
+> The script itself is small: it downloads the generator, [AGIDMGen](https://pypi.org/project/AGIDMGen/) (with numpy and
+> [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)), with `pip`. The first run takes a little longer for that.
+> Every run then checks for a newer version; without an internet connection, it runs the version already downloaded.
+> Add `--disableUpdate` to skip the check.
 
 <br>
 
@@ -49,7 +51,7 @@ Either way, the identity mod is written into a folder named after the character,
 
 ## Options
 
-Every option of the library's command line works here, since the script is the library:
+Every option of the library's command line works here, since the script hands its command line to the library:
 
 ```bash
 python AGIDMGen.py gimi --help
@@ -61,3 +63,14 @@ python AGIDMGen.py gimi --help
 | `python AGIDMGen.py gimi --download --all` | every GI character |
 | `python AGIDMGen.py wwmi ChisaParfait --download --version 3.5` | the character as of an older game version, when there is a download folder for it |
 | `python AGIDMGen.py gimi "C:\GI-Model-Importer-Assets\PlayerCharacterData\Albedo"` | from an asset folder you already have |
+
+<br>
+
+### The script's own options
+
+These two are the script's, not the library's, and go anywhere on the command line:
+
+| Option | What it does |
+| --- | --- |
+| `-dup`, `--disableUpdate` | skips checking for a newer AGIDMGen; it is only downloaded when it is not installed yet |
+| `-pre`, `--preRelease` | also considers prereleases of AGIDMGen when downloading it |

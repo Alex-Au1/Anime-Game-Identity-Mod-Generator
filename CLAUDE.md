@@ -122,14 +122,16 @@ the library. There are 144 GI and 54 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed
 
 See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s "`Mods/`".
 
-**THE LIBRARY IS ALSO ONE SCRIPT, `AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py` (the maintainer's request, 2026-10-10)**, for
-users who cannot install a Python package. Like AGRemap's script build, it is compiled by `Tools/ScriptBuilder/main.py`
-on AGRemapUtils' `ScriptBuilder`, but it CONTAINS the library (pure Python), and pip-installs numpy and FixRaidenBoss2 on
-its first run.
+**THE LIBRARY ALSO RUNS FROM ONE SCRIPT, `AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py` (the maintainer's request,
+2026-10-10)**, for users who cannot install a Python package. As in AGRemap, `Tools/ScriptBuilder/main.py` compiles the
+script's own source, `Tools/Script`, and the script only REACHES the library, in one of two builds (`--env`):
 
-- **Rebuild it after any library change**; CI's `Tools/ScriptBuilder/main.py --check` fails on a stale one.
+- **`prod` is the committed build: it pip-installs `AGIDMGen` from PyPI** (with numpy and FixRaidenBoss2) and updates it
+  on every run, unless `--disableUpdate`;
+- **`dev` reaches `AGIDMGen/api/src/py` by a relative path**, for trying a library change through the script here.
+- **Rebuild with `--env prod` after any change to `Tools/Script`**; CI's `main.py --env prod --check` fails on a stale or
+  a `dev` script. A library change needs no rebuild, but reaches script users only once it is released to PyPI.
 - **Its `.py` files are generated**: never edit them.
-- **Keep every module's section markers, and top-level names unique across the package**: the builder refuses a clash.
 
 See [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s "THE SCRIPT BUILD".
 

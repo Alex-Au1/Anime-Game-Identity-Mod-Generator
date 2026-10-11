@@ -38,9 +38,9 @@ Don't want to run the library? Every character's identity mod is ready-made in t
 <br>
 
 ## Run It Without Installing
-Don't know how to install a Python package? The whole library is also a single script,
-[AGIDMGen.py](AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py). Install [Python](https://www.python.org/downloads/), download the
-script, and run:
+Don't know how to install a Python package? The single script
+[AGIDMGen.py](AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py) downloads the library for you. Install
+[Python](https://www.python.org/downloads/), download the script, and run:
 
 ```bash
 python AGIDMGen.py gimi Albedo --download

@@ -64,8 +64,8 @@ A new folder with the character's name (eg. ``Yelan``) appears beside the script
     Copy the character's name as it is written in the `Mods list`_. The new folder is named exactly as you typed it.
 
 .. note::
-    The first run installs what the script needs (numpy, and `AG Remap's API`_), so it takes a little longer. Later
-    runs skip that.
+    The first run downloads the generator, AGIDMGen (with numpy and `AG Remap's API`_), so it takes a little longer.
+    Later runs only check for a newer version.
 
 STEP 3
 ~~~~~~

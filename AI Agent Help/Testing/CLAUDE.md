@@ -104,7 +104,7 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 
 | Job | Workflow | What it runs |
 | --- | --- | --- |
-| `Unit Tests (3.9)`, `Unit Tests (3.13)` | `unit-test-workflow.yml` | `pip install ./AGIDMGen/api` (proving the packaging and pulling numpy and FixRaidenBoss2 from PyPI), the tester's `requirements.txt` (AGRemapUtils), then `main.py`, then `Tools/ScriptBuilder/main.py --check` (the committed script build is what the source builds; added 2026-10-10) |
+| `Unit Tests (3.9)`, `Unit Tests (3.13)` | `unit-test-workflow.yml` | `pip install ./AGIDMGen/api` (proving the packaging and pulling numpy and FixRaidenBoss2 from PyPI), the tester's `requirements.txt` (AGRemapUtils), then `main.py`, then `Tools/ScriptBuilder/main.py --env prod --check` (the committed script build is the prod build of `Tools/Script`; added 2026-10-10) |
 | `Integration Tests` | `integration-test-workflow.yml` | `modsCheck.py`: regenerates a sample of identity mods from GitHub and compares them with the committed `Mods/` |
 
 - **Unlike AGRemap, it also runs on a push to `main`.** Nothing is compiled, so a run takes minutes.
@@ -154,13 +154,21 @@ It runs on a **published release or by hand**, and both do the same three steps:
 
 ## PROVING THE SCRIPT BUILD (2026-10-10)
 
-The single-file script (`AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py`, see [Overview](../Overview/CLAUDE.md)) is the library
-flattened into one file, so its acceptance test is **the same bytes as the library**: run it and `python -m AGIDMGen`
-on the same characters and compare the mod folders, and compare both with `Mods/`. Pass `--out` as an absolute path:
-the script changes into its own folder first. On 2026-10-10 Albedo, Aino, Aalto and Augusta (110 files) matched
-`Mods/` byte for byte.
+The single-file script (`AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py`, see [Overview](../Overview/CLAUDE.md)) hands its
+command line to the library, so its acceptance test is **the same bytes as the library**: run it on characters and compare
+the mod folders with `Mods/`. Pass `--out` as an absolute path: the script changes into its own folder first.
+
+- **dev (2026-10-10):** a dev build, run directly (Albedo), as `python -m AGIDMGen` from `script build/src` (Aalto), and
+  `Tools/Script/main.py` from source (Aino), matched `Mods/` byte for byte.
+- **prod (2026-10-10): this machine's pip cannot reach PyPI** (the TLS quirk), so a prod run here only proves the failure
+  path ("Could not download", exit 1). To prove the rest, install PyPI's own wheel into a scratch venv
+  (`py -3 -m venv --system-site-packages`): fetch it with `urllib` from `https://pypi.org/pypi/AGIDMGen/<version>/json`,
+  `pip install --no-deps --no-index` it, and give FixRaidenBoss2 by `PYTHONPATH`. Then Albedo with `--disableUpdate`,
+  and Aalto through the failed-update fallback, matched `Mods/` byte for byte, and `-h` printed the library's help and
+  then the script's options. Never pip-install into the machine's own Python to test this.
 
 - **`--check` was proven against a broken build:** a line appended to the committed script makes it exit 1.
+- **A dev build fails the prod check**, which is what keeps a dev build from being committed.
 - **The name-clash guard was proven on a two-module fake package** that both define `Shared`.
 - **The build is deterministic:** `--check` passes under several `PYTHONHASHSEED`s. Keep every collection of modules
   the builder visits ordered; a plain set's order changes from run to run, and with it the order of the script.

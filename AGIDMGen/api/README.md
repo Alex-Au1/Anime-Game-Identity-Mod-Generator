@@ -76,8 +76,9 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 > The new folder is named exactly as you typed it.
 
 > [!NOTE]
-> The first run installs what the script needs (numpy, and [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)), so it
-> takes a little longer. Later runs skip that.
+> The first run downloads the generator, [AGIDMGen](https://pypi.org/project/AGIDMGen/) (with numpy and
+> [AG Remap's API](https://pypi.org/project/FixRaidenBoss2/)), so it takes a little longer. Later runs only check for a
+> newer version.
 
 ### STEP 3:
 - Open the game and enjoy it
