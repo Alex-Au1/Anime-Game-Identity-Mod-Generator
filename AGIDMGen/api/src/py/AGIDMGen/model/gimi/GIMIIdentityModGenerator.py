@@ -30,11 +30,11 @@ from ...constants.GIMIBuffers import GIMIBuffers, GIMISemanticBuffers, GIMIFixed
 from ...constants.GIMITextureLayouts import GIMITextureLayouts
 from ...exceptions.BadAssetData import BadAssetData
 from ...exceptions.Error import Error
-from ...model.files.VbDumpFile import VbDumpFile
-from ...model.files.IbDumpFile import IbDumpFile
-from ...model.gimi.GIMIComponent import GIMIComponent
-from ...model.gimi.GIMIIdentityMod import GIMIIdentityMod
-from ...model.gimi.GIMITextureSource import GIMITextureSource
+from ..files.VbDumpFile import VbDumpFile
+from ..files.IbDumpFile import IbDumpFile
+from .GIMIComponent import GIMIComponent
+from .GIMIIdentityMod import GIMIIdentityMod
+from .GIMITextureSource import GIMITextureSource
 ##### EndLocalImports
 
 

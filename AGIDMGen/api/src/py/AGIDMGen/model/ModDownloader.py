@@ -20,13 +20,13 @@ from FixRaidenBoss2 import BaseLogger, Model
 
 
 ##### LocalImports
-from .VersionTools import VersionTools
+from ..tools.VersionTools import VersionTools
 from ..constants.ModLoaders import ModLoaders
 from ..constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders
 from ..data.ModDownloadData import ModDownloadData, ModDownloadAliases
 from ..exceptions.Error import Error
 from ..exceptions.DownloadFailed import DownloadFailed
-from ..model.ModDownload import ModDownload
+from .ModDownload import ModDownload
 ##### EndLocalImports
 
 

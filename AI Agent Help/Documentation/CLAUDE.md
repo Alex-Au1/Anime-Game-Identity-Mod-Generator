@@ -55,7 +55,9 @@ There is no banner image yet (AGRemap's index has `AGRemapBanner.png`).
 
 `Docs/src/api.rst` lists every public export by hand, as in AGRemap: a "Where to start" list, then sections
 (headings underlined with `*`) **Service, Model, View,
-Constants, Data, Exceptions, Tools** (add a section when its first class arrives). The `Model` base class is
+Constants, Data, Exceptions, Tools** (add a section when its first class arrives). An entry goes in the section of
+the package folder its class lives in: the generators, builders and `ModDownloader` are under Model, since they moved
+to `model/` (2026-10-11), and Tools lists only the helpers in `tools/`. The `Model` base class is
 listed under Service, and `conf.py` suppresses `autosectionlabel.api`, because the section and the class are
 both called 'Model', with entries in alphabetical order
 inside each section, each shaped like:

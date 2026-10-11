@@ -20,9 +20,9 @@ from FixRaidenBoss2 import BaseLogger, Model
 from .constants.ModLoaders import ModLoaders
 from .exceptions.Error import Error
 from .model.IDModGenStats import IDModGenStats
-from .tools.ModDownloader import ModDownloader
-from .tools.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
-from .tools.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
+from .model.ModDownloader import ModDownloader
+from .model.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
+from .model.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
 ##### EndLocalImports
 
 
