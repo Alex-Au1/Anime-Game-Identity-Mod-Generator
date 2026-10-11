@@ -42,6 +42,13 @@ AGIDMGen/api/                 distribution folder: pyproject.toml, README.md, LI
   2026-10-11).** Generators, `.ini` builders, download-folder builders and `ModDownloader` are mod logic, so
   they live in `model/` (`model/gimi/`, `model/wwmi/`) beside the types they build. A static parsing or
   formatting helper (`FormatTools`, `VersionTools`) goes in `tools/`.
+- **Moving a module between folders touches only imports and the docs (2026-10-11).** Users import the flat
+  re-exports, so nothing public changes. `git mv` the files (history follows), delete an emptied folder's
+  `__init__.py`, then fix: the moved files' own imports (a sibling in the new folder is `from .X`; the `...`
+  depth stays when the folder depth does), whatever imported them (`__init__.py`, `main.py`, `IDModGenService.py`;
+  grep `AGIDMGen/`, `Testing/`, `Tools/` and `Docs/src` for the old dotted path), `api.rst`'s section and any
+  `autodata` that names the module path, and the layout above. The tools -> model move needed exactly that; its
+  checks are the "module moved" row of [Overview](../Overview/CLAUDE.md)'s change checklist.
 - **Relative imports inside the package** (`from ..exceptions.Error import Error`).
 - **`__init__.py` re-exports every public name flat** under a comment per folder
   (`# --- Constants --------`), and lists it in `__all__`. Users write `AGIDMGen.ModLoaders`, never
