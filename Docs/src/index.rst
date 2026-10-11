@@ -4,17 +4,13 @@
 Welcome to Anime Game Identity Mod Generator's documentation!
 =============================================================
 
-.. image:: https://img.shields.io/badge/3.9%2B-3776AB?style=for-the-badge&label=Python
+.. image:: https://img.shields.io/pypi/pyversions/AGIDMGen?style=for-the-badge
     :alt: Python Version
     :target: https://www.python.org/downloads/
 
-.. image:: https://img.shields.io/badge/GIMI%20%7C%20WWMI-6E4FA3?style=for-the-badge&label=Mod%20Loaders
-    :alt: Mod Loaders
-    :target: tutorial.html#supported-games
-
-.. image:: https://img.shields.io/badge/MIT-green?style=for-the-badge&label=License
-    :alt: License
-    :target: https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AGIDMGen/api/LICENSE
+.. image:: https://img.shields.io/pypi/v/AGIDMGen?label=AGIDMGen%20pypi&style=for-the-badge
+    :alt: AGIDMGen Pypi Version
+    :target: https://pypi.org/project/AGIDMGen/
 
 .. image:: https://img.shields.io/github/actions/workflow/status/Alex-Au1/Anime-Game-Identity-Mod-Generator/tests.yml?branch=main&label=Unit%2FIntegration%20Tests&style=for-the-badge
     :alt: Unit/Integration Tests Status

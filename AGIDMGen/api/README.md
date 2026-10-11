@@ -1,7 +1,8 @@
 # Anime Game Identity Mod Generator (AGIDMGen)
-[![Static Badge](https://img.shields.io/badge/3.9%2B-3776AB?style=for-the-badge&label=Python)](https://www.python.org/downloads/)
-[![Static Badge](https://img.shields.io/badge/GIMI%20%7C%20WWMI-6E4FA3?style=for-the-badge&label=Mod%20Loaders)](#supported-games)
-[![Static Badge](https://img.shields.io/badge/MIT-green?style=for-the-badge&label=License)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/AGIDMGen/api/LICENSE)
+[![PyPI](https://img.shields.io/pypi/pyversions/AGIDMGen?style=for-the-badge)](https://www.python.org/downloads/)
+
+[![PyPI - Version](https://img.shields.io/pypi/v/AGIDMGen?label=AGIDMGen%20pypi&style=for-the-badge)](https://pypi.org/project/AGIDMGen/)
+
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Alex-Au1/Anime-Game-Identity-Mod-Generator/tests.yml?branch=main&label=Unit%2FIntegration%20Tests&style=for-the-badge)](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/actions/workflows/tests.yml)
 
 <br>
