@@ -16,8 +16,8 @@ from typing import Dict, Any, List, Tuple
 
 ##### LocalImports
 from ...constants.WWMIBuffers import WWMIBuffers
-from ...model.wwmi.WWMIDrawRange import WWMIDrawRange
-from ...model.wwmi.WWMIBlendRemap import WWMIBlendRemap
+from .WWMIDrawRange import WWMIDrawRange
+from .WWMIBlendRemap import WWMIBlendRemap
 ##### EndLocalImports
 
 

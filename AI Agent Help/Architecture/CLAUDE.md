@@ -16,17 +16,16 @@ AGIDMGen/api/                 distribution folder: pyproject.toml, README.md, LI
       py.typed
       constants/              enums and module-level constants
       exceptions/             Error and its subclasses
-      model/                  data types (what an identity mod is built from and made of)
+      model/                  everything about mods: what an identity mod is built from and made of, and what builds it
         files/                file formats: FmtFile; the 3DMigoto dump readers VbDumpFile, IbDumpFile, DumpElement, DumpDataType
-        gimi/                 GIMIComponent, GIMITextureSource, GIMIIdentityMod (the result)
-        wwmi/                 WWMIComponent, WWMIShapeKeys, WWMIBlendRemap, WWMIIdentityMod (the result)
-      tools/                  helpers that are not model types (FormatTools, DumpValueTools)
-        gimi/                 GIMIIdentityModGenerator, GIMIIniBuilder
-        wwmi/                 WWMIIdentityModGenerator, WWMIIniBuilder
+        gimi/                 GIMIComponent, GIMITextureSource, GIMIIdentityMod (the result);
+                              GIMIIdentityModGenerator, GIMIIniBuilder, GIMIDownloadFolderBuilder (asset folder -> download folder)
+        wwmi/                 WWMIComponent, WWMIShapeKeys, WWMIBlendRemap, WWMIIdentityMod (the result);
+                              WWMIIdentityModGenerator, WWMIIniBuilder, WWMIDownloadFolderBuilder (asset folder -> download folder)
+        ModDownload.py        one version of a character's download folder
+        ModDownloader.py      finding / fetching download folders
+      tools/                  generic helpers only, nothing about modding (FormatTools, DumpValueTools, VersionTools)
       data/                   generated data: ModDownloadData.py (the download folders, by buildDownloadManifest.py)
-      model/ModDownload.py    one version of a character's download folder
-      tools/ModDownloader.py, tools/VersionTools.py   finding / fetching download folders, choosing a version
-      tools/gimi/GIMIDownloadFolderBuilder.py, tools/wwmi/WWMIDownloadFolderBuilder.py   asset folder -> download folder
       IDModGenService.py      the entry point (see "THE SERVICE, THE LOGGER AND Model")
       view/                   BaseLogger, Logger: where everything is reported
       model/Model.py, model/IDModGenStats.py   the base of every reporting class; what a service run did
@@ -39,6 +38,10 @@ AGIDMGen/api/                 distribution folder: pyproject.toml, README.md, LI
   (`exceptions/Error.py` holds `Error`). Subfolders inside a concept are fine (`model/files/`,
   `tools/enums/`). A small constant that belongs to an enum lives in the enum's file
   (`IniFileEncoding` in `constants/FileEncodings.py`).
+- **`tools/` holds only helpers that know nothing about modding, as in AGRemap (the maintainer's rule,
+  2026-10-11).** Generators, `.ini` builders, download-folder builders and `ModDownloader` are mod logic, so
+  they live in `model/` (`model/gimi/`, `model/wwmi/`) beside the types they build. A static parsing or
+  formatting helper (`FormatTools`, `VersionTools`) goes in `tools/`.
 - **Relative imports inside the package** (`from ..exceptions.Error import Error`).
 - **`__init__.py` re-exports every public name flat** under a comment per folder
   (`# --- Constants --------`), and lists it in `__all__`. Users write `AGIDMGen.ModLoaders`, never

@@ -17,7 +17,7 @@ from typing import List, Optional
 ##### LocalImports
 from ...constants.GIMIBuffers import GIMIBuffers
 from ...constants.GIMITextureLayouts import GIMITextureLayouts
-from ...model.gimi.GIMIComponent import GIMIComponent
+from .GIMIComponent import GIMIComponent
 ##### EndLocalImports
 
 

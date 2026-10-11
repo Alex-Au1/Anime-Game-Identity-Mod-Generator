@@ -28,12 +28,12 @@ from .WWMIIniBuilder import WWMIIniBuilder
 from ...constants.FileEncodings import FileEncodings
 from ...constants.WWMIBuffers import WWMIBuffers, WWMIBlendRemapBuffers, WWMIShapeKeySlots, WWMIBlendRemapSize, WWMIBlendIndexLimit, WWMIDownloadNames, WWMIDownloadTextureSuffix
 from ...exceptions.BadAssetData import BadAssetData
-from ...model.wwmi.WWMIComponent import WWMIComponent
-from ...model.wwmi.WWMIDrawRange import WWMIDrawRange
-from ...model.wwmi.WWMIMesh import WWMIMesh
-from ...model.wwmi.WWMIBlendRemap import WWMIBlendRemap
-from ...model.wwmi.WWMIShapeKeys import WWMIShapeKeys
-from ...model.wwmi.WWMIIdentityMod import WWMIIdentityMod
+from .WWMIComponent import WWMIComponent
+from .WWMIDrawRange import WWMIDrawRange
+from .WWMIMesh import WWMIMesh
+from .WWMIBlendRemap import WWMIBlendRemap
+from .WWMIShapeKeys import WWMIShapeKeys
+from .WWMIIdentityMod import WWMIIdentityMod
 ##### EndLocalImports
 
 

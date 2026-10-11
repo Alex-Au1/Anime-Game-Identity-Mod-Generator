@@ -50,14 +50,14 @@ from .model.wwmi.WWMIShapeKeys import WWMIShapeKeys
 # --- Tools --------
 from .tools.DumpValueTools import DumpValueTools
 from .tools.FormatTools import FormatTools
-from .tools.ModDownloader import ModDownloader
+from .model.ModDownloader import ModDownloader
 from .tools.VersionTools import VersionTools
-from .tools.gimi.GIMIDownloadFolderBuilder import GIMIDownloadFolderBuilder
-from .tools.gimi.GIMIIniBuilder import GIMIIniBuilder
-from .tools.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
-from .tools.wwmi.WWMIDownloadFolderBuilder import WWMIDownloadFolderBuilder
-from .tools.wwmi.WWMIIniBuilder import WWMIIniBuilder
-from .tools.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator, WWMITexturePattern
+from .model.gimi.GIMIDownloadFolderBuilder import GIMIDownloadFolderBuilder
+from .model.gimi.GIMIIniBuilder import GIMIIniBuilder
+from .model.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
+from .model.wwmi.WWMIDownloadFolderBuilder import WWMIDownloadFolderBuilder
+from .model.wwmi.WWMIIniBuilder import WWMIIniBuilder
+from .model.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator, WWMITexturePattern
 
 # --- Service --------
 from .IDModGenService import IDModGenService
