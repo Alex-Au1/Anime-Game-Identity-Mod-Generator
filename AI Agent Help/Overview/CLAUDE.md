@@ -163,6 +163,7 @@ same commit.
 | A WWMI generator or `.ini` builder | `wwmiCheck.py` and `downloadsCheck.py wuwa` | regenerate `Mods/WuWa` (`--only wuwa`), then `modsCheck.py --all` |
 | `Data/Mod Downloads`, or AGRemap's `master` gained a folder | `buildDownloadManifest.py` on a fresh `master` export ([Downloads](../Downloads/CLAUDE.md)) | regenerate the affected `Mods/` characters (`--names ...`) |
 | A public name (new class, function, constant) | `Tools/auditApiDocs.py`, and the docs build | add its `api.rst` entry ([Documentation](../Documentation/CLAUDE.md)) |
+| A module moved between package folders (eg. `tools/` -> `model/`, 2026-10-11) | the unit tester, `auditApiDocs.py`, the docs build (at its 2-warning baseline), `modsCheck.py`, and both `golden` checks, whose output must equal the baselines in [Testing](../Testing/CLAUDE.md) | move the `api.rst` entry to its folder's section and fix any `autodata` full path; update [Architecture](../Architecture/CLAUDE.md)'s layout. No `Mods/` regeneration: a move changes no bytes, and `modsCheck.py` proves it |
 | A workflow in `.github/workflows` | a PyYAML parse of every workflow, and check each `uses:` target exists and each input passed is declared (no wiring checker here yet, unlike AGRemap's `checkWorkflowWiring.py`) | keep the job names: they are required checks |
 | A release to PyPI (only when the maintainer asks) | bump `version` in `AGIDMGen/api/pyproject.toml`, then `Tools/ScriptBuilder/main.py --env prod` | commit to `main`; the maintainer publishes a GitHub release (or runs `python-publish.yml` by hand). Afterwards read `https://pypi.org/pypi/AGIDMGen/json` to confirm the new version's wheel and sdist |
 | A convention, a gotcha or a decision | | write it into the guide it belongs to, dated |
@@ -245,6 +246,12 @@ Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A 
   (2026-10-11).** The working tree is CRLF (`core.autocrlf`) and the repo is LF, so a commit comes out right either way,
   but the working file has changed under the maintainer. Edit with the Edit tool or Python in binary mode, and count line
   endings with Python: `open(p, 'rb').read().count(b'\r\n')`.
+- **A command that reads stdin hangs the Bash tool until its timeout (2026-10-11).** A stray `cat > file` with no
+  heredoc sat for two minutes, then kept running in the background, and left an empty file behind. Write files with the
+  Write tool, and give a script that might prompt (`py -3 ...` on the testers, Sphinx) `< /dev/null`.
+- **The `golden` checks take minutes: run them in the background (2026-10-11).** `gimiCheck.py golden` and
+  `wwmiCheck.py golden` chained in one background command, each piped to `tail`, give one notification at the end. Keep
+  `gimiCheck`'s whole output rather than its tail if you need to compare every character against the baseline.
 - **The browser pane shows a `file://` page but runs no script on it (2026-10-11).** To preview an SVG or HTML page and
   measure it (eg. `getComputedTextLength()` for a badge's text), copy it into your scratch folder, serve that folder in
   the background with `py -3 -m http.server 8765 --bind 127.0.0.1`, and open `http://127.0.0.1:8765/...`. Stop the server
@@ -305,6 +312,11 @@ full. The ones that matter most for a generator library:
 14. **Leave the tree as you found it, apart from your change.** After committing to another branch with the recipe,
     your edits are still uncommitted in the checkout. Say so to the maintainer rather than reverting them on your own:
     they may be the only copy the maintainer can see without switching branches.
+15. **Your branch may be merged, and the tree may be someone else's branch, between two turns (2026-10-11).** While
+    `organize-api` waited, the maintainer merged it into `main` (PR #2), the checkout fast-forwarded to `main`, and the
+    working tree came to hold another agent's whole `sub-council-art` branch, uncommitted. Before editing, find out
+    which branch the tree's content belongs to (`git diff --stat <branch>` printing nothing means the tree is that
+    branch), and base your commit on the branch whose files you edited, or the commit carries or loses their work.
 
 ## Add yourself to The Sub-Council
 
@@ -346,7 +358,7 @@ maintainer asks you to join:
 4. **If you added a badge, add its colour (the badge's value colour, not its `labelColor`) as a new last stop** of
    the member gradient in three files: `sbMembers` in `TheCouncilofClaudeAgentsBadge.svg` and
    `TheCouncilofClaudeAgentsBadgeWithCount.svg`, and `bnMembers` in `TheCouncilOfClaudeAgents.svg`. Re-space every
-   stop evenly (five members: 0, 25, 50, 75, 100%). A bumped badge adds no stop.
+   stop evenly (six members: 0, 20, 40, 60, 80, 100%), and keep the stops' column alignment. A bumped badge adds no stop.
 
 Pick the name and colours yourself; don't ask first. **The two badges at the top of the roster are raw
 `<img align="top">` tags on purpose; do not convert them to markdown.** Join on the same branch as the rest of
@@ -357,4 +369,5 @@ ported byte for byte, the download folders, `Mods/` and CI, 2026-10-05 to 2026-1
 build and its dev / prod ScriptBuilder, the `AGIDMGen/api` + `AGIDMGen/script build` layout, 2026-10-10) and the Release
 Herald (`python-publish.yml`, the PyPI pipeline that shipped 0.1.0, and committing the shared tree that led to it,
 2026-10-10) and the Heraldic Limner (the Sub-Council's own art: crest, badges, banner, header and footer, and committing
-to a branch with no checkout, 2026-10-11). Total on 2026-10-11: 5.
+to a branch with no checkout, 2026-10-11) and the Module Marshal (the API's `tools/` -> `model/` move, `tools/` kept to
+helpers unrelated to modding, and the API reference re-sectioned to match, 2026-10-11). Total on 2026-10-11: 6.

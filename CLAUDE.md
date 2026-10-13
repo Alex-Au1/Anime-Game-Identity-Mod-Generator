@@ -57,6 +57,12 @@ test layout, the agent docs' own format and the commit style are all AGRemap's. 
 `AI Agent Help/`. When this repo's guides do not cover something, look there before inventing a new
 convention — and when you adopt one, write it down here. See [Overview](AI%20Agent%20Help/Overview/CLAUDE.md).
 
+**`tools/` HOLDS ONLY HELPERS THAT KNOW NOTHING ABOUT MODDING, AS IN AGREMAP (the maintainer's rule, 2026-10-11).**
+Generators, `.ini` builders, download-folder builders and `ModDownloader` are mod logic and live in `model/`
+(`model/gimi/`, `model/wwmi/`); `tools/` keeps static helpers like `FormatTools` and `VersionTools`. `api.rst` files
+each entry under the section of its folder. Moving a class is a refactor with its own checklist row in
+[Overview](AI%20Agent%20Help/Overview/CLAUDE.md); see [Architecture](AI%20Agent%20Help/Architecture/CLAUDE.md).
+
 **BOTH GENERATORS ARE PORTED (2026-10-05).**
 
 - **WWMI.** `WWMIIdentityModGenerator` (`python -m AGIDMGen wwmi`) is byte-identical to AGRemap's
