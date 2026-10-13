@@ -15,7 +15,7 @@ setup/test/doc pipelines from scratch when they're already written down.
 | --- | --- | --- |
 | Overview | [`AI Agent Help/Overview/CLAUDE.md`](AI%20Agent%20Help/Overview/CLAUDE.md) | new to the repo — project purpose, how it relates to AGRemap, full directory layout, branch/PR norms. **Also has "Working a feature or bug request here" — read that before starting any task** |
 | Setup | [`AI Agent Help/Setup/CLAUDE.md`](AI%20Agent%20Help/Setup/CLAUDE.md) | bootstrapping from a fresh clone — which Python, why nothing needs installing to test or build the docs, and **the namespace-package trap that makes a wrong `sys.path` still "import" `AGIDMGen`** |
-| Testing | [`AI Agent Help/Testing/CLAUDE.md`](AI%20Agent%20Help/Testing/CLAUDE.md) | running or adding unit tests, or proving a generated identity mod is right (**a byte comparison against the game's own buffers, never a clean run**) |
+| Testing | [`AI Agent Help/Testing/CLAUDE.md`](AI%20Agent%20Help/Testing/CLAUDE.md) | running or adding unit tests, or proving a generated identity mod is right (**a byte comparison against the game's own buffers, never a clean run**), or looking at one in game with AGRemap's GameView |
 | Documentation | [`AI Agent Help/Documentation/CLAUDE.md`](AI%20Agent%20Help/Documentation/CLAUDE.md) | writing docstrings or building the Sphinx docs — the warning baseline, and why every public export needs a hand-written `api.rst` entry |
 | Architecture | [`AI Agent Help/Architecture/CLAUDE.md`](AI%20Agent%20Help/Architecture/CLAUDE.md) | writing new library code — package layout, one class per file, the `##### Credits` / `##### Script` section markers, naming and docstring style (all inherited from AGRemap), and **when C++/Cython is allowed in (only once Python is measured too slow)** |
 | Downloads | [`AI Agent Help/Downloads/CLAUDE.md`](AI%20Agent%20Help/Downloads/CLAUDE.md) | working on `Data/Mod Downloads`, `ModDownloader`, `generateFromRepo` / downloading by name, or the `Tools/Downloads` tools: **files come from AGRemap's GitHub first and this repo's second, so nothing is stored twice**; the generated manifest; the newest-version rule; what cannot be generated from downloads yet |
@@ -40,7 +40,13 @@ request here" (2026-10-10).** It has:
   **the checkout moves between your turns** (check `git status -sb`, `git log -5` and
   `HEAD` against `origin/main` before starting and before committing; re-read a file before editing it), how to
   commit to `main` from another branch, **a requested branch starts from `origin/main`, not from the checkout**, and
-  **test the artifact a user actually runs** (the PyPI package, the script, `Mods/`), not only the source.
+  **test the artifact a user actually runs** (the PyPI package, the script, `Mods/`), not only the source;
+- **a report of how a mod LOOKS is checked in the game itself** (habits 20-21): read the frame dumps already on this
+  machine, then drive the game with AGRemap's GameView. **Paint the texture flat purple to prove a binding is live**,
+  because an identity mod binds the game's own texture and a dead binding looks the same as a working one. The recipe
+  and its traps are in [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "LOOKING AT A GENERATED MOD IN GAME";
+- **another agent may commit your uncommitted work for you** (habit 22): check `origin/main`'s last commits for your
+  files before committing, and never start git commands into someone else's running `git checkout` / `git pull`.
 
 Commit and push only when asked, and then straight to `main`, unless the maintainer asks for a branch.
 

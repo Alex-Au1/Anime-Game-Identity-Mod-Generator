@@ -108,6 +108,36 @@ Two rules from AGRemap's lessons:
   [Identity Mods](../IdentityMods/CLAUDE.md)'s lessons); a bug that only shows on real mods will not show
   on it.
 
+## LOOKING AT A GENERATED MOD IN GAME: AGREMAP'S GAMEVIEW (2026-10-13)
+
+When a report is about how a mod LOOKS (white cheeks, a wrong colour), no byte comparison answers it: the game must be
+asked. AGRemap's `Tools/GameView` drives the game (read its `AI Agent Help/GameView/CLAUDE.md` once). The maintainer
+wants it used instead of asking them for screenshots. What it took on 2026-10-13, for a GIMI face fix:
+
+- **Read the game's existing frame dumps before taking a new one.** The maintainer's GIMI folder
+  (`E:\Computer\Games\Wuthering Waves Mods\Importer\GIMI\FrameAnalysis-*`) holds dumps of a dozen characters.
+  `Tools/faceDumpRegisters.py` lists which register each face texture is bound to there. **A texture is drawn in
+  several passes, on DIFFERENT registers**: the face diffuse is on `ps-t1` in the colour pass (`82c84814`) and on `ps-t0`
+  in four others. Decide by the colour pass, not by the first file `grep` finds.
+- **Stage test copies in the importer's folder** (`GIMI\AGIDMGenFaceTest\<variant>\<Mod>`), same drive as `Mods`, and
+  load each with `mods GIMI load <Mod> --from <folder>`. Copy them from `Mods/GI/<Name>` and edit the copy with Python in
+  binary mode (the `.ini` is CRLF). Delete the staging folder when done.
+- **Park every character mod first**, not only the character's own. On reload, other mods' warnings scroll an orange
+  overlay over the middle of the screen for minutes and hide the face. `mods GIMI only` stops halfway on a name clash
+  (`Diluc2` was both parked and loaded). Park by an explicit name list, and write down the loaded set (`mods GIMI list`)
+  so you can restore it exactly with `load`.
+- **`compare --crop X Y W H` is x, y, WIDTH, HEIGHT, in FULL-resolution pixels unless `--space view`.** Two rounds
+  cropped empty sky before that was clear.
+- **The character screen's idle moves the model** (Mavuika rides a motorbike through the frame). Pick a calm character
+  (Yaoyao worked), zoom with `scroll 30 --at <face>`, and take a timed series (4 compares, 6 s apart). Judge only the
+  frames where the face is front-on.
+- **PAINT THE TEXTURE TO PROVE A BINDING REACHES THE MODEL.** An identity mod binds the game's OWN texture, so a binding
+  that works and one that silently does nothing look the same. Replace the `.dds` with a flat purple one (an
+  uncompressed 64x64 A8R8G8B8 DDS is 128 header bytes plus pixels, written with `struct`). If the part turns purple,
+  the binding is live.
+- **Finish by testing the artifact users get** (the regenerated `Mods/GI/<Name>`), not only your hand-edited copy. Then
+  restore the loaded set, `reload`, and leave the game where you found it.
+
 ## CI: `.github/workflows` (2026-10-06)
 
 The layout follows AGRemap's. `tests.yml` ("Testers") is the entry point: a push to `main`, a pull request,

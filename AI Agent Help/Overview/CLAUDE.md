@@ -163,6 +163,7 @@ same commit.
 | A WWMI generator or `.ini` builder | `wwmiCheck.py` and `downloadsCheck.py wuwa` | regenerate `Mods/WuWa` (`--only wuwa`), then `modsCheck.py --all` |
 | A command-line option, or what the command line accepts (the maintainer's UX requests, 2026-10-13) | the unit tester (`test_Main.py` for parsing, `test_IDModGenService.py` for behaviour), then a REAL run of `python -m AGIDMGen ...` on two characters of different games with `--localData` ("Where the inputs live") | update EVERY place a user reads it, or it drifts: `Docs/src/commandOpts.rst` (options table, Usage, Mod Names), `Docs/src/tutorial.rst`, `AGIDMGen/api/README.md` (Quickstart AND its Command Options table), `AGIDMGen/script build/README.md`, `Tools/Script/README.md` and `main.py`'s header, the root `README.md`, and the maintainer's launcher (below). `grep` the old spelling across them before calling it done |
 | What a generator writes into an `.ini` (a comment, a credit, a default like the WWMI author) | the unit tester, and `gimiCheck.py` / `wwmiCheck.py`: they compare with AGRemap's prototypes and skip only the lines in their `GeneratorLines`, so add any new line that names this program there (and pass the prototype's value where a default differs, as `wwmiCheck.py`'s `PrototypeAuthor`) | regenerate ALL of `Mods/` with `Tools/modsDiff.py` around it (below): every `.ini` changes, and no binary may |
+| What a GIMI `.ini` BINDS (a `ps-t` register, a texture line), or a report of how a mod looks in game | read the game's own frame dumps (`Tools/faceDumpRegisters.py` for the face), then look in game with AGRemap's GameView, painting the texture to prove the binding is live ([Testing](../Testing/CLAUDE.md)'s "LOOKING AT A GENERATED MOD IN GAME") | the `.ini` row above; and test the regenerated `Mods/` copy in game, not only your hand-edited one |
 | `AGIDMGen/data/ModNameData.py`'s `ModNamePartData` (a character split into parts) | the unit tester (`ModNameDataTest.test_everyPartIsAModOfItsGame`) | nothing to regenerate: parts only change how names are looked up |
 | `AGIDMGen/data/ModNameData.py` (a mod's name or aliases) | the unit tester (`ModNameDataTest` checks the table against the manifest and AGRemap's names) | a renamed mod: regenerate it (`populateMods.py --names <new name>`, which deletes the old folder), then `modsCheck.py --all` |
 | `Data/Mod Downloads`, or AGRemap's `master` gained a folder | `buildDownloadManifest.py` on a fresh `master` export ([Downloads](../Downloads/CLAUDE.md)) | regenerate the affected `Mods/` characters (`--names ...`) |
@@ -364,6 +365,19 @@ full. The ones that matter most for a generator library:
 19. **Turn off argparse's abbreviations (`allow_abbrev = False`, 2026-10-13).** With them on, a REMOVED option is
     silently read as a longer one it prefixes: the old `--download` became `--downloadFolder`, and `--download Yelan`
     would have kept the downloads in a folder called `Yelan`. Run a removed option once to see it rejected.
+20. **A visual bug report needs the game's own evidence, and the maintainer's words may be narrower than the bug
+    (2026-10-13).** "Some characters have white cheeks" was in fact every GI mod with a face section: all 144 bound the
+    face diffuse at `ps-t0`. Read the frame dumps already on this machine before guessing, and check the claim across
+    ALL of `Mods/` (one `grep` over the `.ini` files) before scoping the fix to "some".
+21. **When two fixes both work, show the trade-off and let the maintainer pick (2026-10-13).** `ps-t1` and `this =` both
+    cured the cheeks in game; they differ in what AGRemap's fixer can read. That is the maintainer's call. Ask with
+    the evidence (what each was proven to do), the side effects, and a recommendation, and record why the choice won.
+22. **Another agent may commit your uncommitted work under its own commit, while you wait (2026-10-13).** The face fix,
+    its tests, `faceDumpRegisters.py` and its guide sections reached `main` inside the Alias Cartographer's commits
+    before this session was asked to commit. Before committing, `git log -5 --stat origin/main` and grep it for your
+    files; do not commit them twice. **And when someone else is pulling or switching branches** (Windows'
+    process list shows `git checkout` / `git pull` / `merge FETCH_HEAD`), wait for it to end; do not start git commands
+    into it. The desktop app's own background `git status` calls are many and harmless; a branch operation is not.
 
 ## Add yourself to The Sub-Council
 
