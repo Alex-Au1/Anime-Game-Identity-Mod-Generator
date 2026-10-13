@@ -85,9 +85,15 @@ class GIMIIdentityModGeneratorTest(BaseUnitTest):
         self.assertNotIn("run = ", self.ini())
 
     def test_face_onFaceRegister(self):
-        mod = self.generate(generator = IDMG.GIMIIdentityModGenerator(faceRegister = "ps-t1"))
+        mod = self.generate(generator = IDMG.GIMIIdentityModGenerator(faceRegister = "ps-t0"))
         self.assertEqual(mod.faceDiffuse, "TesterFaceHeadDiffuse.dds")
         self.assertEqual(self.read("TesterFaceHeadDiffuse.dds"), b"face")
+        self.assertIn("[TextureOverrideTesterFaceHeadDiffuse]\nhash = facef00d\nps-t0 = ResourceTesterFaceHeadDiffuse\n", self.ini().replace("\r\n", "\n"))
+
+    def test_face_onPsT1ByDefault(self):
+        # GI 6.x reads the face diffuse from ps-t1: one on ps-t0 is read as the face's light map, and its blush mask shows as white cheeks
+        mod = self.generate()
+        self.assertEqual(mod.faceRegister, "ps-t1")
         self.assertIn("[TextureOverrideTesterFaceHeadDiffuse]\nhash = facef00d\nps-t1 = ResourceTesterFaceHeadDiffuse\n", self.ini().replace("\r\n", "\n"))
 
     def test_noFace_noFaceSection(self):

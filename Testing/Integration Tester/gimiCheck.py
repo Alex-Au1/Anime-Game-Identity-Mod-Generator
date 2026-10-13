@@ -32,7 +32,7 @@ import AGIDMGen as IDMG
 
 
 # the line of the .ini that names the program that wrote it
-GeneratorLines = ("; the identity mod of ",)
+GeneratorLines = ("; the identity mod of ", "; Authors: ", "; Github: ")
 
 
 def golden(args) -> int:
@@ -84,7 +84,7 @@ def parseExtra(extra: str):
     parser.add_argument("--name", default = None)
     parser.add_argument("--assetPrefix", default = None)
     parser.add_argument("--noFix", action = "store_true")
-    parser.add_argument("--faceRegister", default = "ps-t0")
+    parser.add_argument("--faceRegister", default = "ps-t0")    # the PROTOTYPE's default; the library's is ps-t1, where GI 6.x reads the face diffuse
     parser.add_argument("--textureFrom", action = "append", default = None)
     options = parser.parse_args(shlex.split(extra))
 

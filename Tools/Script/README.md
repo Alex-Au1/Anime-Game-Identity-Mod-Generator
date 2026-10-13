@@ -41,11 +41,11 @@ To run the script straight from this source, against the API in this repo, on
 [CMD](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd), enter
 
 ```bash
-python main.py gimi Albedo --download
+python main.py Albedo
 ```
 
 Every option of the API's own command line works here, since they are the API's:
 
 ```bash
-python main.py gimi --help
+python main.py --help
 ```

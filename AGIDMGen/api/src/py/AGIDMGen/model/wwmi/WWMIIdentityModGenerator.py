@@ -24,6 +24,8 @@ from FixRaidenBoss2 import BaseLogger, Model
 ##### LocalImports
 from ..ModDownloader import ModDownloader
 from ...constants.ModLoaders import ModLoaders
+from ...constants.Credits import AGIDMGenAuthor
+from ...constants.ModNames import ModNames
 from .WWMIIniBuilder import WWMIIniBuilder
 from ...constants.FileEncodings import FileEncodings
 from ...constants.WWMIBuffers import WWMIBuffers, WWMIBlendRemapBuffers, WWMIShapeKeySlots, WWMIBlendRemapSize, WWMIBlendIndexLimit, WWMIDownloadNames, WWMIDownloadTextureSuffix
@@ -76,7 +78,7 @@ class WWMIIdentityModGenerator(Model):
     author: :class:`str`
         The mod author that WWMI shows :raw-html:`<br />` :raw-html:`<br />`
 
-        **Default**: ``"Anime Game Remap"``
+        **Default**: ``"AGIDMGen"`` (see :attr:`AGIDMGenAuthor`)
 
     includeTextures: :class:`bool`
         Whether to copy the textures into the mod :raw-html:`<br />` :raw-html:`<br />`
@@ -105,7 +107,7 @@ class WWMIIdentityModGenerator(Model):
         Whether to write each bone index through its component's ``vg_map``
     """
 
-    def __init__(self, author: str = "Anime Game Remap", includeTextures: bool = True, useVgMap: bool = True, logger: Optional[BaseLogger] = None):
+    def __init__(self, author: str = AGIDMGenAuthor, includeTextures: bool = True, useVgMap: bool = True, logger: Optional[BaseLogger] = None):
         super().__init__(logger = logger)
         self.author = author
         self.includeTextures = includeTextures
@@ -613,7 +615,7 @@ class WWMIIdentityModGenerator(Model):
         Parameters
         ----------
         name: :class:`str`
-            The character's name (see :meth:`ModDownloader.getName`)
+            The character's name, or one of its aliases (see :class:`ModNames`)
 
         modFolder: :class:`str`
             The folder to write the mod into. It is created if it does not exist
@@ -634,7 +636,7 @@ class WWMIIdentityModGenerator(Model):
             **Default**: ``None``
 
         modName: Optional[:class:`str`]
-            The name of the character in the mod. If this value is ``None``, the prefix of the download folder's files is used :raw-html:`<br />` :raw-html:`<br />`
+            The name of the character in the mod. If this value is ``None``, the name of the character's mod is used (eg. ``Raiden`` for ``RaidenShogun``; see :class:`ModNames`) :raw-html:`<br />` :raw-html:`<br />`
 
             **Default**: ``None``
 
@@ -657,6 +659,8 @@ class WWMIIdentityModGenerator(Model):
 
         downloader = ModDownloader(logger = self.logger) if (downloader is None) else downloader
         download = downloader.find(ModLoaders.WWMI, name, version)
+        if (modName is None):
+            modName = ModNames.find(name, [ModLoaders.WWMI]).name
 
         with tempfile.TemporaryDirectory() as temp:
             downloader.download(download, temp if (downloadFolder is None) else downloadFolder)

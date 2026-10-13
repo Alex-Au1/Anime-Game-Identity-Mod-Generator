@@ -17,10 +17,13 @@ from .constants.FileEncodings import FileEncodings, IniFileEncoding, ReadEncodin
 from .constants.GIMIBuffers import GIMIBuffers, GIMISemanticBuffers, GIMIFixedStrides, GIMIHashFileSuffix
 from .constants.GIMITextureLayouts import GIMITextureLayouts
 from .constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders
+from .constants.Credits import AGIDMGenGithubLink, AGIDMGenAuthor, AGIDMGenAuthors
 from .constants.ModLoaders import ModLoaders
+from .constants.ModNames import ModNames, ModNameGameTypeIds
 
 # --- Data --------
 from .data.ModDownloadData import ModDownloadData, ModDownloadAliases
+from .data.ModNameData import ModNameData, ModNamePartData
 from .constants.WWMIBuffers import WWMIBuffers, WWMIBlendRemapBuffers, WWMIShapeKeySlots, WWMIBlendRemapSize, WWMIBlendIndexLimit, WWMIDownloadNames, WWMIDownloadTextureSuffix
 
 # --- Exceptions --------
@@ -32,6 +35,7 @@ from .exceptions.UnknownDXGIFormat import UnknownDXGIFormat
 # --- Model --------
 from .model.IDModGenStats import IDModGenStats
 from .model.ModDownload import ModDownload
+from .model.ModName import ModName
 from .model.files.DumpDataType import DumpDataType
 from .model.files.DumpElement import DumpElement
 from .model.files.FmtFile import FmtFile
@@ -60,16 +64,17 @@ from .model.wwmi.WWMIIniBuilder import WWMIIniBuilder
 from .model.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator, WWMITexturePattern
 
 # --- Service --------
-from .IDModGenService import IDModGenService
+from .IDModGenService import IDModGenService, AssetsFolderFiles
+from .IDModGenServiceCLI import IDModGenServiceCLI, LogFileName, CharacterListLink
 
 ##### EndLocalImports
 
 
-__all__ = ["IDModGenService", "IDModGenStats",
+__all__ = ["IDModGenService", "IDModGenServiceCLI", "AssetsFolderFiles", "LogFileName", "CharacterListLink", "IDModGenStats",
            "DumpDataKinds", "GIMIBuffers", "GIMISemanticBuffers", "GIMIFixedStrides", "GIMITextureLayouts",
            "DumpDataType", "DumpElement", "IbDumpFile", "VbDumpFile", "GIMIComponent", "GIMIIdentityMod", "GIMITextureSource",
            "DumpValueTools", "GIMIIniBuilder", "GIMIIdentityModGenerator", "GIMIDownloadFolderBuilder", "WWMIDownloadFolderBuilder",
-           "ModDownloadRepos", "ModDownloadGameFolders", "ModDownloadData", "ModDownloadAliases", "DownloadFailed", "ModDownload", "ModDownloader", "VersionTools",
+           "ModDownloadRepos", "ModDownloadGameFolders", "ModDownloadData", "ModDownloadAliases", "ModName", "ModNames", "AGIDMGenGithubLink", "AGIDMGenAuthor", "AGIDMGenAuthors", "ModNameData", "ModNamePartData", "ModNameGameTypeIds", "DownloadFailed", "ModDownload", "ModDownloader", "VersionTools",
            "GIMIHashFileSuffix", "WWMIDownloadNames", "WWMIDownloadTextureSuffix", "WWMIDrawRange", "WWMIMesh",
            "DXGIFormats", "DXGIFormatPrefix", "FileEncodings", "IniFileEncoding", "ReadEncodings", "ModLoaders",
            "WWMIBuffers", "WWMIBlendRemapBuffers", "WWMIShapeKeySlots", "WWMIBlendRemapSize", "WWMIBlendIndexLimit",

@@ -23,6 +23,7 @@ from FixRaidenBoss2 import BaseLogger, Model
 ##### LocalImports
 from ..ModDownloader import ModDownloader
 from ...constants.ModLoaders import ModLoaders
+from ...constants.ModNames import ModNames
 from .GIMIIniBuilder import GIMIIniBuilder
 from ...constants.FileEncodings import FileEncodings
 from ...constants.ModDownloadRepos import ModDownloadGameFolders
@@ -72,7 +73,7 @@ class GIMIIdentityModGenerator(Model):
         print("\\n".join(mod.getSummary()))
 
         # a component with no textures of its own reads another's
-        generator = IDMG.GIMIIdentityModGenerator(faceRegister = "ps-t1", textureSources = {
+        generator = IDMG.GIMIIdentityModGenerator(textureSources = {
             "Bang": IDMG.GIMITextureSource("Body", "A"),
             "Eye": IDMG.GIMITextureSource("Body", "A", IDMG.GIMITextureLayouts.Plain)})
         generator.generate("GI-Model-Importer-Assets/PlayerCharacterData/YelanTranquil", "Mods/YelanTranquilIdentity")
@@ -85,9 +86,11 @@ class GIMIIdentityModGenerator(Model):
         **Default**: ``True``
 
     faceRegister: :class:`str`
-        The register the face's diffuse texture is bound to. Some skins of version 6.0 or newer bind it to ``ps-t1`` :raw-html:`<br />` :raw-html:`<br />`
+        The register the face's diffuse texture is bound to. Since version 6.0, the game's face shader reads the diffuse from ``ps-t1``
+        and the face's light map from ``ps-t0``, so a diffuse bound to ``ps-t0`` shows its blush mask as white cheeks. ``ps-t0`` is
+        only right for the game before version 6.0 :raw-html:`<br />` :raw-html:`<br />`
 
-        **Default**: ``"ps-t0"``
+        **Default**: ``"ps-t1"``
 
     textureSources: Optional[Dict[:class:`str`, :class:`GIMITextureSource`]]
         For each component with no textures of its own, where it reads its textures from. If this value is ``None``, no component borrows textures :raw-html:`<br />` :raw-html:`<br />`
@@ -111,7 +114,7 @@ class GIMIIdentityModGenerator(Model):
         For each component with no textures of its own, where it reads its textures from
     """
 
-    def __init__(self, includeFix: bool = True, faceRegister: str = "ps-t0", textureSources: Optional[Dict[str, GIMITextureSource]] = None,
+    def __init__(self, includeFix: bool = True, faceRegister: str = "ps-t1", textureSources: Optional[Dict[str, GIMITextureSource]] = None,
                  logger: Optional[BaseLogger] = None):
         super().__init__(logger = logger)
         self.includeFix = includeFix
@@ -306,7 +309,7 @@ class GIMIIdentityModGenerator(Model):
         Parameters
         ----------
         name: :class:`str`
-            The character's name (see :meth:`ModDownloader.getName`)
+            The character's name, or one of its aliases (see :class:`ModNames`)
 
         modFolder: :class:`str`
             The folder to write the mod into. It is created if it does not exist
@@ -327,7 +330,7 @@ class GIMIIdentityModGenerator(Model):
             **Default**: ``None``
 
         modName: Optional[:class:`str`]
-            The name of the character in the mod. If this value is ``None``, the prefix of the download folder's files is used :raw-html:`<br />` :raw-html:`<br />`
+            The name of the character in the mod. If this value is ``None``, the name of the character's mod is used (eg. ``Raiden`` for ``RaidenShogun``; see :class:`ModNames`) :raw-html:`<br />` :raw-html:`<br />`
 
             **Default**: ``None``
 
@@ -350,6 +353,8 @@ class GIMIIdentityModGenerator(Model):
 
         downloader = ModDownloader(logger = self.logger) if (downloader is None) else downloader
         download = downloader.find(ModLoaders.GIMI, name, version)
+        if (modName is None):
+            modName = ModNames.find(name, [ModLoaders.GIMI]).name
 
         with tempfile.TemporaryDirectory() as temp:
             downloader.download(download, temp if (downloadFolder is None) else downloadFolder)

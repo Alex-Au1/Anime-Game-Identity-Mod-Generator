@@ -14,12 +14,13 @@ Where to start
 
 You rarely need more than a handful of the classes on this page. Depending on what you want to do:
 
-- **Make the identity mods of several characters at once**, the way the command line does:
-  :class:`IDModGenService`. It records what it made, and every error, in its :class:`IDModGenStats`.
+- **Make the identity mods of several characters at once**, of any of the games (eg. ``Zani`` and ``Ayaka``):
+  :class:`IDModGenService`. For the command line's reporting around it (log file, tips, exit code), :class:`IDModGenServiceCLI`. It records what it made, and every error, in its :class:`IDModGenStats`.
 - **Make one character's identity mod**: :class:`GIMIIdentityModGenerator` (GI) or
   :class:`WWMIIdentityModGenerator` (WuWa). Unlike the service, they raise an error when they fail.
 - **Choose the game**: :class:`ModLoaders`.
 - **Find the characters that can be made without an asset folder**: :class:`ModDownloader`.
+- **Find a character by its name or one of its aliases** (eg. ``ei`` for ``Raiden``): :class:`ModNames`.
 
 :doc:`API Examples <apiExamples>` shows each of these end to end.
 
@@ -35,6 +36,16 @@ IDModGenService
 .. attributetable:: AGIDMGen.IDModGenService
 
 .. autoclass:: AGIDMGen.IDModGenService
+    :members:
+
+:raw-html:`<br />`
+
+IDModGenServiceCLI
+==================
+
+.. attributetable:: AGIDMGen.IDModGenServiceCLI
+
+.. autoclass:: AGIDMGen.IDModGenServiceCLI
     :members:
 
 :raw-html:`<br />`
@@ -172,6 +183,16 @@ ModDownloader
 
 :raw-html:`<br />`
 
+ModName
+=======
+
+.. attributetable:: AGIDMGen.ModName
+
+.. autoclass:: AGIDMGen.ModName
+    :members:
+
+:raw-html:`<br />`
+
 VbDumpFile
 ==========
 
@@ -282,6 +303,41 @@ WWMITexturePattern
 Constants
 *********
 
+AGIDMGenAuthor
+==============
+
+.. autodata:: AGIDMGen.constants.Credits.AGIDMGenAuthor
+
+:raw-html:`<br />`
+
+AGIDMGenAuthors
+===============
+
+.. autodata:: AGIDMGen.constants.Credits.AGIDMGenAuthors
+
+:raw-html:`<br />`
+
+AGIDMGenGithubLink
+==================
+
+.. autodata:: AGIDMGen.constants.Credits.AGIDMGenGithubLink
+
+:raw-html:`<br />`
+
+AssetsFolderFiles
+=================
+
+.. autodata:: AGIDMGen.IDModGenService.AssetsFolderFiles
+
+:raw-html:`<br />`
+
+CharacterListLink
+=================
+
+.. autodata:: AGIDMGen.IDModGenServiceCLI.CharacterListLink
+
+:raw-html:`<br />`
+
 DumpDataKinds
 =============
 
@@ -364,6 +420,13 @@ IniFileEncoding
 
 :raw-html:`<br />`
 
+LogFileName
+===========
+
+.. autodata:: AGIDMGen.IDModGenServiceCLI.LogFileName
+
+:raw-html:`<br />`
+
 ModDownloadGameFolders
 ======================
 
@@ -387,6 +450,23 @@ ModLoaders
 .. attributetable:: AGIDMGen.ModLoaders
 
 .. autoclass:: AGIDMGen.ModLoaders
+    :members:
+
+:raw-html:`<br />`
+
+ModNameGameTypeIds
+==================
+
+.. autodata:: AGIDMGen.constants.ModNames.ModNameGameTypeIds
+
+:raw-html:`<br />`
+
+ModNames
+========
+
+.. attributetable:: AGIDMGen.ModNames
+
+.. autoclass:: AGIDMGen.ModNames
     :members:
 
 :raw-html:`<br />`
@@ -466,6 +546,21 @@ ModDownloadData
 
 .. autodata:: AGIDMGen.data.ModDownloadData.ModDownloadData
     :no-value:
+
+:raw-html:`<br />`
+
+ModNameData
+===========
+
+.. autodata:: AGIDMGen.data.ModNameData.ModNameData
+    :no-value:
+
+:raw-html:`<br />`
+
+ModNamePartData
+===============
+
+.. autodata:: AGIDMGen.data.ModNameData.ModNamePartData
 
 :raw-html:`<br />`
 

@@ -275,3 +275,8 @@ details[open] > .py-attribute-overload-summary .py-attribute-overload-icon {
 }
 
 /* ======================================= */
+
+/* the generated table of mod names (Docs/src/extensions/modnametable.py): a long alias wraps instead of widening the page */
+table.mod-name-table td:nth-child(3) {
+    overflow-wrap: anywhere;
+}

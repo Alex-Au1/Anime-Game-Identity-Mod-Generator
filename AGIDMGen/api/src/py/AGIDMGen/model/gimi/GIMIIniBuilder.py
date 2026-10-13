@@ -17,6 +17,7 @@ from typing import List, Optional
 ##### LocalImports
 from ...constants.GIMIBuffers import GIMIBuffers
 from ...constants.GIMITextureLayouts import GIMITextureLayouts
+from ...constants.Credits import AGIDMGenAuthors, AGIDMGenGithubLink
 from .GIMIComponent import GIMIComponent
 ##### EndLocalImports
 
@@ -48,9 +49,9 @@ class GIMIIniBuilder():
         **Default**: ``None``
 
     faceRegister: :class:`str`
-        The register the face's diffuse texture is bound to :raw-html:`<br />` :raw-html:`<br />`
+        The register the face's diffuse texture is bound to (the game reads it from ``ps-t1`` since version 6.0) :raw-html:`<br />` :raw-html:`<br />`
 
-        **Default**: ``"ps-t0"``
+        **Default**: ``"ps-t1"``
 
     includeFix: :class:`bool`
         Whether an object that binds textures runs the ``ORFix`` command list of its layout :raw-html:`<br />` :raw-html:`<br />`
@@ -82,7 +83,7 @@ class GIMIIniBuilder():
     """
 
     def __init__(self, name: str, components: List[GIMIComponent], source: str, faceDiffuse: Optional[str] = None,
-                 faceHash: Optional[str] = None, faceRegister: str = "ps-t0", includeFix: bool = True):
+                 faceHash: Optional[str] = None, faceRegister: str = "ps-t1", includeFix: bool = True):
         self.name = name
         self.components = components
         self.source = source
@@ -148,6 +149,7 @@ class GIMIIniBuilder():
         if (self.faceDiffuse):
             L += [f"[Resource{name}FaceHeadDiffuse]", f"filename = {self.faceDiffuse}", ""]
 
-        L += ["", f"; the identity mod of {name}: the game's own model out of {self.source}, built by AGIDMGen", ""]
+        L += ["", f"; the identity mod of {name}: the game's own model out of {self.source}, built by AGIDMGen",
+              f"; Authors: {AGIDMGenAuthors}", f"; Github: {AGIDMGenGithubLink}", ""]
         return "\n".join(L)
 ##### EndScript

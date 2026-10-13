@@ -43,7 +43,7 @@ Don't know how to install a Python package? The single script
 [Python](https://www.python.org/downloads/), download the script, and run:
 
 ```bash
-python AGIDMGen.py gimi Albedo --download
+python AGIDMGen.py Albedo Zani
 ```
 
 See the [script's README](AGIDMGen/script%20build/README.md) for the details.

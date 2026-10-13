@@ -12,6 +12,7 @@ from .test_IDModGenService import IDModGenServiceTest
 from .test_ImportCheck import ImportCheckTest
 from .test_Main import MainTest
 from .test_ModDownloader import ModDownloaderTest
+from .test_ModNames import ModNamesTest, ModNameDataTest
 from .test_VbDumpFile import VbDumpFileTest
 from .test_VersionTools import VersionToolsTest
 from .test_WWMIComponent import WWMIComponentTest

@@ -34,7 +34,10 @@ import AGIDMGen as IDMG
 
 
 # the lines of mod.ini that name the program that wrote it, which is all the two programs may disagree on
-GeneratorLines = ('data = "The identity mod of ', "; This mod.ini is the IDENTITY mod of ")
+GeneratorLines = ('data = "The identity mod of ', "; This mod.ini is the IDENTITY mod of ", "; Authors: ", "; Github: ")
+
+# the author AG Remap's prototype writes; this library's own default is AGIDMGen
+PrototypeAuthor = "Anime Game Remap"
 
 # AGRemap's download folders name the TexCoord buffer 'Texcoord'
 DownloadNames = {IDMG.WWMIBuffers.TexCoord: "Texcoord"}
@@ -127,7 +130,7 @@ def prototype(args) -> int:
 
             libraryError = None
             try:
-                IDMG.WWMIIdentityModGenerator().generate(assets, resultRoot, name = name)
+                IDMG.WWMIIdentityModGenerator(author = PrototypeAuthor).generate(assets, resultRoot, name = name)
             except IDMG.Error as e:
                 libraryError = str(e)
 

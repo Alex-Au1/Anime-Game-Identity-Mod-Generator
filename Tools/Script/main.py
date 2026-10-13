@@ -3,7 +3,7 @@
 #
 # Runs the script's source straight out of the repo, against the library's source in AGIDMGen/api:
 #
-#   py -3 Tools/Script/main.py gimi Albedo --download
+#   py -3 Tools/Script/main.py Albedo
 #
 # The ScriptBuilder (Tools/ScriptBuilder) compiles this source into 'AGIDMGen/script build/src/AGIDMGen/AGIDMGen.py'.
 #

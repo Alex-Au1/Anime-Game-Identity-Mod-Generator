@@ -69,8 +69,9 @@ class GIMIDownloadFolderBuilderTest(BaseUnitTest):
             for fileName in os.listdir(fromAssets):
                 if (fileName.endswith(".ini")):
                     with open(os.path.join(fromAssets, fileName), encoding = "utf-8") as a, open(os.path.join(fromDownload, fileName), encoding = "utf-8") as b:
-                        # all but the last comment, which says what the mod was generated from
-                        self.assertEqual(a.read().splitlines()[:-2], b.read().splitlines()[:-2])
+                        # all but the comment that says what the mod was generated from
+                        notSource = lambda txt: [line for line in txt.splitlines() if (not line.startswith("; the identity mod of "))]
+                        self.assertEqual(notSource(a.read()), notSource(b.read()))
                 else:
                     self.assertTrue(filecmp.cmp(os.path.join(fromAssets, fileName), os.path.join(fromDownload, fileName), shallow = False), fileName)
 
@@ -98,4 +99,20 @@ class GIMIDownloadFolderBuilderTest(BaseUnitTest):
             IDMG.GIMIIdentityModGenerator().generateFromRepo("Tester", self.path("Mod"), downloader = downloader)
 
         with open(self.path("Mod", "Tester.ini"), encoding = "utf-8") as f:
-            self.assertIn("out of its download folder (GI/Tester/6_8), built by AGIDMGen", f.read())
+            txt = f.read()
+        self.assertIn("out of its download folder (GI/Tester/6_8), built by AGIDMGen\n; Authors: Albert Gold#2696\n; Github: https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator\n", txt)
+
+    def test_modFromRepo_byAlias_namedAsItsMod(self):
+        from unittest import mock
+        writeAssets(self.assets, "Tester", oneComponent())
+        own = self.path("Own")
+        IDMG.GIMIDownloadFolderBuilder().build(self.assets, os.path.join(own, "GI", "Tester", "6_8"), "Tester")
+        files = {f: "AGIDMGen" for f in os.listdir(os.path.join(own, "GI", "Tester", "6_8"))}
+
+        with mock.patch.dict(IDMG.ModDownloadData, {"GI": {"Tester": {"6_8": ("Tester", files)}}}, clear = True),              mock.patch.dict(IDMG.ModNameData, {"GI": {"Testy": ("Tester", ["Tt"])}}, clear = True):
+            downloader = IDMG.ModDownloader(localFolders = {IDMG.ModDownloadRepos.AGIDMGen: own})
+            IDMG.GIMIIdentityModGenerator().generateFromRepo("tt", self.path("Mod"), downloader = downloader)
+            IDMG.GIMIIdentityModGenerator().generateFromRepo("tt", self.path("Named"), downloader = downloader, modName = "Other")
+
+        self.assertTrue(os.path.isfile(self.path("Mod", "Testy.ini")))
+        self.assertTrue(os.path.isfile(self.path("Named", "Other.ini")))

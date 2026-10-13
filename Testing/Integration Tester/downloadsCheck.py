@@ -8,7 +8,7 @@
 #   py -3 downloadsCheck.py gi   <AGRemap/Data/Mod Downloads> --assets <GI-Model-Importer-Assets/PlayerCharacterData>
 #   py -3 downloadsCheck.py wuwa <AGRemap/Data/Mod Downloads> --assets <WWMI-Assets/PlayerCharacterData>
 #
-# GI: every file must be identical, and the .ini apart from its last comment (what it was generated from).
+# GI: every file must be identical, and the .ini apart from the comment that says what it was generated from.
 # WuWa: every Meshes/ buffer must be identical, and the same texture hashes present -- a mod from a download
 #   folder names its textures <prefix>Texture<hash>.dds, which cannot be turned back into the asset names.
 #
@@ -53,7 +53,9 @@ def compareGIMI(fromAssets: str, fromDownload: str):
             differences.append(f"{fileName} in only one")
         elif (fileName.endswith(".ini")):
             with open(a, encoding = "utf-8") as fa, open(b, encoding = "utf-8") as fb:
-                if (fa.read().splitlines()[:-2] != fb.read().splitlines()[:-2]):
+                # all but the comment that says what the mod was generated from
+                notSource = lambda txt: [line for line in txt.splitlines() if (not line.startswith("; the identity mod of "))]
+                if (notSource(fa.read()) != notSource(fb.read())):
                     differences.append(f"{fileName} differs")
         elif (not filecmp.cmp(a, b, shallow = False)):
             differences.append(f"{fileName} differs")
@@ -92,7 +94,8 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as temp:
             fromDownload = os.path.join(temp, "download")
             try:
-                modB = Generator().generateFromRepo(name, fromDownload, downloader = downloader)
+                # named as the asset folder's mod is, by the files' prefix rather than the mod's name, so the two compare file by file
+                modB = Generator().generateFromRepo(name, fromDownload, downloader = downloader, modName = download.prefix)
             except IDMG.Error as e:
                 failed.append(name)
                 print(f"{name} {download.version}: FAILED -- {e}", flush = True)

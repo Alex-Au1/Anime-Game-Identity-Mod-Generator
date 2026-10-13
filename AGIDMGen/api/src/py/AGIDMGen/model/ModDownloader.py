@@ -23,7 +23,8 @@ from FixRaidenBoss2 import BaseLogger, Model
 from ..tools.VersionTools import VersionTools
 from ..constants.ModLoaders import ModLoaders
 from ..constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders
-from ..data.ModDownloadData import ModDownloadData, ModDownloadAliases
+from ..constants.ModNames import ModNames
+from ..data.ModDownloadData import ModDownloadData
 from ..exceptions.Error import Error
 from ..exceptions.DownloadFailed import DownloadFailed
 from .ModDownload import ModDownload
@@ -91,15 +92,15 @@ class ModDownloader(Model):
         Returns
         -------
         List[:class:`str`]
-            The names of the characters' folders, in alphabetical order
+            The names of the characters' mods (see :class:`ModNames`), in alphabetical order
         """
 
-        return sorted(ModDownloadData.get(ModDownloadGameFolders[loader], {}), key = str.lower)
+        return [modName.name for modName in ModNames.getAll([loader])]
 
     @classmethod
     def getName(cls, loader: ModLoaders, name: str) -> str:
         """
-        Retrieves the name of a character's folder, from its name or another name it is known by (eg. ``KamisatoAyaka`` for ``Ayaka``), in any case
+        Retrieves the name of a character's download folder, from the name of its mod or one of its aliases, in any case (see :class:`ModNames`)
 
         Parameters
         ----------
@@ -107,7 +108,7 @@ class ModDownloader(Model):
             The mod loader
 
         name: :class:`str`
-            The character's name
+            The character's name (eg. ``Raiden``, ``RaidenShogun`` or ``ei``)
 
         Raises
         ------
@@ -117,21 +118,10 @@ class ModDownloader(Model):
         Returns
         -------
         :class:`str`
-            The name of the character's folder
+            The name of the character's download folder
         """
 
-        game = ModDownloadGameFolders[loader]
-        characters = ModDownloadData.get(game, {})
-        if (name in characters):
-            return name
-
-        # an alias may name a character with no listed folder (eg. one whose asset folder cannot be built)
-        aliases = {alias.lower(): folder for alias, folder in ModDownloadAliases.get(game, {}).items() if folder in characters}
-        folders = {folder.lower(): folder for folder in characters}
-        result = aliases.get(name.lower(), folders.get(name.lower()))
-        if (result is None):
-            raise Error(f"no {game} character called '{name}' has a download folder")
-        return result
+        return ModNames.find(name, [loader]).folder
 
     @classmethod
     def getVersions(cls, loader: ModLoaders, name: str) -> List[str]:

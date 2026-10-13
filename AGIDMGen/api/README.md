@@ -65,15 +65,15 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 - Right-click [AGIDMGen.py](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py), choose **"Save link as..."**, and save the script into GIMI's or WWMI's `Mods` folder.
 
 ### STEP 2:
-- Double click on the script, and answer its two questions:
-  - **Which game?** Type `gimi` for GI or `wwmi` for WuWa, then enter
-  - **Which characters?** Type the character's name (eg. `Yelan`), then enter. For several characters, put a space between their names. For every character, type `all`.
+- Double click on the script, and answer its question:
+  - **Which characters?** Type the character's name (eg. `Yelan`), then enter. For several characters, put a space between their names: they can be of both games (eg. `Zani Ayaka`). For every character, type `all`.
 
-- A new folder with the character's name (eg. `Yelan`) appears beside the script, holding the mod. When the script says `== Press ENTER to exit ==`, press enter.
+- A new folder for each character (eg. `Yelan`) appears beside the script, holding the mod. When the script says `== Press ENTER to exit ==`, press enter. Copy a GI mod into GIMI's `Mods` folder, and a WuWa mod into WWMI's.
 
 > [!TIP]
-> Copy the character's name as it is written in the [Mods list](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md).
-> The new folder is named exactly as you typed it.
+> A character's name is not case sensitive, and any of its other names work too (eg. `ei` for `Raiden`): see the
+> [Mods list](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md).
+> The new folder is always named by the mod's name (`ei` makes `Raiden`).
 
 > [!NOTE]
 > The first run downloads the generator, [AGIDMGen](https://pypi.org/project/AGIDMGen/) (with numpy and
@@ -96,9 +96,9 @@ then enter
 *( you can now run the program anywhere without copying a script! )*
 
 ### STEP 2:
-- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type the game's word, the character's name, then `--download`:
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in GIMI's or WWMI's `Mods` folder and type the character's name:
 ```bash
-python -m AGIDMGen gimi Yelan --download
+python -m AGIDMGen Yelan
 ```
 then enter
 
@@ -114,25 +114,25 @@ then enter
 - Get the script, as in [Choice A's STEP 1](#choice-a-lets-start--)
 
 ### STEP 2:
-- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in that `Mods` folder and type `python AGIDMGen.py`, the game's word, the character's name, then `--download`.
+- [open cmd](https://www.google.com/search?q=how+to+open+cmd+in+a+folder&oq=how+to+open+cmd) in that `Mods` folder and type `python AGIDMGen.py`, then the character's name. The game is found from the character's name.
 
   *eg. for Yelan in GI:*
 ```bash
-python AGIDMGen.py gimi Yelan --download
+python AGIDMGen.py Yelan
 ```
 then enter
 
   *eg. for Sanhua in WuWa:*
 ```bash
-python AGIDMGen.py wwmi Sanhua --download
+python AGIDMGen.py Sanhua
 ```
 
 > [!TIP]
-> - Want several characters? Put a space between their names: `python AGIDMGen.py gimi Yelan YelanTranquil --download`
-> - Want every character? Use `--all` instead of a name: `python AGIDMGen.py gimi --download --all`
+> - Want several characters, of either game? Put a space between their names: `python AGIDMGen.py Zani Ayaka YelanTranquil`
+> - Want every character? Use `--all` instead of a name: `python AGIDMGen.py --all`. For one game's only, add `--game GI` or `--game WuWa`
 > - Already have [GI-Model-Importer-Assets](https://github.com/SilentNightSound/GI-Model-Importer-Assets) or
 >   [WWMI-Assets](https://github.com/SpectrumQT/WWMI-Assets)? Give the **full** path to the character's folder instead of
->   its name, without `--download`: `python AGIDMGen.py gimi "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"`
+>   its name: `python AGIDMGen.py "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"`
 
 ### STEP 3:
 - Open the game and enjoy it
@@ -158,14 +158,14 @@ python -m pip install -U AGIDMGen
 import AGIDMGen as IDMG
 import FixRaidenBoss2 as FRB          # AG Remap's API: its logger works for both libraries
 
-service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan", "YelanTranquil"], outputFolder = "Mods", logger = FRB.Logger())
+service = IDMG.IDModGenService(names = ["Yelan", "YelanTranquil", "Zani"], outputFolder = "Mods", logger = FRB.Logger())
 service.generate()
 
 print("Made:", sorted(service.stats.generated))
 ```
 
 `IDModGenService` makes each mod into `<outputFolder>/<name>`, from download folders (`names = [...]`) or from asset
-folders (`assetsFolders = [...]`). A character that fails does not stop the others: it is recorded in `service.stats`,
+folders (`assetsFolders = [...]`), of both games: each character's game is found from its name (`Zani` is WuWa's). A character that fails does not stop the others: it is recorded in `service.stats`,
 and nothing is printed unless you give it a logger.
 
 <details>
@@ -184,7 +184,7 @@ class ForwardingLogger(FRB.BaseLogger):
         return ""                          # nothing interactive on a server
 
 logger = FRB.Logger(logTxt = True, verbose = False)     # or: ForwardingLogger()
-service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan"], outputFolder = folder, logger = logger)
+service = IDMG.IDModGenService(names = ["Yelan"], outputFolder = folder, logger = logger)
 service.generate()
 transcript = logger.loggedTxt
 ```
@@ -192,7 +192,7 @@ transcript = logger.loggedTxt
 **From asset folders:**
 
 ```python
-service = IDMG.IDModGenService(IDMG.ModLoaders.WWMI, assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
+service = IDMG.IDModGenService(assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
 service.generate()
 ```
 
@@ -204,7 +204,7 @@ mod = IDMG.WWMIIdentityModGenerator().generateFromRepo("Sanhua", "Mods/Sanhua", 
 print("\n".join(mod.getSummary()))
 ```
 
-**Every character with a download folder:** `IDMG.ModDownloader.getCharacters(IDMG.ModLoaders.GIMI)`
+**Every character with a download folder:** `[modName.name for modName in IDMG.ModNames.getAll()]` (or `IDMG.ModNames.getAll([IDMG.ModLoaders.GIMI])` for one game's)
 
 </details>
 
@@ -212,26 +212,27 @@ print("\n".join(mod.getSummary()))
 <br>
 
 ## Command Options
-Add these after the character's name. The **Game** column says which game has the option.
+Type the characters' names, of either game (eg. `python -m AGIDMGen Zani Ayaka ei`), then any of these. Each character's
+game is found from its name, and its files are downloaded. The **Game** column says which game's mods an option is for.
 
 | Options | Game | Description |
 | --- | --- | --- |
 | -h, --help | All | show the help message and exit |
-| --download | All | the names typed are characters' names: download their files and make their mods from them |
-| --all | All | with `--download`: make the mod of every character |
+| --game GI,WuWa | All | look the names up only in these games, separated by commas (`GI`, `Genshin`, `WuWa`, `WutheringWaves`, `GIMI`, `WWMI`). If this option is not specified, then every game is. |
+| --all | All | make the mod of every character (of the `--game` games, if given) |
 | --out folder | All | the folder the mods are made in, as `<folder>/<name>`. If this option is not specified, then the mods are made in the current folder. |
-| --version str | All | with `--download`: the game version wanted, eg. `4.0`. If this option is not specified, then the newest version is used. |
-| --name str | All | the character's name inside the mod (one character only) |
+| --version str | All | for downloaded characters: the game version wanted, eg. `4.0`. If this option is not specified, then the newest version is used. |
+| --nameReplace CHARACTER:NEWNAME,... | All | new names for some of the characters, written into their mods instead of their usual names, eg. `--nameReplace "ei:Raiden1, Zani:Shorty"`. `CHARACTER` is any name or alias of a character being made, a character's base name for all its parts (`Carlotta:Shorty` makes `CarlottaBody` `ShortyBody`), or an asset folder's name. If a character is given twice, the later new name wins. A pair for no character being made, or that cannot be used, is skipped, and the run says so. |
 | --log folder | All | also write everything printed into `<folder>/IDModGenLog.txt` |
 | --quiet | All | print only errors |
-| --proxy str | All | with `--download`: the link to the proxy server, for those whose internet access must go through a proxy |
-| --downloadFolder folder | All | with `--download`: keep the downloaded files in `<folder>/<name>`. If this option is not specified, then they are deleted afterwards. |
-| --localData REPO=folder | All | with `--download`: copy the files of `AGRemap` or `AGIDMGen` from a copy of its `Data/Mod Downloads` folder on your computer, instead of downloading them (can be given more than once) |
+| --proxy str | All | for downloaded characters: the link to the proxy server, for those whose internet access must go through a proxy |
+| --downloadFolder folder | All | for downloaded characters: keep the downloaded files in `<folder>/<name>`. If this option is not specified, then they are deleted afterwards. |
+| --localData REPO=folder | All | for downloaded characters: copy the files of `AGRemap` or `AGIDMGen` from a copy of its `Data/Mod Downloads` folder on your computer, instead of downloading them (can be given more than once) |
 | --noFix | GI | leave the `ORFix` / `NNFix` lines out of the mod |
-| --faceRegister str | GI | the slot the face texture is bound to. If this option is not specified, then `ps-t0` is used (some 6.x skins need `ps-t1`). |
+| --faceRegister str | GI | the slot the face texture is bound to. If this option is not specified, then `ps-t1` is used, where GI 6.0 and newer read it (`ps-t0` is for older versions, and on 6.x it gives white cheeks). |
 | --assetPrefix str | GI | what the asset folder's files start with, when that is not the folder's name (one asset folder only) |
 | --textureFrom B=C:O[:plain\|normalMap] | GI | part `B`, which has no textures of its own, uses object `O` of part `C`'s textures, eg. `Bang=Body:A` (can be given more than once) |
-| --author str | WuWa | the mod author WWMI shows. If this option is not specified, then `Anime Game Remap` is used. |
+| --author str | WuWa | the mod author WWMI shows. If this option is not specified, then `AGIDMGen` is used. |
 | --noTextures | WuWa | leave the textures out |
 | --rawBones | WuWa | write bone indices as `vg_offset` + local index, instead of through the `vg_map` |
 

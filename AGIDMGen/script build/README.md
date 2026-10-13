@@ -17,18 +17,20 @@ package: it downloads the library from [PyPI](https://pypi.org/project/AGIDMGen/
    installer).
 2. Download [AGIDMGen.py](https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/AGIDMGen/script%20build/src/AGIDMGen/AGIDMGen.py)
    and put it in your GIMI or WWMI `Mods` folder.
-3. **Double-click it.** It asks which game (`gimi` or `wwmi`) and which characters (their names with a space between
-   each, or `all`), makes their mods, then waits for ENTER so you can read what it did.
+3. **Double-click it.** It asks which characters (their names with a space between each, of either game, or `all`),
+   makes their mods, then waits for ENTER so you can read what it did.
 
 Or open [CMD](https://www.google.com/search?q=how+to+open+cmd+in+a+folder) in that folder and enter, for example:
 
 ```bash
-python AGIDMGen.py gimi Albedo --download
+python AGIDMGen.py Albedo
 ```
 
 ```bash
-python AGIDMGen.py wwmi Aalto --download
+python AGIDMGen.py Albedo Aalto
 ```
+
+Each character's game is found from its name, so GI's Albedo and WuWa's Aalto can be made in one run.
 
 Either way, the identity mod is written into a folder named after the character, **beside the script**.
 
@@ -54,15 +56,15 @@ Either way, the identity mod is written into a folder named after the character,
 Every option of the library's command line works here, since the script hands its command line to the library:
 
 ```bash
-python AGIDMGen.py gimi --help
+python AGIDMGen.py --help
 ```
 
 | Example | What it does |
 | --- | --- |
-| `python AGIDMGen.py gimi Albedo Aino --download` | several characters at once |
-| `python AGIDMGen.py gimi --download --all` | every GI character |
-| `python AGIDMGen.py wwmi ChisaParfait --download --version 3.5` | the character as of an older game version, when there is a download folder for it |
-| `python AGIDMGen.py gimi "C:\GI-Model-Importer-Assets\PlayerCharacterData\Albedo"` | from an asset folder you already have |
+| `python AGIDMGen.py Albedo Aino Zani` | several characters at once, of either game |
+| `python AGIDMGen.py --all --game GI` | every GI character (`--all` alone: every character) |
+| `python AGIDMGen.py ChisaParfait --version 3.5` | the character as of an older game version, when there is a download folder for it |
+| `python AGIDMGen.py "C:\GI-Model-Importer-Assets\PlayerCharacterData\Albedo"` | from an asset folder you already have |
 
 <br>
 

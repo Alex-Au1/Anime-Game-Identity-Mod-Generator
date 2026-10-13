@@ -95,6 +95,7 @@ def main() -> int:
     for entry in names:
         key, _, name = entry.partition(":")
         loader = Games[key]
+        name = IDMG.ModNames.find(name, [loader]).name
         Generator = IDMG.GIMIIdentityModGenerator if (loader == IDMG.ModLoaders.GIMI) else IDMG.WWMIIdentityModGenerator
         committed = os.path.join(ModsFolder, IDMG.ModDownloadGameFolders[loader], name)
 

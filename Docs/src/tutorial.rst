@@ -51,17 +51,17 @@ Right-click `AGIDMGen.py`_, choose **"Save link as..."**, and save the script in
 STEP 2
 ~~~~~~
 
-Double click on the script, and answer its two questions:
+Double click on the script, and answer its question:
 
-- **Which game?** Type ``gimi`` for GI or ``wwmi`` for WuWa, then enter
 - **Which characters?** Type the character's name (eg. ``Yelan``), then enter. For several characters, put a space
-  between their names. For every character, type ``all``.
+  between their names: they can be of both games (eg. ``Zani Ayaka``). For every character, type ``all``.
 
-A new folder with the character's name (eg. ``Yelan``) appears beside the script, holding the mod. When the script says
-``== Press ENTER to exit ==``, press enter.
+A new folder for each character (eg. ``Yelan``) appears beside the script, holding the mod. When the script says
+``== Press ENTER to exit ==``, press enter. Copy a GI mod into GIMI's ``Mods`` folder, and a WuWa mod into WWMI's.
 
 .. tip::
-    Copy the character's name as it is written in the `Mods list`_. The new folder is named exactly as you typed it.
+    A character's name is not case sensitive, and any of its other names work too (eg. ``ei`` for ``Raiden``): see the
+    `Mods list`_ or :ref:`commandOpts:Mod Names`. The new folder is always named by the mod's name (``ei`` makes ``Raiden``).
 
 .. note::
     The first run downloads the generator, AGIDMGen (with numpy and `AG Remap's API`_), so it takes a little longer.
@@ -97,11 +97,11 @@ then enter
 STEP 2
 ~~~~~~
 
-Open `CMD`_ in GIMI's or WWMI's ``Mods`` folder and type the game's word, the character's name, then ``--download``:
+Open `CMD`_ in GIMI's or WWMI's ``Mods`` folder and type the character's name:
 
 .. code-block:: bash
 
-    python -m AGIDMGen gimi Yelan --download
+    python -m AGIDMGen Yelan
 
 then enter
 
@@ -129,13 +129,14 @@ Get the script, as in :ref:`Choice A's STEP 1 <tutorial:Choice A: Quickstart ðŸŸ
 STEP 2
 ~~~~~~
 
-Open `CMD`_ in that ``Mods`` folder and type ``python AGIDMGen.py``, the game's word, the character's name, then ``--download``.
+Open `CMD`_ in that ``Mods`` folder and type ``python AGIDMGen.py``, then the character's name.
+The game is found from the character's name.
 
 *eg. for Yelan in GI:*
 
 .. code-block:: bash
 
-    python AGIDMGen.py gimi Yelan --download
+    python AGIDMGen.py Yelan
 
 then enter
 
@@ -143,14 +144,15 @@ then enter
 
 .. code-block:: bash
 
-    python AGIDMGen.py wwmi Sanhua --download
+    python AGIDMGen.py Sanhua
 
 .. tip::
-    - Want several characters? Put a space between their names: ``python AGIDMGen.py gimi Yelan YelanTranquil --download``
-    - Want every character? Use ``--all`` instead of a name: ``python AGIDMGen.py gimi --download --all``
+    - Want several characters, of either game? Put a space between their names: ``python AGIDMGen.py Zani Ayaka YelanTranquil``
+    - Want every character? Use ``--all`` instead of a name: ``python AGIDMGen.py --all``. For one game's only,
+      add ``--game GI`` or ``--game WuWa``
     - Already have `GI-Model-Importer-Assets`_ or `WWMI-Assets`_? Give the **full** path to the character's folder
-      instead of its name, without ``--download``:
-      ``python AGIDMGen.py gimi "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"``
+      instead of its name:
+      ``python AGIDMGen.py "C:\path\to\GI-Model-Importer-Assets\PlayerCharacterData\Yelan"``
 
 STEP 3
 ~~~~~~

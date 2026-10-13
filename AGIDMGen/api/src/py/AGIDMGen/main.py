@@ -11,7 +11,6 @@
 
 ##### ExtImports
 import argparse
-import os
 import sys
 from typing import List, Optional
 from FixRaidenBoss2 import BaseLogger, Logger
@@ -19,26 +18,11 @@ from FixRaidenBoss2 import BaseLogger, Logger
 
 
 ##### LocalImports
-from .IDModGenService import IDModGenService
-from .constants.FileEncodings import FileEncodings
-from .constants.ModDownloadRepos import ModDownloadRepos
-from .constants.ModLoaders import ModLoaders
-from .exceptions.Error import Error
-from .model.gimi.GIMITextureSource import GIMITextureSource
-from .model.ModDownloader import ModDownloader
-from .model.gimi.GIMIIdentityModGenerator import GIMIIdentityModGenerator
-from .model.wwmi.WWMIIdentityModGenerator import WWMIIdentityModGenerator
+from .IDModGenServiceCLI import IDModGenServiceCLI, LogFileName, CharacterListLink
 ##### EndLocalImports
 
 
 ##### Script
-#: The name of the log file the command line writes with ``--log``
-LogFileName = "IDModGenLog.txt"
-
-#: Where the names of the characters that can be made are listed, for a run that asks for them
-CharacterListLink = "https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/blob/main/Mods/README.md"
-
-
 def makeArgParser() -> argparse.ArgumentParser:
     """
     Builds the command line's argument parser
@@ -49,99 +33,78 @@ def makeArgParser() -> argparse.ArgumentParser:
         The parser
     """
 
-    parser = argparse.ArgumentParser(prog = "AGIDMGen", description = "Generates the identity mods of characters: the game's own models, written out as mods")
-    loaders = parser.add_subparsers(dest = "loader", required = True)
+    # no abbreviated options: '--download' (an option no more) would otherwise be read as '--downloadFolder'
+    parser = argparse.ArgumentParser(prog = "AGIDMGen", description = "Generates the identity mods of characters: the game's own models, written out as mods", allow_abbrev = False,
+                                     epilog = "A character can be asked for by its mod's name (eg. Raiden), its download folder's name (RaidenShogun) or an alias (Ei), "
+                                              "as Anime Game Remap names its mod types, and of any game: Zani (WuWa) and Ayaka (GI) can be made in one run. "
+                                              "The names are not case sensitive, and each mod is written under its mod's name. "
+                                              f"For the names and aliases, see {CharacterListLink}")
 
-    wwmi = loaders.add_parser(ModLoaders.WWMI.value.lower(), aliases = [ModLoaders.WWMI.value], help = "WuWa characters, from WWMI-Assets folders or download folders")
-    wwmi.add_argument("sources", nargs = "*", help = "the asset folders (Metadata.json, Component N.fmt/.vb/.ib, *.dds), or with --download the characters' names")
-    wwmi.add_argument("--author", default = "Anime Game Remap", help = "the mod author WWMI shows")
-    wwmi.add_argument("--noTextures", action = "store_true", help = "leave the textures out (geometry, skeleton and shape keys only)")
-    wwmi.add_argument("--rawBones", action = "store_true", help = "write bone indices as vg_offset + local instead of through the vg_map (the merged skeleton's duplicate slots; every real mod uses the vg_map)")
+    parser.add_argument("sources", nargs = "*", help = "the characters' names or aliases, of any game, in any case (eg. Zani Ayaka ei), whose files are downloaded, and/or asset folders (a GI-Model-Importer-Assets or WWMI-Assets character folder, or any path)")
+    parser.add_argument("--game", default = None, help = "look the names up only in these games, separated by commas (eg. GI, WuWa, Genshin; default: every game)")
+    parser.add_argument("--out", default = None, help = "the folder each mod is written into, as <out>/<name> (default: the current folder)")
+    parser.add_argument("--nameReplace", default = None, metavar = "CHARACTER:NEWNAME,...",
+                        help = "new names for some of the characters, written into their mods instead of their usual names, eg. \"ei:Raiden1, Zani:Shorty, Carlotta:Shorty\" (CHARACTER is any name or alias of a character being made, a character's base name for all its parts (CarlottaBody becomes ShortyBody), or an asset folder's name; if a character is given twice, the later new name wins; a pair for no character being made, or that cannot be used, is skipped)")
+    parser.add_argument("--all", action = "store_true", help = "every character that has a download folder (of --game's games, if given)")
+    parser.add_argument("--version", default = None, help = "for downloaded characters: the game version wanted, eg. 4.0 (default: the newest)")
+    parser.add_argument("--localData", action = "append", default = None, metavar = "REPO=FOLDER",
+                        help = "for downloaded characters: copy a repository's files from a local copy of its 'Data/Mod Downloads' folder instead (REPO is AGRemap or AGIDMGen); repeatable")
+    parser.add_argument("--downloadFolder", default = None, help = "for downloaded characters: keep the downloaded files in <downloadFolder>/<name> (default: temporary folders)")
+    parser.add_argument("--proxy", default = None, help = "for downloaded characters: the proxy to download through")
+    parser.add_argument("--log", default = None, help = f"write everything printed into <log>/{LogFileName}")
+    parser.add_argument("--quiet", action = "store_true", help = "print only errors")
 
-    gimi = loaders.add_parser(ModLoaders.GIMI.value.lower(), aliases = [ModLoaders.GIMI.value], help = "GI characters, from GI-Model-Importer-Assets folders or download folders")
-    gimi.add_argument("sources", nargs = "*", help = "the asset folders (hash.json, *-vb0=*.txt, *-ib=*.txt, *.dds), or with --download the characters' names")
-    gimi.add_argument("--assetPrefix", default = None, help = "what the asset folder's files start with, when that is not the folder's name (one asset folder only)")
-    gimi.add_argument("--noFix", action = "store_true", help = "leave the ORFix / NNFix run lines out of the object sections")
-    gimi.add_argument("--faceRegister", default = "ps-t0", help = "the register the face diffuse is bound to (GI 6.x swapped it to ps-t1 on some skins; default ps-t0)")
-    gimi.add_argument("--textureFrom", action = "append", default = None, metavar = "COMP=COMP:OBJ[:LAYOUT]",
-                      help = "a component with no textures of its own reads another component object's, in the borrower's own normalMap / plain layout (e.g. Bang=Body:A, Eye=Body:A:plain); repeatable")
+    gi = parser.add_argument_group("GI (GIMI) mods")
+    gi.add_argument("--assetPrefix", default = None, help = "what the asset folder's files start with, when that is not the folder's name (one asset folder only)")
+    gi.add_argument("--noFix", action = "store_true", help = "leave the ORFix / NNFix run lines out of the object sections")
+    gi.add_argument("--faceRegister", default = None, help = "the register the face diffuse is bound to (default ps-t1, where GI 6.0 and newer read it; ps-t0 is for older versions)")
+    gi.add_argument("--textureFrom", action = "append", default = None, metavar = "COMP=COMP:OBJ[:LAYOUT]",
+                    help = "a component with no textures of its own reads another component object's, in the borrower's own normalMap / plain layout (e.g. Bang=Body:A, Eye=Body:A:plain); repeatable")
 
-    for subparser in (wwmi, gimi):
-        subparser.add_argument("--out", default = None, help = "the folder each mod is written into, as <out>/<name> (default: the current folder)")
-        subparser.add_argument("--name", default = None, help = "the character's name in the mod (one character only)")
-        subparser.add_argument("--download", action = "store_true", help = "the sources are characters' names: generate from their download folders (from AG Remap's repository, then this library's)")
-        subparser.add_argument("--all", action = "store_true", help = "with --download: every character that has a download folder")
-        subparser.add_argument("--version", default = None, help = "with --download: the game version wanted, eg. 4.0 (default: the newest)")
-        subparser.add_argument("--localData", action = "append", default = None, metavar = "REPO=FOLDER",
-                               help = "with --download: copy a repository's files from a local copy of its 'Data/Mod Downloads' folder instead (REPO is AGRemap or AGIDMGen); repeatable")
-        subparser.add_argument("--downloadFolder", default = None, help = "with --download: keep the downloaded files in <downloadFolder>/<name> (default: temporary folders)")
-        subparser.add_argument("--proxy", default = None, help = "with --download: the proxy to download through")
-        subparser.add_argument("--log", default = None, help = f"write everything printed into <log>/{LogFileName}")
-        subparser.add_argument("--quiet", action = "store_true", help = "print only errors")
+    wuwa = parser.add_argument_group("WuWa (WWMI) mods")
+    wuwa.add_argument("--author", default = None, help = "the mod author WWMI shows (default: AGIDMGen)")
+    wuwa.add_argument("--noTextures", action = "store_true", help = "leave the textures out (geometry, skeleton and shape keys only)")
+    wuwa.add_argument("--rawBones", action = "store_true", help = "write bone indices as vg_offset + local instead of through the vg_map (the merged skeleton's duplicate slots; every real mod uses the vg_map)")
 
     return parser
 
 
-def makeService(args: argparse.Namespace, logger: Logger) -> IDModGenService:
+def makeServiceCLI(args: argparse.Namespace, logger: Optional[BaseLogger] = None) -> IDModGenServiceCLI:
     """
-    Builds the service the command line runs
+    Builds the command line front end from the parsed arguments
 
     Parameters
     ----------
     args: :class:`argparse.Namespace`
         The parsed arguments, from :func:`makeArgParser`
 
-    logger: :class:`Logger`
-        Where the service reports what it does
+    logger: Optional[:class:`BaseLogger`]
+        Where everything is reported. If this value is ``None``, the front end makes a console ``Logger`` :raw-html:`<br />` :raw-html:`<br />`
 
-    Raises
-    ------
-    :class:`Error`
-        If the arguments are not valid
+        **Default**: ``None``
 
     Returns
     -------
-    :class:`IDModGenService`
-        The service
+    :class:`IDModGenServiceCLI`
+        The front end
     """
 
-    loader = ModLoaders.GIMI if (args.loader.upper() == ModLoaders.GIMI.value) else ModLoaders.WWMI
-    if (loader == ModLoaders.GIMI):
-        textureSources = dict(GIMITextureSource.parse(value) for value in (args.textureFrom or []))
-        generator = GIMIIdentityModGenerator(includeFix = not args.noFix, faceRegister = args.faceRegister, textureSources = textureSources, logger = logger)
-    else:
-        generator = WWMIIdentityModGenerator(author = args.author, includeTextures = not args.noTextures, useVgMap = not args.rawBones, logger = logger)
-
-    localFolders = {}
-    for value in (args.localData or []):
-        repo, separator, folder = value.partition("=")
-        if (not separator or repo not in ModDownloadRepos.__members__):
-            raise Error(f"--localData is REPO=FOLDER with REPO one of {', '.join(ModDownloadRepos.__members__)}, not {value!r}")
-        localFolders[ModDownloadRepos[repo]] = folder
-
-    if (args.all and not args.download):
-        raise Error("--all is for --download")
-
-    names = None
-    assetsFolders = None
-    if (args.download):
-        names = ModDownloader.getCharacters(loader) if (args.all) else args.sources
-    else:
-        assetsFolders = args.sources
-
-    return IDModGenService(loader, assetsFolders = assetsFolders, names = names, outputFolder = args.out, version = args.version,
-                           downloader = ModDownloader(localFolders = localFolders, proxy = args.proxy, logger = logger), downloadFolder = args.downloadFolder,
-                           generator = generator, modName = args.name, assetPrefix = getattr(args, "assetPrefix", None), handleExceptions = True, logger = logger)
+    games = None if (args.game is None) else [game for game in args.game.split(",") if (game.strip())]
+    return IDModGenServiceCLI(sources = args.sources, all = args.all, games = games, outputFolder = args.out,
+                              nameReplace = args.nameReplace, version = args.version, localData = args.localData, downloadFolder = args.downloadFolder,
+                              proxy = args.proxy, author = args.author, noTextures = args.noTextures, rawBones = args.rawBones,
+                              assetPrefix = args.assetPrefix, noFix = args.noFix, faceRegister = args.faceRegister, textureFrom = args.textureFrom,
+                              log = args.log, verbose = not args.quiet, handleExceptions = True, logger = logger)
 
 
 def askArgs(logger: BaseLogger) -> List[str]:
     """
-    Asks the user which game and which characters to make the identity mods of, for a run with no arguments
-    (eg. the script double-clicked)
+    Asks the user which characters to make the identity mods of, for a run with no arguments (eg. the script
+    double-clicked)
 
     :raw-html:`<br />`
 
-    The mods are made from the characters' download folders, into the current folder
+    The characters may be of any game, and their mods are made from their download folders, into the current folder
 
     Parameters
     ----------
@@ -151,80 +114,34 @@ def askArgs(logger: BaseLogger) -> List[str]:
     Returns
     -------
     List[:class:`str`]
-        The arguments the answers stand for, eg. ``["gimi", "Yelan", "--download"]``
+        The arguments the answers stand for, eg. ``["Zani", "Ayaka"]``
     """
-
-    loaders = {loader.value.lower(): loader for loader in ModLoaders}
-    loaderNames = {ModLoaders.GIMI: "GI", ModLoaders.WWMI: "WuWa"}
-    loaderChoices = " or ".join(f"{name} ({loaderNames[loader]})" for name, loader in loaders.items())
 
     # the questions are shown without the logger's '# prefix -->', as BaseLogger.waitExit shows its own
     prevIncludePrefix = logger.includePrefix
     logger.includePrefix = False
     try:
-        loader = None
-        while (loader is None):
-            loader = loaders.get(logger.input(f"Which game? Type {loaderChoices}: ").strip().lower())
-
-        logger.log(f"\nThe characters' names are listed at {CharacterListLink}")
+        logger.log(f"The characters' names and aliases are listed at {CharacterListLink}")
         names = []
         while (not names):
-            names = logger.input("Which characters? Type their names with a space between each, or 'all' for every character: ").split()
+            names = logger.input("Which characters, of any game? Type their names with a space between each (eg. Zani Ayaka), or 'all' for every character: ").split()
         logger.log("")
     finally:
         logger.includePrefix = prevIncludePrefix
 
     if (len(names) == 1 and names[0].lower() == "all"):
-        return [loader.value.lower(), "--download", "--all"]
-    return [loader.value.lower()] + names + ["--download"]
-
-
-def run(args: argparse.Namespace, logger: BaseLogger) -> int:
-    """
-    Makes the identity mods the parsed arguments ask for
-
-    Parameters
-    ----------
-    args: :class:`argparse.Namespace`
-        The parsed arguments, from :func:`makeArgParser`
-
-    logger: :class:`BaseLogger`
-        Where the service reports what it does
-
-    Returns
-    -------
-    :class:`int`
-        The exit code, as :func:`main` returns it
-    """
-
-    try:
-        service = makeService(args, logger)
-    except Error as e:
-        logger.error(str(e))
-        return 1
-
-    service.generate()
-    if (args.log is not None):
-        os.makedirs(args.log, exist_ok = True)
-        with open(os.path.join(args.log, LogFileName), "w", encoding = FileEncodings.UTF8.value) as f:
-            f.write(logger.loggedTxt)
-
-    stats = service.stats
-    if (not stats.noErrors or not stats.generated):
-        return 1
-    if (any(getattr(mod, "checksumMatches", None) is False or getattr(mod, "dispatchYMatches", None) is False for mod in stats.generated.values())):
-        return 2
-    return 0
+        return ["--all"]
+    return names
 
 
 def main(argv: Optional[List[str]] = None, logger: Optional[BaseLogger] = None) -> int:
     """
-    Runs the command line: ``python -m AGIDMGen <gimi|wwmi> SOURCE ... [--out FOLDER] [options]``
+    Runs the command line: ``python -m AGIDMGen SOURCE ... [--out FOLDER] [options]``
 
     :raw-html:`<br />`
 
-    With no arguments (eg. the script double-clicked), asks which game and which characters to make the mods of
-    (see :func:`askArgs`), then waits for ENTER before it ends, so the window stays open to be read
+    With no arguments (eg. the script double-clicked), asks which characters to make the mods of (see :func:`askArgs`),
+    then waits for ENTER before it ends, so the window stays open to be read
 
     Parameters
     ----------
@@ -234,14 +151,14 @@ def main(argv: Optional[List[str]] = None, logger: Optional[BaseLogger] = None) 
         **Default**: ``None``
 
     logger: Optional[:class:`BaseLogger`]
-        Where everything is printed and asked. If this value is ``None``, a console :class:`Logger` is used :raw-html:`<br />` :raw-html:`<br />`
+        Where everything is printed and asked. If this value is ``None``, a console ``Logger`` is used :raw-html:`<br />` :raw-html:`<br />`
 
         **Default**: ``None``
 
     Returns
     -------
     :class:`int`
-        The exit code: 0 when every mod was generated, 1 when one could not be (or the arguments are not valid), 2 when a WWMI mod's shape keys do not match its ``Metadata.json``
+        The exit code (see :attr:`IDModGenServiceCLI.exitCode`): 0 when every mod was generated, 1 when one could not be (or the arguments are not valid), 2 when a WWMI mod's shape keys do not match its ``Metadata.json``
     """
 
     if (argv is None):
@@ -258,15 +175,14 @@ def main(argv: Optional[List[str]] = None, logger: Optional[BaseLogger] = None) 
             return 1
 
     args = makeArgParser().parse_args(argv)
-    if (logger is None):
-        logger = Logger(logTxt = args.log is not None, verbose = not args.quiet)
+    serviceCLI = makeServiceCLI(args, logger)
+    serviceCLI.generate()
 
-    exitCode = run(args, logger)
     if (interactive):
         try:
-            logger.waitExit()
+            serviceCLI.logger.waitExit()
         except EOFError:
             pass
 
-    return exitCode
+    return serviceCLI.exitCode
 ##### EndScript

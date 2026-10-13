@@ -37,7 +37,7 @@ Importing
     import AGIDMGen as IDMG
     import FixRaidenBoss2 as FRB          # AG Remap's API: its logger works for both libraries
 
-    service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan"], outputFolder = "Mods", logger = FRB.Logger())
+    service = IDMG.IDModGenService(names = ["Yelan"], outputFolder = "Mods", logger = FRB.Logger())
     service.generate()
 
 :raw-html:`<br />`

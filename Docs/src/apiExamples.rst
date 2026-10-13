@@ -23,7 +23,9 @@ stop the others: it is recorded in ``service.stats``, and nothing is printed unl
 From Download Folders
 ~~~~~~~~~~~~~~~~~~~~~
 
-No asset repository needed: each character's files are downloaded for you.
+No asset repository needed: each character's files are downloaded for you. The characters can be of both games: each
+one's game is found from its name (``Zani`` is WuWa's), and a name can be any of the character's aliases (see
+:ref:`commandOpts:Mod Names`).
 
 .. code-block:: python
     :linenos:
@@ -31,7 +33,7 @@ No asset repository needed: each character's files are downloaded for you.
     import AGIDMGen as IDMG
     import FixRaidenBoss2 as FRB
 
-    service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan", "YelanTranquil"], outputFolder = "Mods", logger = FRB.Logger())
+    service = IDMG.IDModGenService(names = ["Yelan", "YelanTranquil", "Zani"], outputFolder = "Mods", logger = FRB.Logger())
     service.generate()
 
     print("Made:", sorted(service.stats.generated))
@@ -46,7 +48,7 @@ From Asset Folders
 
     import AGIDMGen as IDMG
 
-    service = IDMG.IDModGenService(IDMG.ModLoaders.WWMI, assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
+    service = IDMG.IDModGenService(assetsFolders = ["WWMI-Assets/PlayerCharacterData/Sanhua"], outputFolder = "Mods")
     service.generate()
 
 :raw-html:`<br />`
@@ -59,9 +61,27 @@ Every Character
 
     import AGIDMGen as IDMG
 
-    names = IDMG.ModDownloader.getCharacters(IDMG.ModLoaders.GIMI)
-    service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = names, outputFolder = "Mods")
+    # every game's; for one game's only, IDMG.ModNames.getAll([IDMG.ModLoaders.GIMI])
+    names = [modName.name for modName in IDMG.ModNames.getAll()]
+    service = IDMG.IDModGenService(names = names, outputFolder = "Mods")
     service.generate()
+
+:raw-html:`<br />`
+
+As the Command Line Does
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`IDModGenServiceCLI` wraps the service with what the command line adds: options given as strings, a log file,
+tips at the end, and an exit code.
+
+.. code-block:: python
+    :linenos:
+
+    import AGIDMGen as IDMG
+
+    serviceCLI = IDMG.IDModGenServiceCLI(sources = ["Zani", "Ayaka"], games = ["GI", "WuWa"], outputFolder = "Mods", log = "Logs")
+    serviceCLI.generate()
+    print(serviceCLI.exitCode)      # 0 when every mod was made
 
 :raw-html:`<br />`
 :raw-html:`<br />`
@@ -85,7 +105,7 @@ Give each request its own logger, and either read what it wrote afterwards or fo
             return ""                          # nothing interactive on a server
 
     logger = FRB.Logger(logTxt = True, verbose = False)     # or: ForwardingLogger()
-    service = IDMG.IDModGenService(IDMG.ModLoaders.GIMI, names = ["Yelan"], outputFolder = folder, logger = logger)
+    service = IDMG.IDModGenService(names = ["Yelan"], outputFolder = folder, logger = logger)
     service.generate()
     transcript = logger.loggedTxt
 
