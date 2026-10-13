@@ -50,7 +50,7 @@ The maintainer chose to rewrite AGRemap's compiled dump readers in Python rather
 | `parseTextureFrom` | `GIMITextureSource.parse` |
 | `NormalMapLayout`, `PlainLayout`, `ORFix`, `NNFix` | `GIMITextureLayouts` (`registers`, `fixCommand`) |
 | `BufOf`, `FixedStrides`, `BufOrder` | `GIMISemanticBuffers`, `GIMIFixedStrides`, `GIMIBuffers` |
-| `main` | `GIMIIdentityModGenerator.generate` (returns a `GIMIIdentityMod`), and `python -m AGIDMGen gimi` |
+| `main` | `GIMIIdentityModGenerator.generate` (returns a `GIMIIdentityMod`), and `python -m AGIDMGen <GI names or asset folders>` |
 | the `.ini` text | `GIMIIniBuilder.build` |
 
 **What "the same bytes as `readDumpStr`" took.** These are read off the C++
@@ -90,6 +90,31 @@ not guessed:
 - The `.ini`'s last comment says `built by AGIDMGen`.
 - There is no path translation for WSL.
 
+### WHITE CHEEKS: THE FACE DIFFUSE IS ON `ps-t1` SINCE GI 6.x (2026-10-13)
+
+The maintainer reported white cheeks on generated GI mods, "the face change from GI 6.x". Every mod in `Mods/GI`
+bound the face diffuse at `ps-t0`, the prototype's default.
+
+- **What the game does**, read off the 2026-09 frame dumps in the maintainer's GIMI folder with
+  `Tools/faceDumpRegisters.py`: the face's colour pass (pixel shader `82c84814`) reads the face diffuse from **`ps-t1`**
+  for all 11 characters dumped (Amber, Arlecchino, Bennett, Charlotte, Citlali, Keqing, KeqingOpulent, Lumine,
+  Neuvillette, Yaoyao, Yelan). `ps-t0` there holds `d4841e1a`, the same texture for every character. The face's other
+  passes (`525f307e`, `d68b526e`, `daa9d7c6`, `e39077b7`) keep the diffuse on `ps-t0`.
+- **Why it shows as white cheeks.** A hash-matched `ps-t0 = ...` binds the diffuse into the slot the colour pass reads
+  as the light map, and the diffuse's alpha (the blush mask, Texture Editing in AGRemap) comes back as two white
+  patches. This is the same register swap AGRemap's fixer undoes (its Creating Remaps, "The face diffuse").
+- **Proved in game on Yaoyao** (GameView, character screen, `compare` against F9): `ps-t0` shows the patches; `ps-t1`
+  and `this =` both match the unmodded face. Since a binding that silently did nothing would also look clean, each was
+  checked again with the face diffuse painted flat purple: both turned the face purple, so both reach it.
+- **The maintainer chose `ps-t1`** over `this =`: it keeps the `--faceRegister` option and AGRemap's `ps-t` convention.
+  `this =` would be exact on every pass, but AGRemap's face swap does not handle it. With `ps-t1` the face's other
+  passes also get the diffuse on `t1`, which showed no difference in game.
+- **The default changed in the library, the command line and the script** (the script takes the library's default).
+  `gimiCheck.py prototype` still passes the prototype's `ps-t0` to both programs, so parity is unaffected, and it also
+  holds with `--extra "--faceRegister ps-t1"`.
+- **Why only "some" characters looked wrong:** a mod whose face hash the game no longer uses never fires its face
+  section, so those faces look right by accident. That is a guess and has not been checked.
+
 **It is about 4 times faster than the prototype (2026-10-05):** Yelan takes 10 s instead of 40 s, most
 of the prototype's time being AGRemap's DLLs loading. Nothing has needed a C++ layer yet.
 
@@ -104,7 +129,7 @@ of the prototype's time being AGRemap's DLLs loading. Nothing has needed a C++ l
 | `Component` | `WWMIComponent` (`getElementBytes`, `getShapeKeys`) |
 | `buildIndex`, `buildVertexBuffer`, `buildBlend`, `buildBlendRemaps`, `buildShapeKeys` | the same names on `WWMIIdentityModGenerator` |
 | `iniText`, `blendRemapIni` | `WWMIIniBuilder.build` |
-| `main` | `WWMIIdentityModGenerator.generate` (returns a `WWMIIdentityMod`), and `python -m AGIDMGen wwmi` |
+| `main` | `WWMIIdentityModGenerator.generate` (returns a `WWMIIdentityMod`), and `python -m AGIDMGen <WuWa names or asset folders>` |
 | the printed report | `WWMIIdentityMod.getSummary()` |
 | `BufferFiles`, `ShapeKeySlots`, `BlendRemapSize` | `WWMIBuffers`, `WWMIShapeKeySlots`, `WWMIBlendRemapSize` |
 
@@ -130,8 +155,15 @@ of the prototype's time being AGRemap's DLLs loading. Nothing has needed a C++ l
 - every buffer byte;
 - the WWMI BETA-2 / WWMI Tools 1.3.4 `.ini` template, with its known differences from current real
   mods (see the lessons below);
-- CRLF line endings;
-- the default author `Anime Game Remap`.
+- CRLF line endings.
+
+**Its credits differ from AGRemap's, by the maintainer's request (2026-10-13).** A WuWa mod's default author
+(`[ResourceModAuthor]`, `--author`) is `AGIDMGen` (`AGIDMGenAuthor`), where the prototype writes `Anime Game Remap`; and
+every mod's `.ini` has `; Authors: Albert Gold#2696` and `; Github: <this repo>` right after its credit comment (a GI
+mod's `; the identity mod of ...`, a WuWa mod's `; This mod.ini is the IDENTITY mod of ...`; `constants/Credits.py`). So
+`wwmiCheck.py` builds the library's generator with the prototype's author, and both checks skip the `; Authors:` /
+`; Github:` lines as they skip the credit line. And the source line is no longer
+the `.ini`'s last: `downloadsCheck.py` and the unit test skip it by its text, not by "the last two lines".
 
 How it was proved is in [Testing](../Testing/CLAUDE.md)'s "THE WWMI ACCEPTANCE CHECKS".
 
@@ -212,7 +244,8 @@ single-component character, and that output **must stay byte-identical** to the 
 **Options that exist for one character each, so a port must keep them general:**
 
 - `--textureFrom`: a component that borrows another's textures (YelanTranquil's Bang / Eye).
-- `--faceRegister ps-t1`: GI 6.x skins moved the face diffuse to `ps-t1`.
+- `--faceRegister`: GI 6.x reads the face diffuse from `ps-t1`. The prototype's default is `ps-t0`; **the library's is
+  `ps-t1` since 2026-10-13** (see "WHITE CHEEKS" below).
 - `--assetPrefix`: CitlaliWhisperofStars' files are named `Citlali_WhisperOfStars...`.
 
 ### WWMI: `wwmiIdentityMod.py`

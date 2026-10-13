@@ -143,7 +143,8 @@ The maintainer created `Mods/` "for storing compiled mods in case users don't wa
 - **How it is made.** `Tools/populateMods.py <AGRemap master export's Data/Mod Downloads>` runs
   `IDModGenService` over every character in the manifest. It reads AGRemap's files from the export and this
   repo's from `Data/`, so nothing is downloaded, and writes `Mods/<GI|WuWa>/<Name>/` and the index
-  `Mods/README.md` (game version and source per mod). Use `--only gi|wuwa` and `--names ...` to redo part of it.
+  `Mods/README.md` (aliases, game version and source per mod). Folders are named by mod name (see "MOD NAMES AND
+  ALIASES"). Use `--only gi|wuwa` and `--names ...` to redo part of it.
 - **When to rerun it.** After any change to a generator, `Data/` or the manifest.
 - **The 2026-10-06 run:** 144 GI and 54 WuWa mods, 0 failures, 4,182 files, 4.61 GB.
 - **Git LFS.** `Mods/**/*.dds`, `*.buf` and `*.ib` are tracked in Git LFS, and `Mods/**/*.ini` is `-text`. The
@@ -153,9 +154,50 @@ The maintainer created `Mods/` "for storing compiled mods in case users don't wa
   stores identical content once. Of the 4.61 GB, only 0.71 GB (696 distinct files) is content `Data/` does not
   already hold: what came from AGRemap's own folders.
 - **What a mod contains.**
-  - Each is what `python -m AGIDMGen <gi|wuwa> <Name> --download` would write.
+  - Each is what `python -m AGIDMGen <Name>` would write.
   - Skins with texture donors bind them.
   - WuWa mods name their textures `<prefix>Texture<hash>.dds` (see "THE WWMI PORT" in Identity Mods).
+
+## MOD NAMES AND ALIASES: `ModNames`, AS AGREMAP NAMES ITS MOD TYPES (the maintainer's request, 2026-10-12)
+
+The maintainer asked for "many alias names just like AGRemap", looked up with Aho-Corasick as AGRemap does, and for
+the mods to be NAMED as AGRemap names its mod types. So a mod's name is no longer its download folder's name.
+
+- **Three names per character.** `ModName.name` (what the mod, its `Mods/` folder, its `.ini` sections and its files
+  are called, eg. `Raiden`), `ModName.folder` (the download folder, eg. `RaidenShogun`, which stays AGRemap's or the
+  asset repo's name: never rename a download folder for this) and `ModName.aliases`.
+- **The table is `AGIDMGen/data/ModNameData.py`, kept BY HAND** (not generated), `{game: {name: (folder, [aliases])}}`,
+  as AGRemap keeps its aliases in `GIBuilder` / `WWMIBuilder`. It holds only this library's own aliases: at lookup,
+  `ModNames` adds AGRemap's aliases from `FixRaidenBoss2.ModTypes` LIVE (matched by name and `gameTypeId`; the
+  maintainer chose live over a copy) and the folder's name. A manifest folder missing from the table is named by
+  its folder, so a new download folder works before anyone names it.
+- **The naming convention.** AGRemap's mod type name where it has one (`Raiden`, `AyakaSpringBloom`, `Yaoyao`).
+  Otherwise its style: the name players use, PascalCase (`HuTao`, `YunJin`, `Gaming`), a Japanese character's
+  given name (`Kazuha`, `Ayato`, `Itto`, `Sara`, `Shinobu`, `Kokomi`; `Yae` is the one family name, as players say
+  it), and a skin as the character then one word of the skin (`SanhuaExorcist`, `ChisaParfait`; ours:
+  `ChangliNymph` for Laurel Nymph, `CarlottaSummer<Part>` for Splashing Summer, `JinhsiBlossom` for Peach Blossom).
+  WuWa uses the in-game spelling `Jinhsi`, as AGRemap's `JinhsiBodyguard` alias does; WWMI-Assets says `Jinshi`.
+  WWMI-Assets' part folders keep their part suffix (`CalcharoBody`), and `ZaniArchive` is Zani's whole model, so `Zani`.
+  The WuWa skin names came from third-party guides (2026-10-12), not an official list: the maintainer is to review them.
+- **Lookup is AGRemap's**: an `AhoCorasickSingleton(AhoCorasickBuilder())` per game, keyed by
+  `ModNames.normalize(name)` (lowercase, and also without spaces, `_` and `-`, which AGRemap does not strip), and
+  `getMaximal`: the LONGEST name or alias found INSIDE the text wins, as AGRemap's `ModTypeIdTools::findByName`.
+  So `ModNames.search("RaidenShogunMod")` is Raiden. Names are filed before aliases, so an alias can never take a mod's
+  name. The automaton is rebuilt whenever the manifest's folders or the table change (a key per lookup), so tests that
+  `mock.patch.dict` either need no reset; a change to AGRemap's mod types needs `ModNames.clear()`.
+- **Who uses the name.** `ModDownloader.getCharacters` returns mod names and `getName` returns the FOLDER for any name or
+  alias; `generateFromRepo(..., modName = None)` now writes the mod under its mod's name (it was the download prefix);
+  `IDModGenService` labels, files and dedupes downloaded characters by mod name (`ei` and `Raiden` make one `Raiden`).
+- **Checks.** `test_ModNames.py`'s `ModNameDataTest` fails on an alias filed for two mods, on a folder named twice, and
+  on a mod whose name or folder is one of AGRemap's names or aliases but is not named as AGRemap names it (both were
+  shown to fail on a bad table first). `downloadsCheck.py` generates the download side with `modName = download.prefix`,
+  so it still compares file by file with the asset side.
+- **The 2026-10-12 rename** moved 16 mods (10 GI, 6 WuWa). Each, generated under its OLD name, was byte-identical to the
+  committed `Mods/` first, so the regenerated mods differ only by name. `populateMods.py` now deletes a `Mods/` folder
+  that is no mod's name, and `Mods/README.md` lists every mod's aliases.
+- **Case-only renames on Windows (`AyakaSpringbloom` -> `AyakaSpringBloom`, `GaMing` -> `Gaming`).** The filesystem
+  ignores case and so does git here (`core.ignorecase`): commit them with `git rm -r --cached Mods/GI/<old>` then
+  `git add Mods/GI/<new>`, or the index keeps the old spelling.
 
 ## HASH FILES DERIVED FROM AGREMAP'S OWN DATA: `Tools/Downloads/hashFromAGRemap.py` (2026-10-05)
 

@@ -85,6 +85,21 @@ For an `Enum`, use `:members:` without `:undoc-members:`: the class docstring's 
 already documents each member, and adding both documents them twice (four duplicate-object warnings on
 2026-10-05).
 
+## THE MOD NAME TABLE IS GENERATED AT BUILD TIME (the maintainer's request, 2026-10-13)
+
+`commandOpts.rst`'s "Mod Names" section ends in `.. modnametable::`, a directive in
+`Docs/src/extensions/modnametable.py` that builds AGRemap's mod-type table layout (Name / Game / Aliases, a few per line /
+Download Folder) from `AGIDMGen.ModNames` while Sphinx runs. AGRemap transcribes its table by hand, and its guide records
+that the transcription drifted (a misspelled name, a missing alias); generating it means the table is always what the
+library accepts, AGRemap's live aliases included. So never hand-write rows into that section.
+
+- `:game: GI` or `:game: WuWa` lists one game; without it, both, sorted by name.
+- The page depends on `ModNameData.py` and `ModDownloadData.py` (`env.note_dependency`), so an incremental build re-reads
+  it when either changes. A change to AGRemap's aliases alone needs `sphinx-build -E`.
+- The table has the class `mod-name-table`, and `styles.css` lets its Aliases cells break anywhere: AGRemap's longest
+  alias (`TsaritsaJacketStealerButDoesntNeedItSinceItIsSummer`) otherwise pushed the table 130 px past furo's column.
+  Only the Aliases column: breaking every cell split `WuWa` in two.
+
 ## Docstring format
 
 Numpydoc sections rendered by `sphinx.ext.napoleon`, with Sphinx roles for every type, as in AGRemap:

@@ -18,20 +18,26 @@ setup/test/doc pipelines from scratch when they're already written down.
 | Testing | [`AI Agent Help/Testing/CLAUDE.md`](AI%20Agent%20Help/Testing/CLAUDE.md) | running or adding unit tests, or proving a generated identity mod is right (**a byte comparison against the game's own buffers, never a clean run**) |
 | Documentation | [`AI Agent Help/Documentation/CLAUDE.md`](AI%20Agent%20Help/Documentation/CLAUDE.md) | writing docstrings or building the Sphinx docs — the warning baseline, and why every public export needs a hand-written `api.rst` entry |
 | Architecture | [`AI Agent Help/Architecture/CLAUDE.md`](AI%20Agent%20Help/Architecture/CLAUDE.md) | writing new library code — package layout, one class per file, the `##### Credits` / `##### Script` section markers, naming and docstring style (all inherited from AGRemap), and **when C++/Cython is allowed in (only once Python is measured too slow)** |
-| Downloads | [`AI Agent Help/Downloads/CLAUDE.md`](AI%20Agent%20Help/Downloads/CLAUDE.md) | working on `Data/Mod Downloads`, `ModDownloader`, `generateFromRepo` / `--download`, or the `Tools/Downloads` tools: **files come from AGRemap's GitHub first and this repo's second, so nothing is stored twice**; the generated manifest; the newest-version rule; what cannot be generated from downloads yet |
+| Downloads | [`AI Agent Help/Downloads/CLAUDE.md`](AI%20Agent%20Help/Downloads/CLAUDE.md) | working on `Data/Mod Downloads`, `ModDownloader`, `generateFromRepo` / downloading by name, or the `Tools/Downloads` tools: **files come from AGRemap's GitHub first and this repo's second, so nothing is stored twice**; the generated manifest; the newest-version rule; what cannot be generated from downloads yet |
 | Identity Mods | [`AI Agent Help/IdentityMods/CLAUDE.md`](AI%20Agent%20Help/IdentityMods/CLAUDE.md) | working on the generators themselves — what an identity mod is and what AGRemap uses it for, the **GIMI and WWMI generators in AGRemap that this library is ported from** (inputs, algorithm, output layout), and every lesson AGRemap's agents recorded about them |
 
 **BEFORE A FEATURE OR BUG REQUEST, READ [Overview](AI%20Agent%20Help/Overview/CLAUDE.md)'s "Working a feature or bug
 request here" (2026-10-10).** It has:
 
 - the change checklist: which check to rerun, and which COMMITTED generated files (the manifest, `Mods/`) to
-  regenerate, after each kind of change;
+  regenerate, after each kind of change. **A command-line change has a row listing the SEVEN places users read about
+  it** (docs pages, both READMEs, the script's README, the maintainer's launcher); **an `.ini` text change has a row
+  too** (the parity checks' skip lists, and all of `Mods/`);
+- **`Tools/modsDiff.py` proves a regeneration of `Mods/`**: snapshot before, compare after; it fails on any changed
+  binary and lists each changed `.ini` line once with its count. Do not use `git diff Mods` for this (10+ minutes here);
 - where the asset repos and AGRemap's data live on this machine;
 - this machine's tooling quirks: pushing, a slow git after `Mods/` changes, no `gh` login, searches to keep
   out of `Mods/` and `Data/`, reading PyPI through Python when pip cannot, AGRemap's API vanishing mid-rebuild,
   **never a second checkout (`git worktree add` pulls 7+ GB of LFS) and how to commit to a branch from a temporary
   index instead**, Git Bash's CRLF traps, and previewing an image in the browser pane over local HTTP;
-- the habits, among them: **the checkout moves between your turns** (check `git status -sb`, `git log -5` and
+- the habits, among them: **the maintainer asks for UX in small steps, and 0.1.0 needs no compatibility shims**
+  (habit 16), **ask before guessing names or data** (17), **match names exactly where a wrong match does harm** (18),
+  **the checkout moves between your turns** (check `git status -sb`, `git log -5` and
   `HEAD` against `origin/main` before starting and before committing; re-read a file before editing it), how to
   commit to `main` from another branch, **a requested branch starts from `origin/main`, not from the checkout**, and
   **test the artifact a user actually runs** (the PyPI package, the script, `Mods/`), not only the source.
@@ -65,10 +71,10 @@ each entry under the section of its folder. Moving a class is a refactor with it
 
 **BOTH GENERATORS ARE PORTED (2026-10-05).**
 
-- **WWMI.** `WWMIIdentityModGenerator` (`python -m AGIDMGen wwmi`) is byte-identical to AGRemap's
+- **WWMI.** `WWMIIdentityModGenerator` (`python -m AGIDMGen <WuWa names>`) is byte-identical to AGRemap's
   `wwmiIdentityMod.py` on all 50 WWMI-Assets characters (2025-10 checkout), and to AGRemap's committed
   Sanhua and SanhuaExorcist buffers.
-- **GIMI.** `GIMIIdentityModGenerator` (`python -m AGIDMGen gimi`) is byte-identical to `identityMod.py`
+- **GIMI.** `GIMIIdentityModGenerator` (`python -m AGIDMGen <GI names>`) is byte-identical to `identityMod.py`
   on all 123 GI-Model-Importer-Assets characters that can be built from.
 - **The GIMI dump readers were rewritten in Python (`VbDumpFile` / `IbDumpFile`), by the maintainer's
   choice.** They reproduce AGRemap's C++ `readDumpStr` byte for byte, quirks included: `from_chars`
@@ -78,14 +84,33 @@ each entry under the section of its folder. Moving a class is a refactor with it
 
 See [Identity Mods](AI%20Agent%20Help/IdentityMods/CLAUDE.md) and [Testing](AI%20Agent%20Help/Testing/CLAUDE.md).
 
+**GIMI MODS BIND THE FACE DIFFUSE ON `ps-t1` BY DEFAULT (the maintainer's choice, 2026-10-13).** GI 6.x reads it from
+`ps-t1`; on `ps-t0` it lands in the face's light-map slot and its blush mask shows as white cheeks. Read off the game's
+frame dumps (`Tools/faceDumpRegisters.py`) and proved in game. AGRemap's prototype still defaults to `ps-t0`, which
+`gimiCheck.py` mirrors. See [Identity Mods](AI%20Agent%20Help/IdentityMods/CLAUDE.md)'s "WHITE CHEEKS".
+
 **IDENTITY MODS CAN BE GENERATED WITH NO ASSET REPO, FROM DOWNLOAD FOLDERS (2026-10-05).**
-`generateFromRepo` / `python -m AGIDMGen <gi|wuwa> <Name> <mod> --download` fetches a character's newest
+`generateFromRepo` / `python -m AGIDMGen <Name> ...` fetches a character's newest
 download folder: each file from AGRemap's GitHub if AGRemap keeps it, else from this repo's
 `Data/Mod Downloads`, which holds only what AGRemap lacks. The fetching goes through AGRemap's
 `FixRaidenBoss2.FileDownload`. **The library knows about a folder only through the generated
 `AGIDMGen/data/ModDownloadData.py`**: rerun `Tools/Downloads/buildDownloadManifest.py` after any change to
 either repo's download folders, **on an export of AGRemap's `master` (`exportAGRemapDownloads.py`), never
 on AGRemap's checkout**, which may be on another branch. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md).
+
+**MODS ARE NAMED AS AGREMAP NAMES ITS MOD TYPES, AND TAKE ALIASES THE WAY AGREMAP'S DO (the maintainer's request, 2026-10-12).**
+`ModNames` finds a character by its mod's name (`Raiden`), its download folder's (`RaidenShogun`) or an alias (`Ei`), through
+AGRemap's `AhoCorasickSingleton` (longest match wins, case ignored). AGRemap's own aliases are read live from
+`FixRaidenBoss2.ModTypes`; this library's are in the hand-kept `AGIDMGen/data/ModNameData.py`. A mod, its `Mods/` folder and
+its `.ini` are named by the mod's name, never the download folder's. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)'s
+"MOD NAMES AND ALIASES".
+
+**ONE RUN, ANY GAMES: THE GAME IS FOUND FROM EACH CHARACTER (the maintainer's request, 2026-10-13).** `python -m AGIDMGen
+Zani Ayaka` makes a WuWa and a GI mod; there is no game argument (`--game GI,WuWa` only narrows the name lookup), and no
+`--download`: every name is downloaded. Both went 2026-10-13, with no compatibility for 0.1.0 (the maintainer: only a
+publishing test, nobody uses it). `IDModGenService` takes no `ModLoaders`, and `IDModGenServiceCLI` is its
+command line half, as AGRemap's `RemapServiceCLI` is `RemapService`'s. See [Architecture](AI%20Agent%20Help/Architecture/CLAUDE.md)'s
+"THE SERVICE, THE LOGGER AND `Model`".
 
 **`IDModGenService` IS THE LIBRARY'S ENTRY POINT, AND `BaseLogger` ITS VIEW (the maintainer's direction, 2026-10-05).**
 They follow AGRemap's `RemapService` / logger for API users, and for a future Django backend that will use both

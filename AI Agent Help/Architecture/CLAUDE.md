@@ -26,10 +26,11 @@ AGIDMGen/api/                 distribution folder: pyproject.toml, README.md, LI
         ModDownloader.py      finding / fetching download folders
       tools/                  generic helpers only, nothing about modding (FormatTools, DumpValueTools, VersionTools)
       data/                   generated data: ModDownloadData.py (the download folders, by buildDownloadManifest.py)
-      IDModGenService.py      the entry point (see "THE SERVICE, THE LOGGER AND Model")
+      IDModGenService.py      the entry point, the model (see "THE SERVICE, THE LOGGER AND Model")
+      IDModGenServiceCLI.py   the command line's front end over it: strings in, log file, tips, exit code
       view/                   BaseLogger, Logger: where everything is reported
       model/Model.py, model/IDModGenStats.py   the base of every reporting class; what a service run did
-      main.py, __main__.py    the command line: python -m AGIDMGen <gimi|wwmi> SOURCE ... --out FOLDER
+      main.py, __main__.py    the command line: python -m AGIDMGen SOURCE ... [--game GI,WuWa] --out FOLDER
     cpp/                      (does not exist) the future C++ core, only once Python is measured too slow
     cy/                       (does not exist) the future Cython layer, same rule
 ```
@@ -132,15 +133,55 @@ together**. What exists, and the rules it sets:
 
 - **`IDModGenService` (`AGIDMGen/IDModGenService.py`) is the entry point.** It generates several characters
   into `<outputFolder>/<name>`, from asset folders (`assetsFolders`) or download folders (`names`).
+  - **IT TAKES NO GAME (the maintainer's request, 2026-10-13: "what if the user wants Zani and Ayaka").** Each name
+    is looked up in every game (`ModNames.find(name, loaders)`, `loaders = None` for all), and each asset folder's
+    game is told by its files (`getAssetsLoader`: `hash.json` is GIMI, `Metadata.json` WWMI). It holds a generator
+    per game, `gimiGenerator` / `wwmiGenerator` (`None` for the defaults); `loaders` only narrows the name lookup.
+    Before this the service's first argument was a `ModLoaders`, and the command line's first word the game.
+  - **No name is two games'.** `ModNameDataTest.test_noNameOrAliasInTwoGames` checks it, since a name alone picks the
+    game. Across games the longest match still wins (GI's `Lumine` over WuWa's `Lumi`); an equally long match in two
+    games is refused (`find` raises "names both"), as AGRemap's `findByName` refuses an ambiguous match.
   - **`generate()` returns nothing; results are in `stats`** (`IDModGenStats`: `generated`, `skipped`,
     `noErrors`), as in `RemapService`.
   - **A failing character is recorded in `stats.skipped`, never raised.**
   - **`handleExceptions` governs only whole-run failures** (options that contradict each other): raise, or
     report and return.
   - A library `Error` is reported by its message; any other exception, being a bug, with its traceback.
-- **The command line (`main.py`) is a thin view over the service**, as AGRemap's `main.py` is over
-  `RemapServiceCLI`. It parses arguments, builds a `Logger` and a service with `handleExceptions = True`,
-  runs it, and writes `--log`. Put no generation logic in `main.py`.
+- **`IDModGenServiceCLI` is the service's command line half, as AGRemap's `RemapServiceCLI` is
+  `RemapService`'s (the maintainer's request, 2026-10-13).** Built from the strings argparse produced (`sources`,
+  `games`, `localData`, `textureFrom`, the generators' flags), or from a ready `service`. It owns the `Logger` and
+  the log file (`createLog`, written even when the run raises), prints `addTips()` after a clean run, and gives
+  `exitCode` (0 / 1 / 2). A string that does not convert (an unknown `--game`) is STORED, not raised, and
+  `generate()` raises or reports it (`hasErrorsBeforeGenerate`), as `RemapServiceCLI` does. It also owns the
+  source rules (`splitSources`): a path (`/`, `\`) or a folder holding a game's asset files is an asset folder; a bare
+  folder that names a character (an old `Yelan` mod where the command runs) is that character; anything else is a name.
+- **`--name` BECAME `--nameReplace "ei:Raiden1,Zani:Shorty"` (the maintainer's request, 2026-10-13)**, so a run of many
+  characters can rename some. The CLI parses the pairs (`parseNameReplace`: a repeated key in any case, the later wins);
+  the service's `nameReplace` dict replaced `modName`, and `getNameReplacements()` resolves each key to a character of the
+  run (an asset folder's name, or any name or alias through `ModNames`), so `ei` and `Raiden` are one key and the later
+  wins again. The generators keep `modName`: one mod.
+  - **LENIENT, BUT NEVER SILENT (the maintainer, 2026-10-13: "if some key does not exist ... or that key is invalid,
+    ignore that KVP").** A pair that is not `CHARACTER:NEWNAME`, a key for none of the run's characters, a new name that
+    is not `[A-Za-z0-9_-]+`, or one that would write into a folder another mod holds, is SKIPPED, with one "Not renaming
+    a character: ..." line each, and the run stays clean (exit 0). (It raised before that, the same day.)
+  - **KEYS ARE MATCHED WHOLE (`ModNames.match`, AGRemap's `StrEnum.match`), NOT BY `search`.** The longest-match search
+    finds `Ei` inside `Heizo` or a nonsense key, and would rename Raiden. Proven: with `match` swapped for `search`,
+    `test_nameReplace_unusablePairsSkippedWithAReason` fails.
+  - **A BASE NAME RENAMES EVERY PART (the maintainer's request).** WWMI-Assets splits some characters into several mods
+    (`CarlottaBody`, `CarlottaHairCrystal`, ...). `data/ModNameData.py`'s hand-kept `ModNamePartData` lists each part's
+    base (`ModName.base`, `.part`), because a prefix cannot tell a part from a skin (`SanhuaExorcist`, `YelanTranquil`).
+    `Carlotta:Shorty` makes `ShortyBody`, ...; a whole character with parts (`Augusta`, `AugustaHelm`) renames both; a
+    skin's parts have their own base (`CarlottaSummer`). Add a new split character's parts to that table.
+  - **A BASE NAME ALSO GENERATES EVERY PART (the maintainer's request, 2026-10-13).** `AGIDMGen carlotta` makes her three
+    parts, `Augusta` makes `Augusta` and `AugustaHelm`: `ModNames.getParts(txt)` matches the base, or a whole character's
+    name or alias, exactly, and `IDModGenService._getModNames` asks it before `search`. A part's own name is one part.
+    Checked: `carlotta lupa` matched `Mods/WuWa` byte for byte.
+- **NO `--download` AND NO GAME WORD (the maintainer, 2026-10-13: "--download is redundant").** Every name is
+  downloaded, so the option went, and the folder rule above covers the one case it had settled. The old first word
+  (`gimi Yelan`) went too, with no shim: 0.1.0 was only a publishing test. `gimi` is now an unknown name.
+- **The command line (`main.py`) only parses**: `makeArgParser` (flat: no game subcommand; GI's and WuWa's options
+  are argument groups), `makeServiceCLI`, and `main`, which asks for the characters when run with no arguments.
+  Put no generation or reporting logic in `main.py`.
 - **The logger IS AGRemap's: `FixRaidenBoss2.BaseLogger` / `FixRaidenBoss2.Logger`.** This library has no
   logger of its own, so one logger object serves both libraries in the Django backend.
   - A server subclasses `BaseLogger` and implements `write` / `read`, or reads `loggedTxt` with

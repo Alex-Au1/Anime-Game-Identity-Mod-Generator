@@ -52,6 +52,17 @@ class, so AGRemap's tester ignores them.
   (`# =============== build ======...`), and prefer a table of cases (`tests = [...]; for ... in tests:`).
 - `BaseUnitTest` gives `self.patch()` / `self.patchObj()` (mocks cleaned up automatically) and
   `compareDict` / `compareList` with readable failure messages.
+- **Check the "Ran N tests" count went UP by your new tests (2026-10-13).** A new file that is not registered above
+  still leaves the run "OK"; one session saw 127 where 139 were expected, and only the count showed it.
+- **Patch a target ONCE per test (2026-10-13).** `patchObj` files its cleanup under the target, so patching the same
+  method again inside a loop ends in `KeyError` at cleanup. Patch it before the loop and `reset_mock()` each case.
+- **Patching the data tables needs no reset (2026-10-12).** `ModNames` rebuilds its lookup whenever `ModDownloadData`,
+  `ModNameData` or `ModNamePartData` change (a cheap key per lookup), so `mock.patch.dict` on them just works, even
+  mid-test. Only a change to AGRemap's mod types needs `ModNames.clear()`.
+- **The service's tests patch the generators' `generateFromRepo`** (`mock_mod()` in `test_IDModGenService.py`) to test
+  which characters are made, under which names and folders, with no download; the real data tables are used, so
+  `["Zani", "Ayaka"]` really resolves across both games. Prove the mods themselves with a real run instead (Overview's
+  "Where the inputs live").
 - **Run a new test against broken code once** and watch it fail before you trust it.
 - **GIMI generator tests do the same** (`gimiAssetsFixture.py`): text dumps written in 3DMigoto's format
   (CRLF, as the asset repo's are), where vertex i holds the value i in every channel, so every expected
