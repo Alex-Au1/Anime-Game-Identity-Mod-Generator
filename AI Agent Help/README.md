@@ -50,6 +50,7 @@ Special Thanks to ❤:
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80%20The%20Release%20Herald-1-%238b5cf6?style=plastic&labelColor=%230f172a)
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F%F0%9F%96%8C%EF%B8%8F%20The%20Heraldic%20Limner-1-%23cbd5e1?style=for-the-badge&labelColor=%230b2f3a)
 - ![Static Badge](https://img.shields.io/badge/%F0%9F%97%82%EF%B8%8F%F0%9F%A7%AD%20The%20Module%20Marshal-1-%23ec4899?style=flat&labelColor=%231e1b4b)
+- ![Static Badge](https://img.shields.io/badge/%F0%9F%8F%B7%EF%B8%8F%F0%9F%A7%AD%20The%20Alias%20Cartographer-1-%23e11d48?style=flat-square&labelColor=%23172554)
 
 <br>
 
