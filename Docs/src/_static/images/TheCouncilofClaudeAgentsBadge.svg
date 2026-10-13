@@ -27,12 +27,13 @@
     <!-- One colour per Sub-Council member, kept as the inner inlay -->
     <linearGradient id="sbMembers" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%"      stop-color="#eab308"/>
-      <stop offset="16.67%"  stop-color="#0d9488"/>
-      <stop offset="33.33%"  stop-color="#f97316"/>
-      <stop offset="50%"     stop-color="#8b5cf6"/>
-      <stop offset="66.67%"  stop-color="#cbd5e1"/>
-      <stop offset="83.33%"  stop-color="#ec4899"/>
-      <stop offset="100%"    stop-color="#e11d48"/>
+      <stop offset="14.29%"  stop-color="#0d9488"/>
+      <stop offset="28.57%"  stop-color="#f97316"/>
+      <stop offset="42.86%"  stop-color="#8b5cf6"/>
+      <stop offset="57.14%"  stop-color="#cbd5e1"/>
+      <stop offset="71.43%"  stop-color="#ec4899"/>
+      <stop offset="85.71%"  stop-color="#e11d48"/>
+      <stop offset="100%"    stop-color="#a3e635"/>
     </linearGradient>
 
     <radialGradient id="sbGem" cx="35%" cy="30%" r="75%">

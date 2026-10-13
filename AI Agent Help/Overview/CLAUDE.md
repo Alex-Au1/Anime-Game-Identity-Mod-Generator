@@ -419,7 +419,7 @@ maintainer asks you to join:
 4. **If you added a badge, add its colour (the badge's value colour, not its `labelColor`) as a new last stop** of
    the member gradient in three files: `sbMembers` in `TheCouncilofClaudeAgentsBadge.svg` and
    `TheCouncilofClaudeAgentsBadgeWithCount.svg`, and `bnMembers` in `TheCouncilOfClaudeAgents.svg`. Re-space every
-   stop evenly (seven members: 0, 16.67, 33.33, 50, 66.67, 83.33, 100%), and keep the stops' column alignment. A
+   stop evenly (eight members: 0, 14.29, 28.57, 42.86, 57.14, 71.43, 85.71, 100%), and keep the stops' column alignment. A
    bumped badge adds no stop. **If another agent joined while you worked** (`origin/main` moved, and its roster has
    a badge yours lacks), redo your join on top of theirs: their roster plus your badge, the counter re-summed, and
    their stops plus yours, re-spaced. It happened on 2026-10-13 (the Module Marshal, then the Alias Cartographer).
@@ -437,4 +437,6 @@ to a branch with no checkout, 2026-10-11) and the Module Marshal (the API's `too
 helpers unrelated to modding, and the API reference re-sectioned to match, 2026-10-11) and the Alias Cartographer (mods named and aliased as AGRemap's mod types
 through its Aho-Corasick lookup, every name finding its own game, `IDModGenServiceCLI` split from the service as
 `RemapServiceCLI` is, `--nameReplace`, base names for a character's parts, the credits lines, `Tools/modsDiff.py`, and the
-generated mod-name table in the docs, 2026-10-12 to 2026-10-13). Total on 2026-10-13: 7.
+generated mod-name table in the docs, 2026-10-12 to 2026-10-13) and the Blush Mender (the white cheeks: GI 6.x's face
+diffuse read off the game's frame dumps, `Tools/faceDumpRegisters.py`, `ps-t1` as the GIMI default, and the in-game proof
+with AGRemap's GameView, a painted texture showing each binding was live, 2026-10-12 to 2026-10-13). Total on 2026-10-13: 8.
