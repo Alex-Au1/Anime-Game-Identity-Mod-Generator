@@ -153,6 +153,9 @@ of the prototype's time being AGRemap's DLLs loading. Nothing has needed a C++ l
 **What it keeps exactly**, because AGRemap's tools and download folders depend on it:
 
 - every buffer byte;
+- the skeleton binding of WWMI Tools 1.7.3 (since 2026-10-13, ported from AGRemap's `c6498c99`: `vs-cb4` marked binds
+  the main skeleton there and the previous pose in `vs-cb3`; else a marked `vs-cb3` gets the MAIN skeleton. The 1.3.x
+  form hid Lynae's ID card, chest pin and ear cups);
 - the WWMI BETA-2 / WWMI Tools 1.3.4 `.ini` template, with its known differences from current real
   mods (see the lessons below);
 - CRLF line endings.

@@ -283,6 +283,11 @@ py -3 gimiCheck.py prototype "E:/Computer/Games/Genshin/Repos/Repos/GI-Model-Imp
 - `--only` limits the run to some characters.
 - The run takes about 1.5 hours: the prototype spends about 40 s per character loading AGRemap's DLLs.
 
+**Rerun on 2026-10-13** (AGRemap `master` at `7106388`, after the names, credits and `ps-t1` work): `prototype` gave **the
+same 123 identical, 2,227 files, and the same 10 refused by both**; `golden` the same 216 buffers and the same 16
+exceptions. `gimiCheck.py` passes `--faceRegister ps-t0` to the library by default (the prototype's default) and skips
+the `; Authors:` / `; Github:` lines.
+
 **Result on 2026-10-05:**
 
 - **All 123 characters the asset repo can build from: identical, 2,227 files.** That includes the 31
@@ -358,6 +363,16 @@ py -3 wwmiCheck.py prototype "E:/Computer/Games/Wuthering Waves Mods/Repos/WWMI-
 `golden` also passes on the newer checkout with `--alias SanhuaExorcist=SanhuaSkin1`: 18 of 18 buffers
 match, for Sanhua and SanhuaExorcist. Every shape-key checksum and `dispatch_y` matched `Metadata.json`.
 The run takes about 20 minutes, mostly spent copying textures; use `--only` while iterating.
+
+**THE PROTOTYPE MOVED AFTER THE PORT, AND ONLY THIS CHECK SAW IT (2026-10-13).** The rerun found every `mod.ini` of all 50
+characters different, every buffer and texture identical. AGRemap had changed `wwmiIdentityMod.py` on 2026-10-05
+(`c6498c99`, "bind the skeleton in WWMI Tools 1.7.3's form") after the port was proved: Lynae draws passes with her
+skeleton in `vs-cb3` alone, the 1.3.x binding put the previous frame's pose there, and her ID card, chest pin and ear
+cups did not render. That commit reached this machine's AGRemap checkout only when the maintainer pulled it. Ported as
+`WWMIIniBuilder._bindSkeleton` (pinned by `test_ini_skeletonBoundInWWMITools173Form`, which fails on the old form); the
+rerun then gave **all 50 identical, 1,408 files**, and `Mods/WuWa` was regenerated. So: **after AGRemap's checkout
+moves, rerun both `prototype` checks**, and read a difference as "the reference changed" before "the port broke": see
+which side's history touched the code (`git log -- Tools/Misc/Prototypes/<prototype>.py` in AGRemap).
 
 AugustaHelm, CarlottaHairCrystal, CarlottaHairNormal, CarlottaSkin1HairNormal and LupaTail have **no shape keys**. The prototype writes their mod, then
 crashes printing its report (`keys[0]`). The check recognises exactly that crash and compares the files

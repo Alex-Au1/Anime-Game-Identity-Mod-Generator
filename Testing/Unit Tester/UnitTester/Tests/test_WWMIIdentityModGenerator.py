@@ -154,6 +154,22 @@ class WWMIIdentityModGeneratorTest(BaseUnitTest):
         self.assertIn(b"global $mesh_vertex_count = 7\r\n", ini)
         self.assertIn(b'data = "Tester Identity"', ini)
 
+    def test_ini_skeletonBoundInWWMITools173Form(self):
+        # vs-cb4 marked: the main skeleton there and the extra (previous pose) in vs-cb3; else vs-cb3 marked: the MAIN
+        #   skeleton in vs-cb3. The 1.3.x form bound the previous pose to a lone vs-cb3, and Lynae's thin parts vanished
+        plain = (b"vb4 = ResourceBlendBuffer\r\nif vs-cb4 == 3381.7777\r\n    vs-cb4 = ResourceMergedSkeleton\r\n"
+                 b"    if vs-cb3 == 3381.7777\r\n        vs-cb3 = ResourceExtraMergedSkeleton\r\n    endif\r\n"
+                 b"elif vs-cb3 == 3381.7777\r\n    vs-cb3 = ResourceMergedSkeleton\r\nendif\r\n")
+        self.generate()
+        self.assertIn(plain, self.readIni())
+
+        self.generate(components = self.highBoneComponents())
+        ini = self.readIni()
+        for suffix in (b"", b"Override"):
+            self.assertIn(b"    if vs-cb4 == 3381.7777\r\n        vs-cb4 = ref ResourceMergedSkeleton" + suffix + b"\r\n"
+                          b"        if vs-cb3 == 3381.7777\r\n            vs-cb3 = ref ResourceExtraMergedSkeleton" + suffix + b"\r\n        endif\r\n"
+                          b"    elif vs-cb3 == 3381.7777\r\n        vs-cb3 = ref ResourceMergedSkeleton" + suffix + b"\r\n    endif\r\n", ini, suffix)
+
     def test_textures_copiedAndOverriddenByHash(self):
         textures = ["Components-0-1 t=ABCD1234.dds", "Components-1 t=00ff00ff.dds", "notATexture.dds"]
         mod = self.generate(textures = textures)
