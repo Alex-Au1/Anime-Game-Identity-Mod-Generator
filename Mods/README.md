@@ -180,8 +180,8 @@ files are stored in [Git LFS](https://git-lfs.com).
 | [CarlottaSummerHairNormal](WuWa/CarlottaSummerHairNormal) | CarlottaSplashingSummerHairNormal, SummerCarlottaHairNormal, CarlottaSkin1HairNormal | 2.7 | AGIDMGen |
 | [Cartethyia](WuWa/Cartethyia) |  | 2.7 | AGIDMGen |
 | [CartethyiaFleurdelys](WuWa/CartethyiaFleurdelys) | Fleurdelys | 2.7 | AGIDMGen |
-| [Changli](WuWa/Changli) |  | 2.7 | AGIDMGen |
-| [ChangliNymph](WuWa/ChangliNymph) | ChangliLaurelNymph, LaurelNymphChangli, NymphChangli, ChangliSkin1 | 2.7 | AGIDMGen |
+| [Changli](WuWa/Changli) |  | 3.7 | AG Remap |
+| [ChangliNymph](WuWa/ChangliNymph) | ChangliLaurelNymph, ChangliSkin1, LaurelNymphChangli, NymphChangli | 3.7 | AG Remap |
 | [Chisa](WuWa/Chisa) |  | 2.8 | AG Remap |
 | [ChisaParfait](WuWa/ChisaParfait) | ChisaSkin1, ParfaitChisa | 3.7 | AG Remap |
 | [Chixia](WuWa/Chixia) |  | 2.7 | AGIDMGen |
