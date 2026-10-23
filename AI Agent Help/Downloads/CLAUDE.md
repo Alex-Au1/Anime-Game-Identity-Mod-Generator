@@ -80,6 +80,20 @@ WuWa characters (55 versions), and nothing else changed. Lynae was then generate
 GitHub (47 files, three blend remaps, checksum OK). LynaePeppermint was generated from the export
 (checksum OK).
 
+**Rebuilt against `master` `eedaf348` on 2026-10-23**, after CI's `wuwa:Lynae` failed (see [Testing](../Testing/CLAUDE.md)'s
+`modsCheck.py`). `master` had changed Lynae's and LynaePeppermint's foils (full mip chains) and added their lighting ramps
+and LynaePeppermint's jacket noise texture. It had also added Changli 3_7 and a `ChangliNymph` 3_7 folder.
+`Tartaglia/4_0` stays skipped, since no file in it names the prefix. Still 144 GI and 54 WuWa characters (57 versions).
+Lynae, LynaePeppermint, Changli and ChangliNymph were regenerated: Changli and ChangliNymph now come from 3_7.
+
+**A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME (2026-10-23).** AGRemap's new `WuWa/ChangliNymph` is the skin this repo
+kept as `WuWa/ChangliSkin1/2_7` (WWMI-Assets' name). With both in the manifest, one mod has two download folders, and
+`ModNameDataTest.test_everyFolderNamedOnce` fails. The fix was to rename this repo's folder to AGRemap's name
+(`git mv`; the files inside keep their `ChangliSkin1` prefix, which the manifest records per version). Then 2_7 (here)
+and 3_7 (AGRemap) are two versions of one character, the newest wins, and Changli is laid out the same way.
+`ModNameData` points `ChangliNymph` at the folder `ChangliNymph` and keeps `ChangliSkin1` as an alias, as `JinhsiBlossom`
+keeps `JinhsiSkin1`. Expect the same for `CarlottaSkin1*` and `JinshiSkin1` if AGRemap adds them.
+
 **A new folder is only live once it is on GitHub.** This repo's on `main`, AGRemap's on `master`.
 Committing and merging them is the maintainer's call, as it is in AGRemap (its Overview: "commit them,
 stop, and tell the maintainer").
