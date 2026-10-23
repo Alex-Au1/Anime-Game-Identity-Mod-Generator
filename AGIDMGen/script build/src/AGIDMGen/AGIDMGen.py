@@ -12,8 +12,8 @@
 #
 # Version: 2.0.0
 # Authors: Albert Gold#2696
-# Datetime Ran: Sunday, October 11, 2026 01:53:34.852 AM UTC
-# Run Hash: a6110aec-805b-4fc1-ae56-57b1d4c0b034
+# Datetime Ran: Friday, October 23, 2026 11:08:24.584 AM UTC
+# Run Hash: 4b163d44-aba5-4af7-a185-89606d6071bf
 #
 # *******************************
 # ================
@@ -30,10 +30,10 @@
 #
 # ***** AGIDMGen Script Stats *****
 #
-# Version: 0.1.0
+# Version: 0.2.0
 # Authors: Albert Gold#2696
-# Datetime Compiled: Sunday, October 11, 2026 01:53:34.854 AM UTC
-# Build Hash: 9cf7e4fb-619c-426d-b169-c52e6a84605a
+# Datetime Compiled: Friday, October 23, 2026 11:08:24.585 AM UTC
+# Build Hash: e2425cd9-1c61-4c47-b89f-84412a713b25
 #
 # *********************************
 #

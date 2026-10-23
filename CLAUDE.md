@@ -102,7 +102,10 @@ download folder: each file from AGRemap's GitHub if AGRemap keeps it, else from 
 `FixRaidenBoss2.FileDownload`. **The library knows about a folder only through the generated
 `AGIDMGen/data/ModDownloadData.py`**: rerun `Tools/Downloads/buildDownloadManifest.py` after any change to
 either repo's download folders, **on an export of AGRemap's `master` (`exportAGRemapDownloads.py`), never
-on AGRemap's checkout**, which may be on another branch. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md).
+on AGRemap's checkout**, which may be on another branch. **The manifest records the AGRemap commit it was built from,
+and `Tools/Downloads/staleManifest.py` (run first by `modsCheck.py`, so CI too) names every character AGRemap has changed
+since (2026-10-23)**: a CI failure tagged STALE MANIFEST means rebuild the manifest, not a bug here. See
+[Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md).
 
 **MODS ARE NAMED AS AGREMAP NAMES ITS MOD TYPES, AND TAKE ALIASES THE WAY AGREMAP'S DO (the maintainer's request, 2026-10-12).**
 `ModNames` finds a character by its mod's name (`Raiden`), its download folder's (`RaidenShogun`) or an alias (`Ei`), through
@@ -155,7 +158,7 @@ has pointer files, which `ModDownloader` refuses with `DownloadFailed`. Download
 - `Testing/Integration Tester/modsCheck.py`, which regenerates a sample from GitHub and checks it against the
   committed `Mods/` through their LFS pointers' sha256, fetching no LFS.
 
-**`python-publish.yml` publishes `AGIDMGen` to PyPI (2026-10-10; 0.1.0 is out, 2026-10-11)**, on a published release or
+**`python-publish.yml` publishes `AGIDMGen` to PyPI (2026-10-10; 0.1.0 is out, 2026-10-11; 0.2.0 is bumped, 2026-10-23)**, on a published release or
 by hand: both testers first, then the sdist and wheel, then a trusted-publishing upload (already registered on PyPI).
 The version is `pyproject.toml`'s, so bump it, and rebuild the script, before a release; PyPI refuses a version it has.
 A release is the maintainer's call: never start one unasked. See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s
