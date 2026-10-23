@@ -31,7 +31,11 @@ jobs:
     - name: Prove the package imports before testing anything
       run: python -c "import FixRaidenBoss2; print('FixRaidenBoss2', FixRaidenBoss2.__file__)"
 
-    # regenerates a sample of identity mods from GitHub and compares them with the committed Mods/
+    # regenerates a sample of identity mods from GitHub and compares them with the committed Mods/. It first asks
+    #   GitHub's API which characters AG Remap changed since the manifest was built (Tools/Downloads/staleManifest.py),
+    #   and names them STALE; the token only raises the API's rate limit, which runners share by IP
     - name: Run Integration Tests
       run: python modsCheck.py
       working-directory: './Testing/Integration Tester'
+      env:
+        GITHUB_TOKEN: ${{ github.token }}

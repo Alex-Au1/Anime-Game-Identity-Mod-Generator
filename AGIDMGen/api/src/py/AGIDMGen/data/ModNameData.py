@@ -183,7 +183,7 @@ ModNameData: Dict[str, Dict[str, Tuple[str, List[str]]]] = {'GI': {'Aino': ('Ain
           'Cartethyia': ('Cartethyia', []),
           'CartethyiaFleurdelys': ('CartethyiaFleurdelys', ['Fleurdelys']),
           'Changli': ('Changli', []),
-          'ChangliNymph': ('ChangliSkin1', ['ChangliLaurelNymph', 'LaurelNymphChangli', 'NymphChangli']),
+          'ChangliNymph': ('ChangliNymph', ['ChangliLaurelNymph', 'ChangliSkin1', 'LaurelNymphChangli', 'NymphChangli']),
           'Chisa': ('Chisa', []),
           'ChisaParfait': ('ChisaParfait', []),
           'Chixia': ('Chixia', []),

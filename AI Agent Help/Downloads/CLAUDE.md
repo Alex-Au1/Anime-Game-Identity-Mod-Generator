@@ -53,7 +53,8 @@ A version folder here holds **only what AGRemap's folder of the same version lac
 | --- | --- |
 | `populateDownloads.py <gi\|wuwa> <assets> <AGRemap Data/Mod Downloads> --version X_Y [--only ...] [--dryRun]` | builds every asset folder's download folder, compares it with AGRemap's newest, and writes only the difference into `Data/Mod Downloads` |
 | `exportAGRemapDownloads.py <AGRemap repo> <out> [--ref origin/master]` | exports AGRemap's `Data/Mod Downloads` exactly as `origin/master` has it (`git archive`), without touching the checkout's branch or files. **Every tool below takes this export, not the checkout** |
-| `buildDownloadManifest.py <AGRemap Data/Mod Downloads>` | writes `AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file |
+| `buildDownloadManifest.py <AGRemap Data/Mod Downloads> [--commit SHA]` | writes `AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file, and `ModDownloadAGRemapCommit`, the AGRemap commit the export was made from (read from the export's `AGRemapCommit.txt`; it refuses a folder that names none, unless `--commit`) |
+| `staleManifest.py [--ref master] [--since SHA]` | names every character folder AGRemap changed on GitHub since `ModDownloadAGRemapCommit`, by file blob hash, so a file replaced under the same name counts. Exits 1 when one is stale. `modsCheck.py` runs it first (see below) |
 | `downloadTools.py` | what the two share: `Aliases.json`, version folders, prefix detection |
 
 **Rerun `buildDownloadManifest.py` after `populateDownloads.py`, and whenever AGRemap's `master` gains a
@@ -73,12 +74,38 @@ py -3 Tools/Downloads/buildDownloadManifest.py "<scratch>/agmaster/Data/Mod Down
 The fetch only moves `origin/master`. The export never switches the checkout's branch: other agents share
 that checkout, and it was on `add-citlali` on 2026-10-05.
 
+**THE MANIFEST RECORDS ITS AGREMAP COMMIT, AND `staleManifest.py` CHECKS IT (the maintainer's request, 2026-10-23).**
+The export writes `AGRemapCommit.txt` beside its `Data/`, and the manifest keeps it as `ModDownloadAGRemapCommit` (not
+exported from the package). `staleManifest.py` diffs AGRemap's `Data/Mod Downloads` at that commit against `master`, with
+five GitHub API calls (a `GITHUB_TOKEN` raises the 60-an-hour limit, and CI passes one). It sorts the changes into:
+- **STALE**: any version folder, listed in the manifest or new. A new folder with no `Hash.json` / `Metadata.json`
+  (eg. `GI/Tartaglia/4_0`) is reported stale too, although the rebuild will skip it. A rebuild clears it, because the
+  manifest's commit becomes `master`.
+- **unused**: everything else, such as a README or a `<Name>LiveHashes.json`.
+
+It was proved against the real failure: with Lynae's old `Mods/` and the manifest pointed at `5422f264`, `modsCheck.py`
+printed `wuwa:Lynae ... -- STALE MANIFEST` and named the fix.
+
 **Rebuilt against `master` `5422f264` on 2026-10-05.** The checkout's `Data/Mod Downloads` had no local-only
 files. `master` had two WuWa characters the checkout lacked, **Lynae and LynaePeppermint** (3_7, 8 weights a
 vertex, blend remaps), and is otherwise identical. So the manifest gained exactly those two: 144 GI and 54
 WuWa characters (55 versions), and nothing else changed. Lynae was then generated entirely from AGRemap's
 GitHub (47 files, three blend remaps, checksum OK). LynaePeppermint was generated from the export
 (checksum OK).
+
+**Rebuilt against `master` `eedaf348` on 2026-10-23**, after CI's `wuwa:Lynae` failed (see [Testing](../Testing/CLAUDE.md)'s
+`modsCheck.py`). `master` had changed Lynae's and LynaePeppermint's foils (full mip chains) and added their lighting ramps
+and LynaePeppermint's jacket noise texture. It had also added Changli 3_7 and a `ChangliNymph` 3_7 folder.
+`Tartaglia/4_0` stays skipped, since no file in it names the prefix. Still 144 GI and 54 WuWa characters (57 versions).
+Lynae, LynaePeppermint, Changli and ChangliNymph were regenerated: Changli and ChangliNymph now come from 3_7.
+
+**A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME (2026-10-23).** AGRemap's new `WuWa/ChangliNymph` is the skin this repo
+kept as `WuWa/ChangliSkin1/2_7` (WWMI-Assets' name). With both in the manifest, one mod has two download folders, and
+`ModNameDataTest.test_everyFolderNamedOnce` fails. The fix was to rename this repo's folder to AGRemap's name
+(`git mv`; the files inside keep their `ChangliSkin1` prefix, which the manifest records per version). Then 2_7 (here)
+and 3_7 (AGRemap) are two versions of one character, the newest wins, and Changli is laid out the same way.
+`ModNameData` points `ChangliNymph` at the folder `ChangliNymph` and keeps `ChangliSkin1` as an alias, as `JinhsiBlossom`
+keeps `JinhsiSkin1`. Expect the same for `CarlottaSkin1*` and `JinshiSkin1` if AGRemap adds them.
 
 **A new folder is only live once it is on GitHub.** This repo's on `main`, AGRemap's on `master`.
 Committing and merging them is the maintainer's call, as it is in AGRemap (its Overview: "commit them,

@@ -238,6 +238,24 @@ the `.ini`'s last comment, and that folder was a TEMPORARY one (`tmp1ypq794d`). 
 reproducible, and the 144 committed GI mods each carried a random name. `generateFromRepo` now passes
 `sourceName = "GI/<Name>/<version>"`, and the GI mods were regenerated.
 
+**IT CAN FAIL WITH NO CHANGE HERE AT ALL: AGREMAP'S `master` MOVED (2026-10-23).** CI downloads AGRemap's files from its
+live `master`, but `Mods/` and the manifest were built from an older one. On 2026-10-23 `wuwa:Lynae` failed with
+`Textures/LynaeTexture4bee4070.dds differs; Textures/LynaeTexture74a761f5.dds differs`, because AGRemap's `f467fdb1`
+(2026-10-15) had replaced those foils with their full mip chains. **`modsCheck.py` now says so itself (2026-10-23):** it
+first runs `Tools/Downloads/staleManifest.py`, prints every folder AGRemap changed since the manifest's commit, and tags
+a differing character `-- STALE MANIFEST`, with a closing line naming the fix. `--noStaleCheck` skips it, and a GitHub
+error only prints a note. So, when a character is STALE:
+
+1. `py -3 Tools/Downloads/staleManifest.py` lists what changed, file by file. For the commits, run
+   `git -C <AGRemap> log origin/master -- "Data/Mod Downloads/<Game>/<Name>"` after a `fetch`.
+2. Do [Downloads](../Downloads/CLAUDE.md)' "BUILD THE MANIFEST FROM AGREMAP'S `master`" on a fresh export. The rebuild
+   also picks up every other character `master` gained or changed meanwhile (that day: two lighting ramps,
+   LynaePeppermint's jacket noise texture, and Changli / ChangliNymph at 3.7).
+3. Run the unit tester: `ModNameDataTest` fails if a new AGRemap folder names a character this repo already keeps
+   under another folder name (see Downloads' "A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME").
+4. Regenerate every character the manifest diff touches (`populateMods.py ... --names ...`), with `modsDiff.py` around
+   it. Every changed binary should trace to an AGRemap commit. Then run the sample and `--all`.
+
 ## THE DOWNLOAD FOLDERS' CHECK: `Testing/Integration Tester/downloadsCheck.py` (2026-10-05)
 
 ```bash
