@@ -4603,6 +4603,9 @@ ModDownloadData: Dict[str, Dict[str, Dict[str, Tuple[str, Dict[str, str]]]]] = {
                               'ZhezhiTexturee5393d0e.dds': 'AGIDMGen',
                               'ZhezhiVector.buf': 'AGIDMGen'})}}}
 
+#: The commit of Anime Game Remap's repository whose download folders this list was built from
+ModDownloadAGRemapCommit: str = 'eedaf348327feca5b3612ad6b8d8571124c08e6f'
+
 #: For each game folder, other names its characters are known by (eg. the asset repo's), and the name of their folder
 ModDownloadAliases: Dict[str, Dict[str, str]] = {'GI': {'KamisatoAyaka': 'Ayaka', 'Raiden': 'RaidenShogun', 'TravelerGirl': 'Lumine', 'YaoYao': 'Yaoyao'}, 'WuWa': {'SanhuaSkin1': 'SanhuaExorcist'}}
 ##### EndScript

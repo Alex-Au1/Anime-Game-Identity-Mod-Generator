@@ -53,7 +53,8 @@ A version folder here holds **only what AGRemap's folder of the same version lac
 | --- | --- |
 | `populateDownloads.py <gi\|wuwa> <assets> <AGRemap Data/Mod Downloads> --version X_Y [--only ...] [--dryRun]` | builds every asset folder's download folder, compares it with AGRemap's newest, and writes only the difference into `Data/Mod Downloads` |
 | `exportAGRemapDownloads.py <AGRemap repo> <out> [--ref origin/master]` | exports AGRemap's `Data/Mod Downloads` exactly as `origin/master` has it (`git archive`), without touching the checkout's branch or files. **Every tool below takes this export, not the checkout** |
-| `buildDownloadManifest.py <AGRemap Data/Mod Downloads>` | writes `AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file |
+| `buildDownloadManifest.py <AGRemap Data/Mod Downloads> [--commit SHA]` | writes `AGIDMGen/api/src/py/AGIDMGen/data/ModDownloadData.py`: every version folder with its file prefix and the repo of each file, and `ModDownloadAGRemapCommit`, the AGRemap commit the export was made from (read from the export's `AGRemapCommit.txt`; it refuses a folder that names none, unless `--commit`) |
+| `staleManifest.py [--ref master] [--since SHA]` | names every character folder AGRemap changed on GitHub since `ModDownloadAGRemapCommit`, by file blob hash, so a file replaced under the same name counts. Exits 1 when one is stale. `modsCheck.py` runs it first (see below) |
 | `downloadTools.py` | what the two share: `Aliases.json`, version folders, prefix detection |
 
 **Rerun `buildDownloadManifest.py` after `populateDownloads.py`, and whenever AGRemap's `master` gains a
@@ -72,6 +73,18 @@ py -3 Tools/Downloads/buildDownloadManifest.py "<scratch>/agmaster/Data/Mod Down
 
 The fetch only moves `origin/master`. The export never switches the checkout's branch: other agents share
 that checkout, and it was on `add-citlali` on 2026-10-05.
+
+**THE MANIFEST RECORDS ITS AGREMAP COMMIT, AND `staleManifest.py` CHECKS IT (the maintainer's request, 2026-10-23).**
+The export writes `AGRemapCommit.txt` beside its `Data/`, and the manifest keeps it as `ModDownloadAGRemapCommit` (not
+exported from the package). `staleManifest.py` diffs AGRemap's `Data/Mod Downloads` at that commit against `master`, with
+five GitHub API calls (a `GITHUB_TOKEN` raises the 60-an-hour limit, and CI passes one). It sorts the changes into:
+- **STALE**: any version folder, listed in the manifest or new. A new folder with no `Hash.json` / `Metadata.json`
+  (eg. `GI/Tartaglia/4_0`) is reported stale too, although the rebuild will skip it. A rebuild clears it, because the
+  manifest's commit becomes `master`.
+- **unused**: everything else, such as a README or a `<Name>LiveHashes.json`.
+
+It was proved against the real failure: with Lynae's old `Mods/` and the manifest pointed at `5422f264`, `modsCheck.py`
+printed `wuwa:Lynae ... -- STALE MANIFEST` and named the fix.
 
 **Rebuilt against `master` `5422f264` on 2026-10-05.** The checkout's `Data/Mod Downloads` had no local-only
 files. `master` had two WuWa characters the checkout lacked, **Lynae and LynaePeppermint** (3_7, 8 weights a

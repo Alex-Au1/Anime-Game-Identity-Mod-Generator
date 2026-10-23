@@ -13,6 +13,9 @@
 #
 # AG Remap's files are listed from the local checkout given, so that checkout must match what AG Remap's
 # GitHub master serves -- a folder only on a local branch would make the library ask for files that 404.
+# Give it an export made by exportAGRemapDownloads.py: the commit the export names (its AGRemapCommit.txt) is
+# written into the manifest as ModDownloadAGRemapCommit, which Tools/Downloads/staleManifest.py compares with
+# AG Remap's master. A folder that is not such an export needs --commit <the hash it matches>.
 #
 
 import argparse
@@ -49,8 +52,17 @@ from typing import Dict, Tuple
 
 def main() -> int:
     parser = argparse.ArgumentParser(description = "write the library's list of download folders")
-    parser.add_argument("agRemap", help = "AG Remap's 'Data/Mod Downloads' folder (a checkout matching its GitHub master)")
+    parser.add_argument("agRemap", help = "AG Remap's 'Data/Mod Downloads' folder, out of exportAGRemapDownloads.py")
+    parser.add_argument("--commit", default = None, help = "the AG Remap commit the folder matches, when it is not an export (default: the export's AGRemapCommit.txt)")
     args = parser.parse_args()
+
+    commit = args.commit
+    commitFile = os.path.join(args.agRemap, "..", "..", "AGRemapCommit.txt")
+    if (commit is None and os.path.isfile(commitFile)):
+        with open(commitFile, encoding = "utf-8") as f:
+            commit = f.read().strip()
+    if (not commit):
+        raise SystemExit(f"which AG Remap commit is '{args.agRemap}'? Export it with exportAGRemapDownloads.py, or pass --commit")
 
     roots = [(IDMG.ModDownloadRepos.AGRemap, args.agRemap), (IDMG.ModDownloadRepos.AGIDMGen, OwnDownloads)]
     data = {}
@@ -87,13 +99,15 @@ def main() -> int:
         f.write("#: For each game folder, character and version folder: the prefix of the folder's files, and the repository (a :class:`ModDownloadRepos` name) each file is kept in\n")
         f.write("ModDownloadData: Dict[str, Dict[str, Dict[str, Tuple[str, Dict[str, str]]]]] = ")
         f.write(pprint.pformat(data, width = 160, sort_dicts = True))
+        f.write("\n\n#: The commit of Anime Game Remap's repository whose download folders this list was built from\n")
+        f.write(f"ModDownloadAGRemapCommit: str = {commit!r}")
         f.write("\n\n#: For each game folder, other names its characters are known by (eg. the asset repo's), and the name of their folder\n")
         f.write("ModDownloadAliases: Dict[str, Dict[str, str]] = ")
         f.write(pprint.pformat(readAliases(), width = 160, sort_dicts = True))
         f.write("\n##### EndScript\n")
 
     counts = {game: (len(characters), sum(len(v) for v in characters.values())) for game, characters in data.items()}
-    print(f"wrote {os.path.relpath(Output, RepoRoot)}: " + ", ".join(f"{game} {c} characters / {v} versions" for game, (c, v) in counts.items()))
+    print(f"wrote {os.path.relpath(Output, RepoRoot)} from AG Remap's {commit[:8]}: " +", ".join(f"{game} {c} characters / {v} versions" for game, (c, v) in counts.items()))
     print(f"skipped (no file names the prefix): {len(skipped)}" + (f" -- {', '.join(skipped)}" if skipped else ""))
     return 0
 

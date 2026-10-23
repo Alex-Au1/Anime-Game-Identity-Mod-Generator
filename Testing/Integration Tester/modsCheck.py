@@ -24,6 +24,9 @@ import tempfile
 from checkTools import RepoRoot
 import AGIDMGen as IDMG
 
+sys.path.insert(0, os.path.join(RepoRoot, "Tools", "Downloads"))
+import staleManifest
+
 ModsFolder = os.path.join(RepoRoot, "Mods")
 Games = {"gi": IDMG.ModLoaders.GIMI, "wuwa": IDMG.ModLoaders.WWMI}
 
@@ -76,6 +79,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description = "regenerate identity mods from their download folders and compare them with Mods/")
     parser.add_argument("--names", nargs = "+", default = None, help = "game:Name for each character (default: a sample, see the header)")
     parser.add_argument("--all", action = "store_true", help = "every character in Mods/")
+    parser.add_argument("--noStaleCheck", action = "store_true", help = "do not ask GitHub which characters AG Remap changed since the manifest was built")
     parser.add_argument("--localData", action = "append", default = None, metavar = "REPO=FOLDER", help = "copy a repository's files from a local 'Data/Mod Downloads' instead of downloading them")
     args = parser.parse_args()
 
@@ -89,13 +93,27 @@ def main() -> int:
     else:
         names = args.names or Sample
 
+    # a character AG Remap changed since the manifest was built is generated from newer files than Mods/ was:
+    #   name it, rather than only reporting its files as different
+    stale = set()
+    if (not args.noStaleCheck):
+        try:
+            built, head, staleFolders, unused = staleManifest.findStale()
+            print("\n".join(staleManifest.report(built, head, staleFolders, unused)) + "\n", flush = True)
+            stale = set(staleManifest.staleCharacters(staleFolders))
+        except staleManifest.GithubError as e:
+            print(f"(could not ask GitHub whether the manifest is stale: {e})\n", flush = True)
+
     downloader = IDMG.ModDownloader(localFolders = localFolders)
     compared = 0
     failed = []
+    staleFailed = []
     for entry in names:
         key, _, name = entry.partition(":")
         loader = Games[key]
         name = IDMG.ModNames.find(name, [loader]).name
+        isStale = f"{key}:{name}" in stale
+        staleNote = " -- STALE MANIFEST: AG Remap changed this character's download folder since the manifest was built" if (isStale) else ""
         Generator = IDMG.GIMIIdentityModGenerator if (loader == IDMG.ModLoaders.GIMI) else IDMG.WWMIIdentityModGenerator
         committed = os.path.join(ModsFolder, IDMG.ModDownloadGameFolders[loader], name)
 
@@ -104,16 +122,23 @@ def main() -> int:
                 Generator().generateFromRepo(name, temp, downloader = downloader)
             except IDMG.Error as e:
                 failed.append(entry)
-                print(f"{entry}: FAILED -- {e}", flush = True)
+                if (isStale):
+                    staleFailed.append(entry)
+                print(f"{entry}: FAILED -- {e}{staleNote}", flush = True)
                 continue
 
             differences, count = compareMod(temp, committed)
             compared += count
-            print(f"{entry}: {count} files, " + ("identical to Mods/" if not differences else "DIFFERENT: " + "; ".join(differences[:6])), flush = True)
+            print(f"{entry}: {count} files, " + ("identical to Mods/" if not differences else "DIFFERENT: " + "; ".join(differences[:6]) + staleNote), flush = True)
             if (differences):
                 failed.append(entry)
+                if (isStale):
+                    staleFailed.append(entry)
 
     print(f"\n{compared} files compared; failed or different: {', '.join(failed) if failed else 'none'}")
+    if (staleFailed):
+        print(f"of those, AG Remap changed the download folders of {', '.join(staleFailed)} since the manifest was built: rebuild the "
+              "manifest and regenerate them (AI Agent Help/Testing, modsCheck.py's \"IT CAN FAIL WITH NO CHANGE HERE AT ALL\")")
     return 1 if (failed or not compared) else 0
 
 
