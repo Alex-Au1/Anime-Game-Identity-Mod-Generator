@@ -197,8 +197,8 @@ files are stored in [Git LFS](https://git-lfs.com).
 | [Iuno](WuWa/Iuno) |  | 2.7 | AGIDMGen |
 | [Jianxin](WuWa/Jianxin) |  | 2.7 | AGIDMGen |
 | [Jingran](WuWa/Jingran) |  | 3.8 | AGIDMGen |
-| [Jinhsi](WuWa/Jinhsi) | Jinshi | 2.7 | AGIDMGen |
-| [JinhsiBlossom](WuWa/JinhsiBlossom) | BlossomJinhsi, JinhsiPeachBlossom, JinhsiSkin1, PeachBlossomJinhsi, JinshiSkin1 | 2.7 | AGIDMGen |
+| [Jinhsi](WuWa/Jinhsi) | Jinshi | 3.7 | AG Remap |
+| [JinhsiBlossom](WuWa/JinhsiBlossom) | BlossomJinhsi, JinhsiPeachBlossom, JinhsiSkin1, JinshiSkin1, PeachBlossomJinhsi | 3.7 | AG Remap |
 | [Jiyan](WuWa/Jiyan) |  | 3.8 | AGIDMGen |
 | [Lily](WuWa/Lily) |  | 3.8 | AGIDMGen |
 | [Lingyang](WuWa/Lingyang) |  | 2.7 | AGIDMGen |

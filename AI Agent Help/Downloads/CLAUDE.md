@@ -100,6 +100,14 @@ and LynaePeppermint's jacket noise texture. It had also added Changli 3_7 and a 
 `Tartaglia/4_0` stays skipped, since no file in it names the prefix. Still 144 GI and 54 WuWa characters (57 versions).
 Lynae, LynaePeppermint, Changli and ChangliNymph were regenerated: Changli and ChangliNymph now come from 3_7.
 
+**Rebuilt against `master` `fefc7b75` on 2026-11-14**, after CI's `wuwa:Sanhua` failed with STALE MANIFEST: AGRemap
+had changed `SanhuaLiveHashes.json` and Changli's and ChangliNymph's tables and textures, and had added Jinhsi and
+JinhsiBlossom 3_7 (renamed here; see `Jinshi` below) and GI `Aether/4_0` and `AetherHeaven/6_3`. The two Aether
+folders are skipped like `Tartaglia/4_0`, since no file in them names the prefix. ZZZ folders are ignored. Now 144 GI and
+75 WuWa characters (85 versions). Changli, ChangliNymph, Jinhsi, JinhsiBlossom, Sanhua and SanhuaExorcist were
+regenerated with `populateMods.py --names`. A `modsDiff` tally showed every difference inside those six; SanhuaExorcist
+is unchanged.
+
 **A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME (2026-10-23).** AGRemap's new `WuWa/ChangliNymph` is the skin this repo
 kept as `WuWa/ChangliSkin1/2_7` (WWMI-Assets' name). With both in the manifest, one mod has two download folders, and
 `ModNameDataTest.test_everyFolderNamedOnce` fails. The fix was to rename this repo's folder to AGRemap's name
@@ -240,8 +248,8 @@ AGRemap had found the same on Sanhua at 3.7 (its Creating Remaps guide, "THE MOD
 The maintainer chose AGRemap's fix, live-hash twins, over a dump-built download folder:
 
 - **The table** is AGRemap's `<Name>LiveHashes.json`, in the CHARACTER folder beside the version folders: `{"_": note,
-  "<asset hash>": "<live hash>"}`. AGRemap has Sanhua, SanhuaExorcist, Changli, ChangliNymph (and on `master`, Jinhsi
-  and JinhsiBlossom); this repo has 38, starting with `WuWa/ZaniArchive/ZaniArchiveLiveHashes.json` (see "THE IN-GAME
+  "<asset hash>": "<live hash>"}`. AGRemap has Sanhua, SanhuaExorcist, Changli, ChangliNymph, Jinhsi
+  and JinhsiBlossom; this repo has 36, starting with `WuWa/ZaniArchive/ZaniArchiveLiveHashes.json` (see "THE IN-GAME
   SWEEP" below).
 - **The manifest** lists them in `ModDownloadLiveHashes` ({game: {folder: repo}}, AGRemap's first), written by
   `buildDownloadManifest.py`. `ModDownload.liveHashes` / `liveHashesFile` carry it, and `ModDownloader` fetches it from
@@ -280,7 +288,7 @@ is a separate refresh (`staleManifest.py`).
 - **Results:** 51 of the 54 pass with real textures matching a no-mod screenshot (46 at first, plus the five rebuilt
   below). Chisa, ChisaParfait, Lynae and
   LynaePeppermint needed no table (dump-built folders). The 4 AGRemap tables passed as they were. Every other passing
-  mod needed a table: this repo now keeps 38.
+  mod needed a table: this repo kept 38, and 36 since Jinhsi's two went to AGRemap's (below).
 - **Five are DEAD, not fixable by a table:** Yangyang (vb0 `bb5dfeaf`), RoverFemale (`3533a957`), Aalto (`93bbbdc0`),
   Yinlin (`42702199`) and Jiyan (`31b50c1d`) are drawn nowhere. The game draws new meshes for them: Rover's is
   `b7b6abd9` (41,562 vertices; the 2_7 folder has 31,790), and Aalto's is `21506004` (35,638 vs 35,634). They need new
@@ -369,9 +377,11 @@ recipe, prefix = folder name (no `2_7`), and named in `ModNameData.py` as the ga
 - **Partial in the purple test:** Sigrika's emissive parts and RoverFemalePerpetualSpark's crown (an accessory) stay
   unpainted.
 
-**`Jinshi` / `JinshiSkin1` here vs AGRemap's `Jinhsi` / `JinhsiBlossom`.** This repo's tables are for its own 2_7
-folders. AGRemap's `master` keeps 3_7 folders and tables under the game's spelling. On the manifest refresh, expect the
-`ChangliNymph` case below ("A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME"), with one table per folder.
+**`Jinshi` / `JinshiSkin1` became AGRemap's `Jinhsi` / `JinhsiBlossom` on the `fefc7b75` refresh (2026-11-14)**, the
+`ChangliNymph` case ("A FOLDER ALREADY KEPT HERE UNDER ANOTHER NAME"). The 2_7 folders were `git mv`ed and keep their
+`Jinshi` / `JinshiSkin1` file prefixes. This repo's two tables were deleted: a table belongs to the character folder,
+and AGRemap's tables serve its newest 3_7 folders. Its notes say they agree with the tables measured here.
+`ModNameData` keeps `Jinshi` / `JinshiSkin1` as aliases.
 
 ## HASH FILES DERIVED FROM AGREMAP'S OWN DATA: `Tools/Downloads/hashFromAGRemap.py` (2026-10-05)
 
