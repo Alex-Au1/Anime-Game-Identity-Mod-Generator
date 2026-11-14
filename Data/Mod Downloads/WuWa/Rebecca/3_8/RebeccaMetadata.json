@@ -1,0 +1,302 @@
+{
+    "vb0_hash": "e082ca87",
+    "cb4_hash": "f02baf77",
+    "vertex_count": 20849,
+    "index_count": 94470,
+    "components": [
+        {
+            "vertex_offset": 0,
+            "vertex_count": 2308,
+            "index_offset": 0,
+            "index_count": 11133,
+            "vg_offset": 0,
+            "vg_count": 4,
+            "vg_map": {
+                "0": 0,
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        },
+        {
+            "vertex_offset": 2308,
+            "vertex_count": 7241,
+            "index_offset": 11133,
+            "index_count": 34119,
+            "vg_offset": 4,
+            "vg_count": 47,
+            "vg_map": {
+                "0": 4,
+                "1": 5,
+                "2": 6,
+                "3": 7,
+                "4": 8,
+                "5": 9,
+                "6": 10,
+                "7": 11,
+                "8": 12,
+                "9": 13,
+                "10": 14,
+                "11": 15,
+                "12": 16,
+                "13": 17,
+                "14": 18,
+                "15": 19,
+                "16": 20,
+                "17": 21,
+                "18": 22,
+                "19": 23,
+                "20": 24,
+                "21": 25,
+                "22": 26,
+                "23": 27,
+                "24": 28,
+                "25": 29,
+                "26": 30,
+                "27": 31,
+                "28": 32,
+                "29": 0,
+                "30": 34,
+                "31": 35,
+                "32": 36,
+                "33": 37,
+                "34": 38,
+                "35": 39,
+                "36": 40,
+                "37": 41,
+                "38": 42,
+                "39": 43,
+                "40": 44,
+                "41": 45,
+                "42": 46,
+                "43": 47,
+                "44": 48,
+                "45": 49,
+                "46": 50
+            }
+        },
+        {
+            "vertex_offset": 9549,
+            "vertex_count": 3791,
+            "index_offset": 45252,
+            "index_count": 16116,
+            "vg_offset": 51,
+            "vg_count": 21,
+            "vg_map": {
+                "0": 0,
+                "1": 52,
+                "2": 53,
+                "3": 54,
+                "4": 55,
+                "5": 56,
+                "6": 57,
+                "7": 58,
+                "8": 59,
+                "9": 60,
+                "10": 61,
+                "11": 62,
+                "12": 63,
+                "13": 64,
+                "14": 65,
+                "15": 66,
+                "16": 67,
+                "17": 68,
+                "18": 69,
+                "19": 70,
+                "20": 71
+            }
+        },
+        {
+            "vertex_offset": 13340,
+            "vertex_count": 7139,
+            "index_offset": 61368,
+            "index_count": 31812,
+            "vg_offset": 72,
+            "vg_count": 36,
+            "vg_map": {
+                "0": 72,
+                "1": 73,
+                "2": 74,
+                "3": 75,
+                "4": 76,
+                "5": 77,
+                "6": 78,
+                "7": 79,
+                "8": 80,
+                "9": 81,
+                "10": 82,
+                "11": 83,
+                "12": 84,
+                "13": 85,
+                "14": 86,
+                "15": 87,
+                "16": 88,
+                "17": 89,
+                "18": 90,
+                "19": 91,
+                "20": 92,
+                "21": 93,
+                "22": 94,
+                "23": 95,
+                "24": 96,
+                "25": 97,
+                "26": 98,
+                "27": 99,
+                "28": 100,
+                "29": 101,
+                "30": 102,
+                "31": 103,
+                "32": 104,
+                "33": 105,
+                "34": 106,
+                "35": 0
+            }
+        },
+        {
+            "vertex_offset": 20479,
+            "vertex_count": 370,
+            "index_offset": 93180,
+            "index_count": 1290,
+            "vg_offset": 108,
+            "vg_count": 1,
+            "vg_map": {
+                "0": 0
+            }
+        }
+    ],
+    "shapekeys": {
+        "offsets_hash": "ec1ea094",
+        "scale_hash": "6739bb37",
+        "vertex_count": 77708,
+        "dispatch_y": 2429,
+        "checksum": 840
+    },
+    "export_format": {
+        "Index": {
+            "semantics": [
+                {
+                    "name": "INDEX",
+                    "index": 0,
+                    "format": "R32_UINT",
+                    "stride": 12
+                }
+            ]
+        },
+        "Position": {
+            "semantics": [
+                {
+                    "name": "POSITION",
+                    "index": 0,
+                    "format": "R32G32B32_FLOAT",
+                    "stride": 12
+                }
+            ]
+        },
+        "Blend": {
+            "semantics": [
+                {
+                    "name": "BLENDINDICES",
+                    "index": 0,
+                    "format": "R8_UINT",
+                    "stride": 8
+                },
+                {
+                    "name": "BLENDWEIGHT",
+                    "index": 0,
+                    "format": "R8_UINT",
+                    "stride": 8
+                }
+            ]
+        },
+        "Vector": {
+            "semantics": [
+                {
+                    "name": "TANGENT",
+                    "index": 0,
+                    "format": "R8G8B8A8_SNORM",
+                    "stride": 4
+                },
+                {
+                    "name": "NORMAL",
+                    "index": 0,
+                    "format": "R8G8B8_SNORM",
+                    "stride": 3
+                },
+                {
+                    "name": "BITANGENTSIGN",
+                    "index": 0,
+                    "format": "R8_SNORM",
+                    "stride": 1
+                }
+            ]
+        },
+        "Color": {
+            "semantics": [
+                {
+                    "name": "COLOR",
+                    "index": 0,
+                    "format": "R8G8B8A8_UNORM",
+                    "stride": 4
+                }
+            ]
+        },
+        "TexCoord": {
+            "semantics": [
+                {
+                    "name": "TEXCOORD",
+                    "index": 0,
+                    "format": "R16G16_FLOAT",
+                    "stride": 4
+                },
+                {
+                    "name": "COLOR",
+                    "index": 1,
+                    "format": "R16G16_UNORM",
+                    "stride": 4
+                },
+                {
+                    "name": "TEXCOORD",
+                    "index": 1,
+                    "format": "R16G16_FLOAT",
+                    "stride": 4
+                },
+                {
+                    "name": "TEXCOORD",
+                    "index": 2,
+                    "format": "R16G16_FLOAT",
+                    "stride": 4
+                }
+            ]
+        },
+        "ShapeKeyOffset": {
+            "semantics": [
+                {
+                    "name": "SHAPEKEY",
+                    "index": 0,
+                    "format": "R32G32B32A32_UINT",
+                    "stride": 16
+                }
+            ]
+        },
+        "ShapeKeyVertexId": {
+            "semantics": [
+                {
+                    "name": "SHAPEKEY",
+                    "index": 1,
+                    "format": "R32_UINT",
+                    "stride": 4
+                }
+            ]
+        },
+        "ShapeKeyVertexOffset": {
+            "semantics": [
+                {
+                    "name": "SHAPEKEY",
+                    "index": 2,
+                    "format": "R16_FLOAT",
+                    "stride": 2
+                }
+            ]
+        }
+    }
+}
