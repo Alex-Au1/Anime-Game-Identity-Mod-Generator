@@ -208,6 +208,11 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 - **The script build's check runs on PyPI's AGRemapUtils 1.0.7 (2026-10-10).** It was published on 2026-10-05,
   after AGRemap's 2026-09-10 change that gave `ScriptBuilder` its `replacements`, and it requires `ordered-set`. Checked
   from PyPI's JSON, not yet by a run on GitHub.
+- **The test runners are pinned to `ubuntu-24.04` (2026-11-14).** `ubuntu-latest` moved to Ubuntu 26.04, and
+  `actions/setup-python` has no Python 3.9 build for it, because 3.9 is past its end of life. The Unit Tests (3.9) job then failed
+  with `The version '3.9' with architecture 'x64' was not found for Ubuntu 26.04`. Check
+  `https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json` before moving the pin, or drop
+  3.9 from the matrix and the branch protection's required checks together (the job names are those checks).
 
 ## PUBLISHING TO PYPI: `python-publish.yml` (2026-10-10)
 
