@@ -1,0 +1,18 @@
+{
+  "_": "Taoqi's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-TaoqiClean38-2026-11-14-045534). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off TaoqiDraws: 15 of 15 textures, scores 0.999 - 1.000, margins over 0.25.",
+  "16d55d60": "bdb3ffb5",
+  "1dcc0f1d": "5764478b",
+  "2c5e38b6": "0cba8877",
+  "4d288374": "04d5d3d6",
+  "4e4bbb32": "7b66072a",
+  "5f5496cc": "7c4b2ef1",
+  "6c4bd3dc": "1841aa85",
+  "7c47abf0": "96807157",
+  "8383cbbf": "a506a70d",
+  "8a1d8b17": "05a85e5e",
+  "9154e0b2": "bc1d9592",
+  "a39f43c8": "eb131db8",
+  "b51d4fd4": "d73ba63b",
+  "b5c93936": "8e33f03b",
+  "d5ba0088": "93888e9e"
+}

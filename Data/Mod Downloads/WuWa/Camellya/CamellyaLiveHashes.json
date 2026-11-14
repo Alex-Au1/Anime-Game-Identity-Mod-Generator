@@ -1,0 +1,17 @@
+{
+  "_": "Camellya's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the base outfit with no Camellya mod loaded (FrameAnalysis-CamellyaClean38-2026-11-14-033353). 277dcf73 and 9b03ba8c are left out as near-ties: each scores 1.000 on its best candidate (120ce215, c3e86a78) but 0.974 on the next, two nearly identical images, so neither pair is clear. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CamellyaClean38Draws: 12 of 14 textures, scores 0.997 - 1.000, margins over 0.11. Second pass, by hand (2026-11-14): the two near-ties are one image filed twice in the asset folder (4 MB and 1 MB copies) and bound twice in the dump (4 MB on ps-t2 of draw 57, 1 MB on ps-t0 of draw 68). Matched one to one by mutual best score and size: 9b03ba8c -> c3e86a78 (4 MB, 1.000) and 277dcf73 -> 120ce215 (1 MB, 1.000). Without them her dress stayed unpainted in the purple test.",
+  "21f813ba": "742c5c7b",
+  "26e023bb": "21c818e8",
+  "277dcf73": "120ce215",
+  "29fedfbc": "af6c88fe",
+  "422a50e2": "4aeb1899",
+  "4cbab190": "d3c25884",
+  "4f357454": "e7723c8d",
+  "8383cbbf": "a506a70d",
+  "9b03ba8c": "c3e86a78",
+  "b4355151": "5a9e1b32",
+  "d8a26ff8": "4a267043",
+  "d8fd5c40": "47ae7506",
+  "e299e4ca": "f2903153",
+  "fed8469a": "6ff3ee98"
+}

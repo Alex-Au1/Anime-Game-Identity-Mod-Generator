@@ -49,7 +49,10 @@ files the library refuses.
 ## Changing what is here
 
 **Never edit a folder by hand.** They are written by `Tools/Downloads/populateDownloads.py` from the asset
-repos, and the library only knows about a folder once `Tools/Downloads/buildDownloadManifest.py` has listed it
+repos. The exceptions are WuWa's `3_8` folders (Yangyang, RoverFemale, Aalto, Yinlin, Jiyan, and 21 characters and outfits newer than
+WWMI-Assets), which AG Remap's
+`wwmiExtractDump.py` and `wwmiDownloadFolder.py` built from frame dumps, and the `<Name>LiveHashes.json` tables,
+measured with `Tools/Downloads/wwmiLiveHashes.py`. The library only knows about a folder once `Tools/Downloads/buildDownloadManifest.py` has listed it
 in `AGIDMGen/src/py/AGIDMGen/data/ModDownloadData.py`. `Aliases.json` maps an asset repo's name to the
 folder's (`KamisatoAyaka` -> `Ayaka`, `SanhuaSkin1` -> `SanhuaExorcist`). The library only finds these files
 once they are on this repository's `main`, as AG Remap's must be on its `master`.

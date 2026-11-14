@@ -1,0 +1,7 @@
+{
+  "_": "CalcharoTorso's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-CalcharoClean38-2026-11-14-043621). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CalcharoDraws: 4 of 4 textures, scores 0.965 - 1.000, margins over 0.30.",
+  "16a54566": "1bca4b80",
+  "31f8578b": "389e85b6",
+  "8b43ad38": "08836a34",
+  "d482f64e": "16b7d51e"
+}

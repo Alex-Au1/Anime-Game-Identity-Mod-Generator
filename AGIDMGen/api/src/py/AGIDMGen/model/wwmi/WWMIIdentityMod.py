@@ -63,6 +63,11 @@ class WWMIIdentityMod():
     textures: List[Tuple[:class:`str`, :class:`str`]]
         The file name of each texture in the mod's ``Textures`` folder and the hash the game binds it under
 
+    liveHashes: Optional[Dict[:class:`str`, :class:`str`]]
+        The textures that got a second override section on their live hash (see :class:`WWMIIniBuilder`): the live hash, by the hash in ``textures``. If this value is ``None``, none did :raw-html:`<br />` :raw-html:`<br />`
+
+        **Default**: ``None``
+
     Attributes
     ----------
     name: :class:`str`
@@ -97,11 +102,14 @@ class WWMIIdentityMod():
 
     textures: List[Tuple[:class:`str`, :class:`str`]]
         The file name of each texture in the mod's ``Textures`` folder and the hash the game binds it under
+
+    liveHashes: Dict[:class:`str`, :class:`str`]
+        The live hash of each texture that got a second override section on it, by the hash in :attr:`textures`
     """
 
     def __init__(self, name: str, folder: str, metadata: Dict[str, Any], components: List[WWMIDrawRange], shapeKeys: WWMIShapeKeys,
                  blendRemaps: List[WWMIBlendRemap], weightsPerVertex: int, blendStride: int, highestBone: int,
-                 bufferSizes: Dict[WWMIBuffers, int], textures: List[Tuple[str, str]]):
+                 bufferSizes: Dict[WWMIBuffers, int], textures: List[Tuple[str, str]], liveHashes: Optional[Dict[str, str]] = None):
         self.name = name
         self.folder = folder
         self.metadata = metadata
@@ -113,6 +121,7 @@ class WWMIIdentityMod():
         self.highestBone = highestBone
         self.bufferSizes = bufferSizes
         self.textures = textures
+        self.liveHashes = {} if (liveHashes is None) else liveHashes
 
     @property
     def vertexCount(self) -> int:
@@ -195,7 +204,7 @@ class WWMIIdentityMod():
         lines.append(f"  shape keys: {len(keys)} keys ({keyRange}), {shapeKeys.entryCount} (key, vertex) entries; first offsets {shapeKeys.offsets[:4].tolist()} sum {shapeKeys.checksum} "
                      f"vs Metadata checksum {sk.get('checksum')} ({'OK' if checksumMatches else 'MISMATCH'}); dispatch_y {shapeKeys.dispatchY} vs {sk.get('dispatch_y')} "
                      f"({'OK' if dispatchYMatches else 'MISMATCH'}); entries vs Metadata {sk.get('vertex_count')}")
-        lines.append(f"  textures: {len(self.textures)}" + ("" if self.textures else " (none)"))
+        lines.append(f"  textures: {len(self.textures)}" + ("" if self.textures else " (none)") + (f", {len(self.liveHashes)} also on their live hash" if self.liveHashes else ""))
         lines.append(f"  written to {self.folder}")
         return lines
 ##### EndScript

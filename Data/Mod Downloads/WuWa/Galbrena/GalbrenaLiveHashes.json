@@ -1,0 +1,23 @@
+{
+  "_": "Galbrena's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-GalbrenaCS38-2026-11-14-055118). Left out: 5f0e43e7 (best de0b8f3e at 0.0000); c121a71d (best 838efcb7 at 0.1174). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off GalbrenaCSDraws: 16 of 22 textures, scores 1.000 - 1.000, margins over 0.26. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 205adb6b -> db7a6931 ; 153bf11f -> 43f0f236 ; 748ec8ca -> 838efcb7 ; 8217b9fc -> 58c4893b.",
+  "153bf11f": "43f0f236",
+  "205adb6b": "db7a6931",
+  "21f813ba": "742c5c7b",
+  "224c55ef": "3848ff74",
+  "3a8954eb": "610712df",
+  "3c29f760": "5da69469",
+  "54d3f1fa": "52e22fd8",
+  "722aab39": "46b198df",
+  "73e396e6": "ced1306e",
+  "748ec8ca": "838efcb7",
+  "8217b9fc": "58c4893b",
+  "8383cbbf": "a506a70d",
+  "aa8d8af5": "9946b488",
+  "b2304a16": "caf28767",
+  "b5e505fe": "51d7c6df",
+  "be367fc9": "84e02bd6",
+  "cad50fd9": "87d04527",
+  "d30b1a7a": "de0b8f3e",
+  "f1c2e889": "6ae8dd10",
+  "f7e87f20": "196f252b"
+}

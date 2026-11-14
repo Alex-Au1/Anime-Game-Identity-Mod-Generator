@@ -1,0 +1,18 @@
+{
+  "_": "Zani's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the base outfit with no Zani mod loaded (FrameAnalysis-ZaniClean38-2026-11-14-022854). 18a76e47 and 612a235b are left out: the game's copies (2a2afdf7, 2f953c59) are the same images with green inverted, so the asset files are not the game's textures there. 83141b71 is bound on no draw of that frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off ZaniClean38: 15 of 18 textures, scores 1.000 - 1.000, margins over 0.33.",
+  "002ba82f": "bd24084a",
+  "1133b076": "7d64bf19",
+  "17d03603": "ebb57b91",
+  "2ba75c9c": "8edc6680",
+  "2bf706b8": "3d742ace",
+  "5bcca6de": "ebc2bf7b",
+  "5fe6e3f5": "fd05a178",
+  "67316edd": "15113ce7",
+  "6df52af4": "1b46da49",
+  "726c6138": "5a073662",
+  "7a411663": "d2b98bac",
+  "8383cbbf": "a506a70d",
+  "85371f27": "6a36128b",
+  "ac687edd": "f2338b4a",
+  "de4463e0": "9c4d3033"
+}

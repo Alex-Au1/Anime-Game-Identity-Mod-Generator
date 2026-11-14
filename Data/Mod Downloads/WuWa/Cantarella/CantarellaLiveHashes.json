@@ -1,0 +1,23 @@
+{
+  "_": "Cantarella's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-CantarellaCS38-2026-11-14-060445). Left out: 52a54db3 (best 02eb17d9 at 0.1737). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CantarellaCSDraws: 20 of 22 textures, scores 0.999 - 1.000, margins over 0.54.",
+  "0480d129": "51128274",
+  "0c868365": "91fca2ee",
+  "21f813ba": "742c5c7b",
+  "22ba1d3e": "4edca488",
+  "3cda6614": "12fc02d8",
+  "3ebe428b": "f8a325ca",
+  "5bbb1f80": "3326d604",
+  "5fb46aac": "4c14f703",
+  "76a3b6f4": "02eb17d9",
+  "787c92b8": "9120962f",
+  "8383cbbf": "a506a70d",
+  "87b19749": "0b530efe",
+  "89e2bbf1": "64dec387",
+  "8ecda31a": "f7eeb7f1",
+  "91bf0adb": "3e8c6fa3",
+  "9986ce50": "0e311b14",
+  "b00d33d6": "c3b48b20",
+  "b6deb6c2": "86d58b2c",
+  "b8fe5f0a": "829922e0",
+  "f7dadc16": "c5961a74"
+}

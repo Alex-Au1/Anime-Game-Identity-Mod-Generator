@@ -1,0 +1,19 @@
+{
+  "_": "Verina's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-VerinaClean38-2026-11-14-044157). Left out: 48c627b9 (best 3c588c9a at 0.9322). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off VerinaDraws: 16 of 17 textures, scores 0.975 - 1.000, margins over 0.44.",
+  "08be5cdb": "0cefa11c",
+  "16b54cef": "6077b727",
+  "21f813ba": "742c5c7b",
+  "237b9fd4": "9c852fb6",
+  "412de025": "ab28ed23",
+  "54fb587d": "cc9e8f3a",
+  "5e99cc67": "2fc3ceed",
+  "8383cbbf": "a506a70d",
+  "a2d01f96": "fef33864",
+  "b81ebdb2": "4509c5b1",
+  "cb01a05c": "8a90ff8c",
+  "d820db97": "151c7257",
+  "d859b60d": "de311dba",
+  "e2887be0": "cbe6a899",
+  "e2a003ed": "ed14910e",
+  "edc699f5": "10d9df5f"
+}

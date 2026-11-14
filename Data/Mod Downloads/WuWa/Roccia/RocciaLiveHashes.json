@@ -1,0 +1,22 @@
+{
+  "_": "Roccia's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-RocciaCS38-2026-11-14-060952). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off RocciaCSDraws: 19 of 19 textures, scores 1.000 - 1.000, margins over 0.14.",
+  "0807dcc7": "bb9e7a6c",
+  "21f813ba": "742c5c7b",
+  "21ff0f89": "85c7eaa7",
+  "24b44872": "238b2da3",
+  "39db08c0": "effb0d9a",
+  "48bd8b69": "a30d2bc4",
+  "4c151aa4": "31ca0e89",
+  "7515ea2e": "68d9ef04",
+  "778a83a4": "e9168f37",
+  "8383cbbf": "a506a70d",
+  "84e10138": "ac7f85a2",
+  "859f8f55": "8cf59acd",
+  "8759aa05": "818046cf",
+  "98decec7": "411a2ebc",
+  "9c46eccc": "904100ac",
+  "9c92e45e": "059beb09",
+  "c88cc1fc": "d0524bfb",
+  "c915f11c": "93c2cd44",
+  "ea12c00e": "8bed3bc9"
+}

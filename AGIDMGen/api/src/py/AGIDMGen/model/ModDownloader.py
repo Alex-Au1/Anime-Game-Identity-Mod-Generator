@@ -24,7 +24,7 @@ from ..tools.VersionTools import VersionTools
 from ..constants.ModLoaders import ModLoaders
 from ..constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders
 from ..constants.ModNames import ModNames
-from ..data.ModDownloadData import ModDownloadData
+from ..data.ModDownloadData import ModDownloadData, ModDownloadLiveHashes
 from ..exceptions.Error import Error
 from ..exceptions.DownloadFailed import DownloadFailed
 from .ModDownload import ModDownload
@@ -179,16 +179,28 @@ class ModDownloader(Model):
             The download folder, not downloaded yet
         """
 
+        game = ModDownloadGameFolders[loader]
         folder = cls.getName(loader, name)
-        versions = ModDownloadData[ModDownloadGameFolders[loader]][folder]
+        versions = ModDownloadData[game][folder]
         chosen = VersionTools.getClosest(versions, version)
         prefix, files = versions[chosen]
-        return ModDownload(loader, folder, chosen, prefix, {fileName: ModDownloadRepos[repo] for fileName, repo in files.items()})
+        liveHashes = ModDownloadLiveHashes.get(game, {}).get(folder)
+        return ModDownload(loader, folder, chosen, prefix, {fileName: ModDownloadRepos[repo] for fileName, repo in files.items()},
+                           liveHashes = None if (liveHashes is None) else ModDownloadRepos[liveHashes])
+
+    @classmethod
+    def _getLocation(cls, download: ModDownload, fileName: str) -> Tuple[ModDownloadRepos, Tuple[str, ...]]:
+        # the repository keeping a file, and its path in the repository's 'Data/Mod Downloads': the table of live hashes
+        #   is in the character's folder, beside the version folders
+        game = ModDownloadGameFolders[download.loader]
+        if (download.liveHashes is not None and fileName == download.liveHashesFile):
+            return download.liveHashes, (game, download.name, fileName)
+        return download.files[fileName], (game, download.name, download.version, fileName)
 
     @classmethod
     def getUrl(cls, download: ModDownload, fileName: str) -> str:
         """
-        Retrieves the address of a file of a download folder
+        Retrieves the address of a file of a download folder, or of the character's table of live texture hashes (:attr:`ModDownload.liveHashesFile`)
 
         Parameters
         ----------
@@ -204,9 +216,8 @@ class ModDownloader(Model):
             The address
         """
 
-        repo = download.files[fileName]
-        path = "/".join(quote(part) for part in (ModDownloadGameFolders[download.loader], download.name, download.version, fileName))
-        return f"{repo.value}/{path}"
+        repo, parts = cls._getLocation(download, fileName)
+        return f"{repo.value}/{'/'.join(quote(part) for part in parts)}"
 
     @classmethod
     def isLfsPointer(cls, path: str) -> bool:
@@ -230,11 +241,12 @@ class ModDownloader(Model):
             return f.read(len(LfsPointerHeader)) == LfsPointerHeader
 
     def _getLocalPath(self, download: ModDownload, fileName: str) -> Optional[str]:
-        root = self.localFolders.get(download.files[fileName])
+        repo, parts = self._getLocation(download, fileName)
+        root = self.localFolders.get(repo)
         if (root is None):
             return None
 
-        path = os.path.join(root, ModDownloadGameFolders[download.loader], download.name, download.version, fileName)
+        path = os.path.join(root, *parts)
         return path if (os.path.isfile(path)) else None
 
     def _downloadFile(self, url: str, fileName: str, folder: str):
@@ -245,7 +257,7 @@ class ModDownloader(Model):
 
     def download(self, download: ModDownload, folder: str) -> ModDownload:
         """
-        Downloads a download folder's files
+        Downloads a download folder's files, and the character's table of live texture hashes if it has one (:attr:`ModDownload.liveHashesFile`)
 
         Parameters
         ----------
@@ -267,8 +279,12 @@ class ModDownloader(Model):
         """
 
         os.makedirs(folder, exist_ok = True)
-        self.print("log", f"Getting {len(download.files)} files of {download.name}'s {download.version} download folder")
-        for fileName in sorted(download.files):
+        fileNames = sorted(download.files)
+        if (download.liveHashes is not None):
+            fileNames.append(download.liveHashesFile)
+
+        self.print("log", f"Getting {len(download.files)} files of {download.name}'s {download.version} download folder" + (", and its live texture hashes" if download.liveHashes is not None else ""))
+        for fileName in fileNames:
             localPath = self._getLocalPath(download, fileName)
             if (localPath is not None):
                 source = localPath

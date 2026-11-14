@@ -42,4 +42,7 @@ class ModDownloadRepos(Enum):
 
 #: The folder of each mod loader's game in ``Data/Mod Downloads``
 ModDownloadGameFolders: Dict[ModLoaders, str] = {ModLoaders.GIMI: "GI", ModLoaders.WWMI: "WuWa"}
+
+#: What the name of a character's table of live texture hashes ends with, after the name of its folder (eg. ``SanhuaLiveHashes.json``)
+ModDownloadLiveHashesSuffix = "LiveHashes.json"
 ##### EndScript

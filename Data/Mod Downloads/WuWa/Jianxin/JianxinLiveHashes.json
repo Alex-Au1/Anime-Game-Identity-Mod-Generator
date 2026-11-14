@@ -1,0 +1,21 @@
+{
+  "_": "Jianxin's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-JianxinClean38-2026-11-14-044008). Left out: a42480d2 (best 68df52f5 at 0.9440). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off JianxinDraws: 12 of 19 textures, scores 0.982 - 1.000, margins over 0.15. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 83744475 -> a95ddb0e ; be729d1a -> 2b4576f3 ; 55a56862 -> d89fd204 ; 4701ab34 -> a2e3717c ; 837eb0d7 -> afae0634 ; af3ba321 -> 771bc28d.",
+  "134a5c16": "1589b0d6",
+  "21f813ba": "742c5c7b",
+  "329a04e7": "632aff44",
+  "4701ab34": "a2e3717c",
+  "4c0805e1": "2d3286f3",
+  "55023199": "c1159ba9",
+  "55a56862": "d89fd204",
+  "5cad8d3e": "cdfb8537",
+  "6b0f5c7a": "2dbf98f8",
+  "83744475": "a95ddb0e",
+  "837eb0d7": "afae0634",
+  "8383cbbf": "a506a70d",
+  "9419c174": "38221ff5",
+  "aa95cf0b": "6fed24ef",
+  "ae193e08": "754eb014",
+  "af3ba321": "771bc28d",
+  "be729d1a": "2b4576f3",
+  "f524ad06": "84aaf8f3"
+}

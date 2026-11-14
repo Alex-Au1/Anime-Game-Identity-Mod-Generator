@@ -1,0 +1,23 @@
+{
+  "_": "Mortefi's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-MortefiClean38-2026-11-14-045338). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off MortefiDraws: 20 of 20 textures, scores 1.000 - 1.000, margins over 0.12.",
+  "0f14dc92": "f9b865ba",
+  "1d2ca7a8": "1ee00a3d",
+  "1dcc0f1d": "5764478b",
+  "2a5da812": "d476110c",
+  "39144df1": "dc4d9cb8",
+  "39e87ecf": "16d375c2",
+  "3f6dc5cc": "a4185470",
+  "539b81a3": "2b7b0645",
+  "5b5dd49a": "6a1a0d71",
+  "6a56519c": "a2c35ec8",
+  "6e183bd5": "19c2f701",
+  "6eea5977": "1a929fec",
+  "76826cfe": "10b21030",
+  "794917a4": "b69d1e56",
+  "800ac367": "cf2b0256",
+  "8383cbbf": "a506a70d",
+  "b658ce48": "0f47abac",
+  "b775a156": "45918f99",
+  "b8690bc1": "75b0fb0f",
+  "fbf9f66a": "30fcc7c6"
+}

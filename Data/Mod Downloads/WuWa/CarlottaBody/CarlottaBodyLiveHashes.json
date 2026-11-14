@@ -1,0 +1,15 @@
+{
+  "_": "CarlottaBody's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the base outfit with no Carlotta mod loaded (FrameAnalysis-CarlottaClean38-2026-11-14-034049). 137c6faa, 1842bc28, 2c08bef8, 52f88bd2, 64b1807c, 75bd903e and 9d32c434 are left out: no texture bound on her body draws (10 of them, vb0 4ba716ae) matches them (best scores 0.12 - 0.72), so their passes were not drawn in that frame. fe16e9c4 is left out by hand: it is the same image as c7918746 at a quarter of the size, and both scored 1.000 on d9a09450, which the dump binds at c7918746's size (4194452 B), so c7918746 -> d9a09450 is kept and fe16e9c4's own live hash is unknown. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CarlottaClean38Draws: 13 of 20 textures (12 kept), scores 1.000 - 1.000, margins over 0.17.",
+  "21f813ba": "742c5c7b",
+  "27abb610": "7de7b837",
+  "333ad4cc": "08d3e652",
+  "463ab246": "3a965001",
+  "6a96ee48": "2069415f",
+  "83141b71": "9efe040e",
+  "8383cbbf": "a506a70d",
+  "c7918746": "d9a09450",
+  "c83f222f": "2dc9e723",
+  "ee96e964": "259644f5",
+  "fc76838a": "abe03def",
+  "fd016c75": "f5b3ad19"
+}

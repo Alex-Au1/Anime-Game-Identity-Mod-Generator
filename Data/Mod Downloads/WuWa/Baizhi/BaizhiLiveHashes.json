@@ -1,0 +1,18 @@
+{
+  "_": "Baizhi's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-BaizhiClean38-2026-11-14-045924). Left out: 83141b71 (best 6bf7a371 at 0.3966); a2315519 (best 5d35ec4b at 0.9462). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off BaizhiDraws: 11 of 17 textures, scores 0.957 - 1.000, margins over 0.47. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 060f40ba -> fd6bb9d4 ; 0be38d62 -> 991a236f ; ff9b6df0 -> 40c797c8 ; afe67129 -> 6504b699.",
+  "060f40ba": "fd6bb9d4",
+  "0be38d62": "991a236f",
+  "1dcc0f1d": "5764478b",
+  "2adec21b": "f5e98cc7",
+  "39b39c99": "106fd273",
+  "43ae1deb": "c04e0311",
+  "4e4d79b9": "a8ea4254",
+  "64b13efd": "aec13ff5",
+  "8383cbbf": "a506a70d",
+  "afe67129": "6504b699",
+  "cac210d5": "8b2ad7cd",
+  "e6d4c134": "f37a20ec",
+  "f0f101b3": "f53d53ca",
+  "fe4e4afe": "96e747e9",
+  "ff9b6df0": "40c797c8"
+}

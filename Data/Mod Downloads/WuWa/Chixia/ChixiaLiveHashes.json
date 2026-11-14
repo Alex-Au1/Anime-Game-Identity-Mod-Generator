@@ -1,0 +1,20 @@
+{
+  "_": "Chixia's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-ChixiaClean38-2026-11-14-050319). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off ChixiaDraws: 17 of 17 textures, scores 1.000 - 1.000, margins over 0.22.",
+  "1436df36": "551cdc33",
+  "1dcc0f1d": "5764478b",
+  "3d50aa1d": "64ca4980",
+  "75333d76": "cfd3e3b7",
+  "7988637b": "ee80430d",
+  "8080d570": "fba66905",
+  "8383cbbf": "a506a70d",
+  "873ca04e": "4774d118",
+  "94afca13": "15d237fa",
+  "94d10f56": "b2ce9b20",
+  "a7141c04": "311691b1",
+  "a7fa522d": "db6abf92",
+  "ab72381e": "ff5dd065",
+  "c26ba661": "b1fe1b15",
+  "cb71b417": "07e9119a",
+  "d51104f6": "26c773bc",
+  "ebe1f999": "79ee6b50"
+}

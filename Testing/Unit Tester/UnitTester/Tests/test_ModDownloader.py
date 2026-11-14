@@ -10,12 +10,13 @@ Data = {"GI": {"Raiden": {"4_0": ("RaidenShogun", {"RaidenShogunHash.json": "AGI
                "Yelan": {"4_0": ("Yelan", {"YelanHash.json": "AGIDMGen"})}},
         "WuWa": {"SanhuaExorcist": {"2_5": ("SanhuaExorcist", {"SanhuaExorcistMetadata.json": "AGRemap"})}}}
 Aliases = {"GI": {"RaidenEi": "Raiden", "YaoYao": "Yaoyao"}, "WuWa": {"SanhuaSkin1": "SanhuaExorcist"}}
+LiveHashes = {"WuWa": {"SanhuaExorcist": "AGIDMGen"}}
 
 
 class ModDownloaderTest(BaseUnitTest):
     def setUp(self):
         super().setUp()
-        for target, values in ((IDMG.ModDownloadData, Data), (IDMG.ModDownloadAliases, Aliases)):
+        for target, values in ((IDMG.ModDownloadData, Data), (IDMG.ModDownloadAliases, Aliases), (IDMG.ModDownloadLiveHashes, LiveHashes)):
             patcher = mock.patch.dict(target, values, clear = True)
             patcher.start()
             self.addCleanup(patcher.stop)
@@ -118,6 +119,36 @@ class ModDownloaderTest(BaseUnitTest):
         for i, (content, expected) in enumerate(tests):
             path = self.makeLocal("p", f"f{i}", content)
             self.assertEqual(IDMG.ModDownloader.isLfsPointer(os.path.join(path, f"f{i}")), expected, i)
+
+    # =============== live texture hashes ===================================
+
+    def test_liveHashes_foundOnlyForTheCharacterThatHasThem(self):
+        download = IDMG.ModDownloader.find(IDMG.ModLoaders.WWMI, "SanhuaSkin1")
+        self.assertEqual((download.liveHashes, download.liveHashesFile), (IDMG.ModDownloadRepos.AGIDMGen, "SanhuaExorcistLiveHashes.json"))
+        self.assertIsNone(IDMG.ModDownloader.find(IDMG.ModLoaders.GIMI, "Raiden").liveHashes)
+
+    def test_liveHashes_besideTheVersionFolders(self):
+        # the table is in the character's folder, not in a version folder, and comes from the repo that keeps it
+        download = IDMG.ModDownloader.find(IDMG.ModLoaders.WWMI, "SanhuaExorcist")
+        self.assertEqual(IDMG.ModDownloader.getUrl(download, "SanhuaExorcistLiveHashes.json"),
+                         "https://github.com/Alex-Au1/Anime-Game-Identity-Mod-Generator/raw/main/Data/Mod%20Downloads/WuWa/SanhuaExorcist/SanhuaExorcistLiveHashes.json")
+
+        agRemap = self.makeLocal("ag", "WuWa/SanhuaExorcist/2_5/SanhuaExorcistMetadata.json", b"{}")
+        own = self.makeLocal("own", "WuWa/SanhuaExorcist/SanhuaExorcistLiveHashes.json", b"{}")
+        self.patchObj(IDMG.ModDownloader, "_downloadFile")
+        out = os.path.join(self._temp.name, "out")
+        IDMG.ModDownloader(localFolders = {IDMG.ModDownloadRepos.AGRemap: agRemap, IDMG.ModDownloadRepos.AGIDMGen: own}).download(download, out)
+        self.assertEqual(sorted(os.listdir(out)), ["SanhuaExorcistLiveHashes.json", "SanhuaExorcistMetadata.json"])
+        IDMG.ModDownloader._downloadFile.assert_not_called()
+
+    def test_liveHashesMissing_raises(self):
+        # a table the manifest lists but the repo does not serve is a failed download, like any other file
+        agRemap = self.makeLocal("ag", "WuWa/SanhuaExorcist/2_5/SanhuaExorcistMetadata.json", b"{}")
+        self.patchObj(IDMG.ModDownloader, "_downloadFile")
+        with self.assertRaises(IDMG.DownloadFailed) as context:
+            IDMG.ModDownloader(localFolders = {IDMG.ModDownloadRepos.AGRemap: agRemap}).download(
+                IDMG.ModDownloader.find(IDMG.ModLoaders.WWMI, "SanhuaExorcist"), os.path.join(self._temp.name, "out"))
+        self.assertIn("SanhuaExorcistLiveHashes.json", str(context.exception))
 
     def test_failedDownload_raisesDownloadFailed(self):
         downloader = IDMG.ModDownloader()

@@ -1,0 +1,20 @@
+{
+  "_": "Yuanwu's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-YuanwuClean38-2026-11-14-044949). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off YuanwuDraws: 11 of 17 textures, scores 0.999 - 1.000, margins over 0.39. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): a6c496bb -> d8795435 ; 7feb53b2 -> 4afc8879 ; 7681bf3d -> 11370262 ; 31d64d0d -> 79e7638f ; 091b887c -> 05f19e62 ; 448bcf7c -> e6d0af70.",
+  "091b887c": "05f19e62",
+  "1dcc0f1d": "5764478b",
+  "31d64d0d": "79e7638f",
+  "3b98aaf4": "09e333de",
+  "448bcf7c": "e6d0af70",
+  "53e67a3d": "538390d6",
+  "7681bf3d": "11370262",
+  "7a0e2aa2": "1eeb433e",
+  "7b4fd238": "36f26d29",
+  "7feb53b2": "4afc8879",
+  "8383cbbf": "a506a70d",
+  "a6c496bb": "d8795435",
+  "bda4f564": "6f01d0fd",
+  "c35df1ad": "398ece52",
+  "d6b9870f": "0a95a341",
+  "d9a6d77f": "73ee1d2e",
+  "f008ac1c": "ee88cd19"
+}

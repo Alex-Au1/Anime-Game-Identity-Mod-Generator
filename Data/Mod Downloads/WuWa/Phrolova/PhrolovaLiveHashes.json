@@ -1,0 +1,20 @@
+{
+  "_": "Phrolova's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-PhrolovaCS38-2026-11-14-055635). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off PhrolovaCSDraws: 17 of 17 textures, scores 1.000 - 1.000, margins over 0.22.",
+  "183fe440": "abd78989",
+  "21f813ba": "742c5c7b",
+  "2a818c36": "d3cd9504",
+  "5052ee31": "0b5b50ae",
+  "584e289f": "d44d6c55",
+  "5ef9b4d3": "ec7bb0fa",
+  "8383cbbf": "a506a70d",
+  "854d739c": "971e6193",
+  "a7bc8074": "97715493",
+  "b55a11e4": "84cd66ac",
+  "b7d01975": "5a594240",
+  "c88cc1fc": "d0524bfb",
+  "c9a55c1a": "d6de6ec6",
+  "d054db9b": "6981dea4",
+  "d8121963": "1b751255",
+  "dd620352": "388a3c12",
+  "eb978a29": "f8d108e3"
+}

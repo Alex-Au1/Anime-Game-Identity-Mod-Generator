@@ -1,0 +1,19 @@
+{
+  "_": "Lumi's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-LumiClean38-2026-11-14-044549). Left out: 1e238f6c (ec23c4a9 is the same image with G inverted); a614279c (e5a2336a is the same image with G inverted); f70a4c5a (best 1552ebc2 at 0.8366). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off LumiDraws: 16 of 19 textures, scores 0.999 - 1.000, margins over 0.21.",
+  "0d6f5019": "ee63c064",
+  "1dcc0f1d": "5764478b",
+  "27308969": "48969ded",
+  "33d29aa1": "1af2edfe",
+  "43682482": "ba6dedda",
+  "68916487": "fe7f821f",
+  "801f9d6e": "11940212",
+  "80fdc4d8": "f1c2c8b8",
+  "8383cbbf": "a506a70d",
+  "8e28c8e7": "789987f6",
+  "ac26dd3b": "399a5cff",
+  "c38e9ebc": "ef921611",
+  "c3b2f4ed": "2a4bf91a",
+  "d23090a3": "054e21cf",
+  "d2ad31db": "b842d083",
+  "f93d2a49": "091274b4"
+}
