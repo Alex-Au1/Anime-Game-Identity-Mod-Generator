@@ -167,6 +167,8 @@ same commit.
 | `AGIDMGen/data/ModNameData.py`'s `ModNamePartData` (a character split into parts) | the unit tester (`ModNameDataTest.test_everyPartIsAModOfItsGame`) | nothing to regenerate: parts only change how names are looked up |
 | `AGIDMGen/data/ModNameData.py` (a mod's name or aliases) | the unit tester (`ModNameDataTest` checks the table against the manifest and AGRemap's names) | a renamed mod: regenerate it (`populateMods.py --names <new name>`, which deletes the old folder), then `modsCheck.py --all` |
 | `Data/Mod Downloads`, or AGRemap's `master` gained or changed a folder (`staleManifest.py` / `modsCheck.py` say STALE) | `buildDownloadManifest.py` on a fresh `master` export ([Downloads](../Downloads/CLAUDE.md)); then `staleManifest.py` must say "up to date" | regenerate the affected `Mods/` characters (`--names ...`) |
+| A WuWa texture override that never fires in game (the purple test stays unpainted; 2026-11-14) | measure the live hashes from a dump with `Tools/Downloads/wwmiLiveHashes.py` into `<Folder>LiveHashes.json` ([Downloads](../Downloads/CLAUDE.md)' "LIVE TEXTURE HASHES"), then the purple test again | `buildDownloadManifest.py`, regenerate the character (`--names`), `modsCheck.py --all` |
+| A WuWa character or outfit no download folder has, or one whose mesh the game replaced (no part turns purple, its `vb0` is drawn nowhere; 2026-11-14) | a dump-built `<Name>/3_8` folder with AGRemap's `wwmiExtractDump.py` / `wwmiDownloadFolder.py`, checked by `wwmiCheckDownload.py` (0 unexplained) and the purple test ([Downloads](../Downloads/CLAUDE.md)' "DUMP-BUILT `3_8` FOLDERS") | add the name to `ModNameData.py` (habit 17), `buildDownloadManifest.py`, `populateMods.py --only wuwa` inside a `modsDiff` snapshot/compare, the unit tester, `modsCheck.py --all`, and the mod counts in the root `README.md` and `CLAUDE.md` |
 | A public name (new class, function, constant) | `Tools/auditApiDocs.py`, and the docs build | add its `api.rst` entry ([Documentation](../Documentation/CLAUDE.md)) |
 | A module moved between package folders (eg. `tools/` -> `model/`, 2026-10-11) | the unit tester, `auditApiDocs.py`, the docs build (at its 2-warning baseline), `modsCheck.py`, and both `golden` checks, whose output must equal the baselines in [Testing](../Testing/CLAUDE.md) | move the `api.rst` entry to its folder's section and fix any `autodata` full path; update [Architecture](../Architecture/CLAUDE.md)'s layout. No `Mods/` regeneration: a move changes no bytes, and `modsCheck.py` proves it |
 | A workflow in `.github/workflows` | a PyYAML parse of every workflow, and check each `uses:` target exists and each input passed is declared (no wiring checker here yet, unlike AGRemap's `checkWorkflowWiring.py`) | keep the job names: they are required checks |
@@ -181,7 +183,9 @@ same commit.
   ..." is one line to read. `git diff --stat Mods` after a full regeneration takes over ten minutes here (it rehashes the
   LFS files) and tells you less. `--mods Mods/WuWa` for one game. Proven against a deliberately broken copy (one
   binary byte, one `.ini` line) on 2026-10-13. A full `populateMods.py` run takes about ten minutes: run it in the
-  background.
+  background. **It prints only the first 40 problems** ("... and 1097 more"): when new mods are expected, import
+  `Tools/modsDiff.py` from Python and count the appeared / vanished / changed files per mod (`modsDiff.modName`), so
+  you can see that every one is inside a new mod (2026-11-14).
 - **The checks that need this machine's asset repos and AGRemap's prototypes** (`gimiCheck.py`,
   `wwmiCheck.py`, `downloadsCheck.py`) do not run in CI. If you changed a generator, CI passing is not enough;
   run them here.
@@ -199,10 +203,24 @@ same commit.
 | The maintainer's launcher, which runs THIS checkout's library on real mods | `AGIDMGenLauncher.py` in that same `GIMI\Mods` folder. It passes every argument to `AGIDMGen.main.main`, so it needs no code change, but its header lists example commands: update them when the command line changes |
 | A quick real run with no downloads | `python -m AGIDMGen Zani Ayaka --out <scratch> --localData AGRemap=<export>/Data/Mod Downloads --localData "AGIDMGen=Data/Mod Downloads"`, with `PYTHONPATH` = AGRemap's `api/src/py;AGIDMGen/api/src/py`, and `<export>` from `exportAGRemapDownloads.py`. Compare the output with `Mods/` through `modsCheck.compareMod` |
 
+**The `E:\` paths above belong to the maintainer's other machine.** If `E:\` is missing, these are the 2026-11 machine's
+locations (checked 2026-11-14); swap them into any guide's command that names an `E:\` path:
+
+| What | Where (the `C:\Users\AlexX` machine) |
+| --- | --- |
+| AGRemap | `C:\Users\AlexX\Documents\Games\Mods\Repos\Anime-Game-Remap` (API: `Anime Game Remap (for all users)\api\src\py`; AGRemapUtils: `Tools\Utilities\src\AGRemapUtils`; GameView: `Tools\GameView`) |
+| WuWa assets | `C:\Users\AlexX\Documents\Games\Mods\Repos\WuWa\WWMI-Assets` |
+| XXMI (GIMI and WWMI `Mods`, frame dumps in `WWMI\FrameAnalysis-*`) | `C:\Users\AlexX\Documents\Games\Mods\XXMI-Launcher-Portable-v1.8.5` |
+| The maintainer's launcher | `...\XXMI-Launcher-Portable-v1.8.5\WWMI\Mods\AGIDMGenLauncher.py` |
+| WuWa install (LOD bias: `ImageDetail` in `Client\Saved\LocalStorage\LocalStorage.db`, 2 = max) | `D:\Wuthering Waves\Wuthering Waves Game` |
+
 Read a file on AGRemap's `master` with `git -C <AGRemap> show master:<path>`. A `git grep` over all of
 `master` takes minutes.
 
 ### THIS MACHINE'S TOOLING QUIRKS (2026-10-10)
+
+- **On the `C:\Users\AlexX` machine, Git Bash has no `python`: use `py` (2026-11-14).** Every guide's `py -3 ...` works
+  as written.
 
 - **Keep `Mods/` and `Data/` out of a search.** They hold several GB, and a repo-wide `grep -r` runs past
   the tool timeout. Search `AGIDMGen/`, `Testing/`, `Tools/` and `AI Agent Help/`, or pass a glob that
@@ -378,6 +396,20 @@ full. The ones that matter most for a generator library:
     files; do not commit them twice. **And when someone else is pulling or switching branches** (Windows'
     process list shows `git checkout` / `git pull` / `merge FETCH_HEAD`), wait for it to end; do not start git commands
     into it. The desktop app's own background `git status` calls are many and harmless; a branch operation is not.
+23. **"Does it work?" for WuWa means in game, for every mod, and WWMI-Assets is not the game (2026-11-14).** All of
+    `Mods/WuWa` passed every byte check while most of its 54 mods bound textures the game never used (streamed live
+    hashes), and five drew nothing (meshes the game had replaced).
+    WWMI-Assets stopped at 2025-10-10, so it also lacks every character since. When asked about "all" characters, list
+    them from the game (Crossing Stars, outfit screens, the Store; [Testing](../Testing/CLAUDE.md)'s "THE WUWA SWEEP"),
+    not from an asset repo or AGRemap.
+24. **Hand hours of game driving to ONE background game agent, in epochs, and check what it reports (2026-11-14).** The
+    maintainer asked for "epoch cycles": each epoch a subagent sweeps, builds or fixes, then reports; you verify and
+    send the next. Give it the recipe, the baseline mod list, the end state the maintainer wants (eg. the overworld),
+    and the limits (no purchases, no settings, no commits, no edits to library code or `ModNameData.py`). Its interim
+    "waiting on background work" notifications are not its report. When it reports, check its claims yourself before
+    relaying them: the new folders, a manifest diff with no removed line, `mods WWMI list` against the baseline, no
+    `FrameAnalysis-*` of its own left, `d3dx.ini` restored. Relay what it touched outside the task (an accidental
+    settings page) to the maintainer.
 
 ## Add yourself to The Sub-Council
 
@@ -439,4 +471,7 @@ through its Aho-Corasick lookup, every name finding its own game, `IDModGenServi
 `RemapServiceCLI` is, `--nameReplace`, base names for a character's parts, the credits lines, `Tools/modsDiff.py`, and the
 generated mod-name table in the docs, 2026-10-12 to 2026-10-13) and the Blush Mender (the white cheeks: GI 6.x's face
 diffuse read off the game's frame dumps, `Tools/faceDumpRegisters.py`, `ps-t1` as the GIMI default, and the in-game proof
-with AGRemap's GameView, a painted texture showing each binding was live, 2026-10-12 to 2026-10-13). Total on 2026-10-13: 8.
+with AGRemap's GameView, a painted texture showing each binding was live, 2026-10-12 to 2026-10-13) and the Purple Prover
+(every WuWa mod painted purple in game: the live-hash twins and `wwmiLiveHashes.py`, 42 tables, the dead meshes and 21
+characters and outfits newer than WWMI-Assets rebuilt as dump-built `3_8` folders, and a background game agent run in
+epochs, 2026-11-14). Total on 2026-11-14: 9.

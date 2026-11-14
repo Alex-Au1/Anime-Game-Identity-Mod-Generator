@@ -314,6 +314,14 @@ python wwmiIdentityMod.py <assets> <mod> [--name] [--author "Anime Game Remap"] 
 | textures | bound to `ps-t*` registers per object, layout by shader family (ORFix / NNFix) | overridden by hash (`this =`), no register lines |
 | shape keys | none | sparse shape-key buffers |
 
+### A WWMI TEXTURE OVERRIDE ON THE ASSET HASH NEVER FIRES: LIVE-HASH TWINS (2026-11-14)
+
+WuWa binds a texture under its streamed ("live") hash, not WWMI-Assets' one, so until 2026-11-14 every WWMI identity
+mod's `[TextureOverrideTexture<n>]` did nothing in game and the game drew its own texture, which looks the same. Only a
+purple test shows it. A character with a `<Name>LiveHashes.json` now gets a `[TextureOverrideTexture<n>Live]` twin per
+texture (5 of 54 mods on 2026-11-14: Changli, ChangliNymph, Sanhua, SanhuaExorcist, Zani); the others still bind dead
+hashes until a table is measured for them. See [Downloads](../Downloads/CLAUDE.md)' "LIVE TEXTURE HASHES".
+
 ## LESSONS AGREMAP RECORDED ABOUT IDENTITY MODS
 
 These are AGRemap's, dated as recorded there (in `AI Agent Help/CreatingRemaps`, `VGRemaps` and `Overview`).

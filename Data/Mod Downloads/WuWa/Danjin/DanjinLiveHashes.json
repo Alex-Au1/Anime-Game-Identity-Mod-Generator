@@ -1,0 +1,22 @@
+{
+  "_": "Danjin's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-DanjinClean38-2026-11-14-045145). Left out: 83141b71 (best 6bf7a371 at 0.3966). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off DanjinDraws: 11 of 20 textures, scores 1.000 - 1.000, margins over 0.38. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 3802a4e4 -> 75ca69a3 ; cea68862 -> 698b7c01 ; 65e1499b -> 76241d48 ; beefbd72 -> 47ce2cf2 ; 11315dc1 -> 93d41230 ; d35da2f0 -> 193e38ce ; 8ae06cff -> ce592722 ; 45a6240e -> 42b069e8.",
+  "0709c3c2": "3529e545",
+  "11315dc1": "93d41230",
+  "18a39719": "5572b370",
+  "1dcc0f1d": "5764478b",
+  "3802a4e4": "75ca69a3",
+  "45a6240e": "42b069e8",
+  "659ab32e": "681bd034",
+  "65e1499b": "76241d48",
+  "689e446c": "0b863d63",
+  "6969fb89": "d5088649",
+  "7536f732": "387fd9fd",
+  "8383cbbf": "a506a70d",
+  "8ae06cff": "ce592722",
+  "99179105": "094d09b4",
+  "beefbd72": "47ce2cf2",
+  "cea68862": "698b7c01",
+  "d2db5a56": "2368e5e0",
+  "d35da2f0": "193e38ce",
+  "ec8f6254": "4cb3388f"
+}

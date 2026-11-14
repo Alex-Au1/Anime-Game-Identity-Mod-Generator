@@ -1,0 +1,20 @@
+{
+  "_": "LupaBody's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-LupaCS38-2026-11-14-055915). Left out: 53b0c79c (best ec448bc6 at 0.2597); 5b5e8084 (best e18c31ec at 0.1735); 83141b71 (best 6bf7a371 at 0.3966). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off LupaCSDraws: 16 of 20 textures, scores 1.000 - 1.000, margins over 0.49. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 87505b2b -> 20b169ce.",
+  "1443c0c0": "dfbf87de",
+  "21f813ba": "742c5c7b",
+  "248b354f": "1efff1fe",
+  "312fc5e4": "539bb5be",
+  "3ba4af04": "7bf47422",
+  "3cf552bd": "e18c31ec",
+  "41532ac9": "23097842",
+  "4c57726e": "fad39b8d",
+  "6f70c428": "7fdbbf5c",
+  "8383cbbf": "a506a70d",
+  "87505b2b": "20b169ce",
+  "8f9bacd2": "44f39c4a",
+  "9d5fe765": "30e60a96",
+  "b7a16140": "dee5c4df",
+  "bbb18270": "4da5a0ce",
+  "d1c82bf3": "9f73f4b1",
+  "eb3b4396": "757d77d3"
+}

@@ -45,6 +45,11 @@ request here" (2026-10-10).** It has:
   machine, then drive the game with AGRemap's GameView. **Paint the texture flat purple to prove a binding is live**,
   because an identity mod binds the game's own texture and a dead binding looks the same as a working one. The recipe
   and its traps are in [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "LOOKING AT A GENERATED MOD IN GAME";
+- **a WuWa mod that passes every byte check can still be dead in game** (habits 23-24): check by the purple test,
+  list "all characters" from the game's own menus (Crossing Stars, the Store, outfit cards), not from WWMI-Assets, and
+  hand long game driving to one background game agent in epochs whose reports you verify. The checklist has rows for a
+  dead texture (a `LiveHashes.json` table) and a missing or replaced model (a dump-built `3_8` folder);
+- **the guides' `E:\` paths are the maintainer's other machine**: Overview's "Where the inputs live" has this one's;
 - **another agent may commit your uncommitted work for you** (habit 22): check `origin/main`'s last commits for your
   files before committing, and never start git commands into someone else's running `git checkout` / `git pull`.
 
@@ -94,6 +99,13 @@ See [Identity Mods](AI%20Agent%20Help/IdentityMods/CLAUDE.md) and [Testing](AI%2
 `ps-t1`; on `ps-t0` it lands in the face's light-map slot and its blush mask shows as white cheeks. Read off the game's
 frame dumps (`Tools/faceDumpRegisters.py`) and proved in game. AGRemap's prototype still defaults to `ps-t0`, which
 `gimiCheck.py` mirrors. See [Identity Mods](AI%20Agent%20Help/IdentityMods/CLAUDE.md)'s "WHITE CHEEKS".
+
+**WWMI MODS OVERRIDE A TEXTURE ON ITS LIVE HASH TOO, WHERE A `<Name>LiveHashes.json` EXISTS (the maintainer's choice,
+2026-11-14).** WuWa binds streamed textures under hashes WWMI-Assets does not have, so an override on the asset hash
+silently never fires (Zani's purple test). `ModDownloadLiveHashes` lists AGRemap's tables and this repo's (measured with
+`Tools/Downloads/wwmiLiveHashes.py`), and `WWMIIniBuilder` adds a `[TextureOverrideTexture<n>Live]` twin. 42 WuWa mods have one
+(2026-11-14). An in-game sweep proved 51 of the first 54 mods; the other 3 cannot be shown from the menus. 21 characters and outfits newer than WWMI-Assets were dump-built as `3_8` folders too (75 WuWa mods; Hsin is past the 512-bone limit). Five
+(Yangyang, RoverFemale, Aalto, Yinlin, Jiyan) had new meshes at 3.8, so they got dump-built `3_8` folders, not tables. See [Downloads](AI%20Agent%20Help/Downloads/CLAUDE.md)' "LIVE TEXTURE HASHES".
 
 **IDENTITY MODS CAN BE GENERATED WITH NO ASSET REPO, FROM DOWNLOAD FOLDERS (2026-10-05).**
 `generateFromRepo` / `python -m AGIDMGen <Name> ...` fetches a character's newest
@@ -167,7 +179,7 @@ A release is the maintainer's call: never start one unasked. See [Testing](AI%20
 **Job names are branch-protection check names; do not rename them casually.** See [Testing](AI%20Agent%20Help/Testing/CLAUDE.md)'s "CI".
 
 **`Mods/` HOLDS EVERY CHARACTER'S PRE-GENERATED IDENTITY MOD (2026-10-06)**, for users who do not want to run
-the library. There are 144 GI and 54 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed in `Mods/README.md`.
+the library. There are 144 GI and 75 WuWa mods, `Mods/<GI|WuWa>/<Name>/`, listed in `Mods/README.md`.
 
 - **It is all generated** by `Tools/populateMods.py`, through `IDModGenService`, from each character's newest
   download folder. Rerun the tool; never edit `Mods/` by hand.

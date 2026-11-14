@@ -1,0 +1,18 @@
+{
+  "_": "Brant's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-BrantCS38-2026-11-14-060730). Left out: 33a5aeec (70c5f622 is the same image with G inverted); 9c7aac2e (53ca75a4 is the same image with G inverted). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off BrantCSDraws: 15 of 17 textures, scores 1.000 - 1.000, margins over 0.17.",
+  "0f4e6e0a": "cf4ff3f7",
+  "10cdc735": "e115dd0f",
+  "152d68e6": "0b524855",
+  "21f813ba": "742c5c7b",
+  "3253c8b4": "dc9a7614",
+  "53770d61": "3beb30a2",
+  "541ea4fd": "4650a24e",
+  "8158aa6e": "a222d0c0",
+  "8383cbbf": "a506a70d",
+  "8b117bac": "24c9af9b",
+  "92036301": "7b561212",
+  "b5976b09": "bfcb8998",
+  "c1f72669": "cd3d16ef",
+  "ef87053b": "86719b26",
+  "f69259fd": "2d084d20"
+}

@@ -10,13 +10,13 @@
 
 
 ##### ExtImports
-from typing import Dict
+from typing import Dict, Optional
 ##### EndExtImports
 
 
 ##### LocalImports
 from ..constants.ModLoaders import ModLoaders
-from ..constants.ModDownloadRepos import ModDownloadRepos
+from ..constants.ModDownloadRepos import ModDownloadRepos, ModDownloadLiveHashesSuffix
 ##### EndLocalImports
 
 
@@ -43,6 +43,11 @@ class ModDownload():
     files: Dict[:class:`str`, :class:`ModDownloadRepos`]
         The repository each file is kept in, by file name
 
+    liveHashes: Optional[:class:`ModDownloadRepos`]
+        The repository that keeps the character's table of live texture hashes (:attr:`liveHashesFile`, beside the version folders), or ``None`` if neither does :raw-html:`<br />` :raw-html:`<br />`
+
+        **Default**: ``None``
+
     Attributes
     ----------
     loader: :class:`ModLoaders`
@@ -60,15 +65,32 @@ class ModDownload():
     files: Dict[:class:`str`, :class:`ModDownloadRepos`]
         The repository each file is kept in, by file name
 
+    liveHashes: Optional[:class:`ModDownloadRepos`]
+        The repository that keeps the character's table of live texture hashes, or ``None`` if neither does
+
     folder: Optional[:class:`str`]
         Where the files were downloaded to, or ``None`` if they have not been
     """
 
-    def __init__(self, loader: ModLoaders, name: str, version: str, prefix: str, files: Dict[str, ModDownloadRepos]):
+    def __init__(self, loader: ModLoaders, name: str, version: str, prefix: str, files: Dict[str, ModDownloadRepos], liveHashes: Optional[ModDownloadRepos] = None):
         self.loader = loader
         self.name = name
         self.version = version
         self.prefix = prefix
         self.files = files
+        self.liveHashes = liveHashes
         self.folder = None
+
+    @property
+    def liveHashesFile(self) -> str:
+        """
+        The name of the character's table of live texture hashes: ``<name>LiveHashes.json``, kept in the character's folder
+        beside its version folders. It holds, for each texture, the hash the game binds it under once it has fully loaded
+        (WuWa streams its textures, and the hash changes as one loads), by the hash the download folder files it under
+
+        :getter: Retrieves the file name
+        :type: :class:`str`
+        """
+
+        return f"{self.name}{ModDownloadLiveHashesSuffix}"
 ##### EndScript

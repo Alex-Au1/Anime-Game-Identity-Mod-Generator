@@ -182,6 +182,48 @@ class WWMIIdentityModGeneratorTest(BaseUnitTest):
         self.assertEqual(mod.textures, [])
         self.assertFalse(os.path.exists(os.path.join(self.mod, "Textures")))
 
+    # =============== live texture hashes ====================================
+
+    def generateLive(self, liveHashes, textures = None, **kwargs):
+        writeAssets(self.assets, twoComponents(), textures = ["Components-0-1 t=abcd1234.dds", "Components-1 t=00ff00ff.dds"] if textures is None else textures)
+        return IDMG.WWMIIdentityModGenerator(**kwargs).generate(self.assets, self.mod, liveHashes = liveHashes)
+
+    def test_liveHashes_twinSectionOnTheLiveHash(self):
+        # the twin binds the same resource as the texture's own section, on the hash the game streams it in under
+        mod = self.generateLive({"abcd1234": "1111aaaa"})
+        ini = self.readIni()
+        body = b"match_priority = 0\r\nif $object_detected\r\n    this = ResourceTexture0\r\nendif\r\n"
+        self.assertIn(b"[TextureOverrideTexture0]\r\nhash = abcd1234\r\n" + body + b"\r\n[TextureOverrideTexture0Live]\r\nhash = 1111aaaa\r\n" + body, ini)
+        self.assertNotIn(b"[TextureOverrideTexture1Live]", ini)
+        self.assertEqual(mod.liveHashes, {"abcd1234": "1111aaaa"})
+        self.assertIn("  textures: 2, 1 also on their live hash", mod.getSummary())
+
+    def test_liveHashes_onlyForTexturesTheModHasAndThatDiffer(self):
+        # a live hash equal to the asset's, a texture the mod does not carry, and a mod with no textures get no twin
+        mod = self.generateLive({"00ff00ff": "00ff00ff", "deadbeef": "99999999"})
+        self.assertNotIn(b"Live]", self.readIni())
+        self.assertEqual(mod.liveHashes, {})
+        self.assertIn("  textures: 2", mod.getSummary())
+
+        mod = self.generateLive({"abcd1234": "1111aaaa"}, includeTextures = False)
+        self.assertNotIn(b"Live]", self.readIni())
+        self.assertEqual(mod.liveHashes, {})
+
+    def test_noLiveHashes_noTwin(self):
+        self.generate(textures = ["Components-0 t=abcd1234.dds"])
+        self.assertNotIn(b"Live]", self.readIni())
+
+    def test_readLiveHashes_hashPairsOnlyInLowercase(self):
+        path = os.path.join(self._temp.name, "TesterLiveHashes.json")
+        with open(path, "w", encoding = "utf-8") as f:
+            json.dump({"_": "where it was measured", "ABCD1234": "1111AAAA", "notahash": "22223333", "33334444": "short", "55556666": 7}, f)
+        self.assertEqual(IDMG.WWMIIdentityModGenerator.readLiveHashes(path), {"abcd1234": "1111aaaa"})
+
+        with open(path, "w", encoding = "utf-8") as f:
+            json.dump(["abcd1234", "1111aaaa"], f)
+        with self.assertRaises(IDMG.BadAssetData):
+            IDMG.WWMIIdentityModGenerator.readLiveHashes(path)
+
     # =============== bad asset data =========================================
 
     def test_badAssetData_raisesAndWritesNothing(self):

@@ -1,0 +1,6 @@
+{
+  "_": "AugustaHelm's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-AugustaClean38-2026-11-14-043026). Left out: bb641eb0 (best 8d93c625 at 0.0606). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off AugustaDraws: 3 of 4 textures, scores 1.000 - 1.000, margins over 0.91.",
+  "8d61b0da": "8d93c625",
+  "edab99db": "00fe591d",
+  "ee8f31d8": "c459bdf0"
+}

@@ -43,6 +43,9 @@ from .WWMIIdentityMod import WWMIIdentityMod
 #: The file names of an asset folder's textures: ``Components-<components> t=<hash>.dds``, named by the components that use them and the hash the game binds them under
 WWMITexturePattern = re.compile(r"^Components-[0-9-]+ t=(?P<hash>[0-9a-fA-F]{8})\.dds$")
 
+# a 3DMigoto hash: eight hex digits
+HashPattern = re.compile(r"[0-9a-fA-F]{8}")
+
 
 class WWMIIdentityModGenerator(Model):
     """
@@ -488,7 +491,7 @@ class WWMIIdentityModGenerator(Model):
 
         return WWMIShapeKeys(offsets, vertexIds, six, counts)
 
-    def generate(self, assetsFolder: str, modFolder: str, name: Optional[str] = None) -> WWMIIdentityMod:
+    def generate(self, assetsFolder: str, modFolder: str, name: Optional[str] = None, liveHashes: Optional[Dict[str, str]] = None) -> WWMIIdentityMod:
         """
         Generates the identity mod of a character
 
@@ -502,6 +505,11 @@ class WWMIIdentityModGenerator(Model):
 
         name: Optional[:class:`str`]
             The name of the character in the mod. If this value is ``None``, the name of ``assetsFolder`` is used :raw-html:`<br />` :raw-html:`<br />`
+
+            **Default**: ``None``
+
+        liveHashes: Optional[Dict[:class:`str`, :class:`str`]]
+            The hash the game binds some of the textures under once they have fully loaded, by their hash in the asset folder (see :meth:`readLiveHashes`). Each of those textures is also overridden on that hash. If this value is ``None``, the textures are overridden only on the asset folder's hashes :raw-html:`<br />` :raw-html:`<br />`
 
             **Default**: ``None``
 
@@ -526,7 +534,7 @@ class WWMIIdentityModGenerator(Model):
         textures = []
         if (self.includeTextures):
             textures = [(os.path.join(assetsFolder, fileName), fileName, textureHash) for fileName, textureHash in self.getTextures(assetsFolder)]
-        return self._write(name, modFolder, mesh, textures)
+        return self._write(name, modFolder, mesh, textures, liveHashes)
 
     def buildMesh(self, assetsFolder: str) -> WWMIMesh:
         """
@@ -664,9 +672,44 @@ class WWMIIdentityModGenerator(Model):
 
         with tempfile.TemporaryDirectory() as temp:
             downloader.download(download, temp if (downloadFolder is None) else downloadFolder)
-            return self.generateFromDownload(download.folder, modFolder, download.prefix, name = modName)
+            liveHashes = None
+            if (download.liveHashes is not None):
+                liveHashes = self.readLiveHashes(os.path.join(download.folder, download.liveHashesFile))
+            return self.generateFromDownload(download.folder, modFolder, download.prefix, name = modName, liveHashes = liveHashes)
 
-    def generateFromDownload(self, downloadFolder: str, modFolder: str, prefix: str, name: Optional[str] = None) -> WWMIIdentityMod:
+    @classmethod
+    def readLiveHashes(cls, path: str) -> Dict[str, str]:
+        """
+        Reads a table of the hashes the game binds a character's textures under once they have fully loaded,
+        laid out as Anime Game Remap's ``Data/Mod Downloads/WuWa/<Name>/<Name>LiveHashes.json``: a JSON object of
+        ``"<asset hash>": "<live hash>"``. Any other entry (eg. the ``"_"`` note) is skipped
+
+        Parameters
+        ----------
+        path: :class:`str`
+            The path to the table
+
+        Raises
+        ------
+        :class:`BadAssetData`
+            If the file is not a JSON object
+
+        Returns
+        -------
+        Dict[:class:`str`, :class:`str`]
+            The live hash of each texture, by its hash in the asset folder, in lowercase
+        """
+
+        with open(path, "r", encoding = FileEncodings.UTF8.value) as f:
+            table = json.load(f)
+        if (not isinstance(table, dict)):
+            raise BadAssetData(f"{os.path.basename(path)} is not a table of texture hashes")
+
+        return {key.lower(): value.lower() for key, value in table.items()
+                if isinstance(value, str) and HashPattern.fullmatch(key) and HashPattern.fullmatch(value)}
+
+    def generateFromDownload(self, downloadFolder: str, modFolder: str, prefix: str, name: Optional[str] = None,
+                             liveHashes: Optional[Dict[str, str]] = None) -> WWMIIdentityMod:
         """
         Generates the identity mod of a character from its download folder, laid out as Anime Game Remap's
         ``Data/Mod Downloads/WuWa/<Name>/<version>`` folders are:
@@ -698,6 +741,11 @@ class WWMIIdentityModGenerator(Model):
 
             **Default**: ``None``
 
+        liveHashes: Optional[Dict[:class:`str`, :class:`str`]]
+            The hash the game binds some of the textures under once they have fully loaded, by their hash in the download folder (see :meth:`readLiveHashes`). Each of those textures is also overridden on that hash. If this value is ``None``, the textures are overridden only on the download folder's hashes :raw-html:`<br />` :raw-html:`<br />`
+
+            **Default**: ``None``
+
         Raises
         ------
         :class:`BadAssetData`
@@ -720,7 +768,7 @@ class WWMIIdentityModGenerator(Model):
                 if (match is not None):
                     textures.append((os.path.join(downloadFolder, fileName), fileName, match.group("hash").lower()))
 
-        return self._write(name, modFolder, mesh, textures)
+        return self._write(name, modFolder, mesh, textures, liveHashes)
 
     def readDownloadMesh(self, downloadFolder: str, prefix: str) -> WWMIMesh:
         """
@@ -824,7 +872,7 @@ class WWMIIdentityModGenerator(Model):
 
         return WWMIMesh(metadata, drawRanges, buffers, shapeKeys, remaps, blendStride, weightsPerVertex, int(ids.max()) if (ids.size) else 0)
 
-    def _write(self, name: str, modFolder: str, mesh: WWMIMesh, textures: List[Tuple[str, str, str]]) -> WWMIIdentityMod:
+    def _write(self, name: str, modFolder: str, mesh: WWMIMesh, textures: List[Tuple[str, str, str]], liveHashes: Optional[Dict[str, str]] = None) -> WWMIIdentityMod:
         self.print("log", f"Writing the mod into {modFolder}")
         meshes = os.path.join(modFolder, "Meshes")
         os.makedirs(meshes, exist_ok = True)
@@ -847,11 +895,16 @@ class WWMIIdentityModGenerator(Model):
                 shutil.copy2(src, os.path.join(textureFolder, fileName))
                 textureList.append((fileName, textureHash))
 
+        # only the textures the mod has get a live twin, and a "live" hash equal to the asset's needs none
+        written = {textureHash for _, textureHash in textureList}
+        liveTwins = {} if (liveHashes is None) else {h: live for h, live in liveHashes.items() if h in written and live != h}
+
         iniBuilder = WWMIIniBuilder(name, self.author, mesh.metadata, mesh.drawRanges, mesh.shapeKeys.entryCount, textureList,
-                                    blendStride = mesh.blendStride, blendRemaps = mesh.blendRemaps, weightsPerVertex = mesh.weightsPerVertex)
+                                    blendStride = mesh.blendStride, blendRemaps = mesh.blendRemaps, weightsPerVertex = mesh.weightsPerVertex,
+                                    liveHashes = liveTwins)
         with open(os.path.join(modFolder, "mod.ini"), "w", encoding = FileEncodings.UTF8.value, newline = "\r\n") as f:
             f.write(iniBuilder.build())
 
         return WWMIIdentityMod(name, modFolder, mesh.metadata, mesh.drawRanges, mesh.shapeKeys, mesh.blendRemaps, mesh.weightsPerVertex, mesh.blendStride,
-                               mesh.highestBone, {buffer: len(data) for buffer, data in mesh.buffers.items()}, textureList)
+                               mesh.highestBone, {buffer: len(data) for buffer, data in mesh.buffers.items()}, textureList, liveHashes = liveTwins)
 ##### EndScript

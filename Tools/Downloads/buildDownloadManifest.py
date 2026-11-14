@@ -11,6 +11,10 @@
 # prefix: <prefix>Hash.json for GI, <prefix>Metadata.json for WuWa. A file both repos have is taken from
 # AG Remap's. Run it after populateDownloads.py, and after AG Remap's master gains a download folder.
 #
+# A character's table of live texture hashes, <name>LiveHashes.json beside its version folders (AG Remap's
+# layout; this repo's are measured with wwmiLiveHashes.py), is listed in ModDownloadLiveHashes, again AG Remap's
+# first.
+#
 # AG Remap's files are listed from the local checkout given, so that checkout must match what AG Remap's
 # GitHub master serves -- a folder only on a local branch would make the library ask for files that 404.
 # Give it an export made by exportAGRemapDownloads.py: the commit the export names (its AGRemapCommit.txt) is
@@ -66,6 +70,7 @@ def main() -> int:
 
     roots = [(IDMG.ModDownloadRepos.AGRemap, args.agRemap), (IDMG.ModDownloadRepos.AGIDMGen, OwnDownloads)]
     data = {}
+    liveHashes = {}
     skipped = []
     for loader in Games.values():
         game = IDMG.ModDownloadGameFolders[loader]
@@ -94,11 +99,21 @@ def main() -> int:
                     continue
                 data.setdefault(game, {}).setdefault(name, {})[version] = (prefix, files)
 
+            # the character's table of live texture hashes, beside its version folders (AG Remap's layout)
+            liveFile = name + IDMG.ModDownloadLiveHashesSuffix
+            for repo, root in roots:
+                if (name in data.get(game, {}) and os.path.isfile(os.path.join(root, game, name, liveFile))):
+                    liveHashes.setdefault(game, {})[name] = repo.name
+                    break
+
     with open(Output, "w", encoding = "utf-8", newline = "\n") as f:
         f.write(Header)
         f.write("#: For each game folder, character and version folder: the prefix of the folder's files, and the repository (a :class:`ModDownloadRepos` name) each file is kept in\n")
         f.write("ModDownloadData: Dict[str, Dict[str, Dict[str, Tuple[str, Dict[str, str]]]]] = ")
         f.write(pprint.pformat(data, width = 160, sort_dicts = True))
+        f.write("\n\n#: For each game folder, the characters with a table of live texture hashes (``<character>LiveHashes.json``, beside their version folders), and the repository (a :class:`ModDownloadRepos` name) it is kept in\n")
+        f.write("ModDownloadLiveHashes: Dict[str, Dict[str, str]] = ")
+        f.write(pprint.pformat(liveHashes, width = 160, sort_dicts = True))
         f.write("\n\n#: The commit of Anime Game Remap's repository whose download folders this list was built from\n")
         f.write(f"ModDownloadAGRemapCommit: str = {commit!r}")
         f.write("\n\n#: For each game folder, other names its characters are known by (eg. the asset repo's), and the name of their folder\n")
@@ -109,6 +124,7 @@ def main() -> int:
     counts = {game: (len(characters), sum(len(v) for v in characters.values())) for game, characters in data.items()}
     print(f"wrote {os.path.relpath(Output, RepoRoot)} from AG Remap's {commit[:8]}: " +", ".join(f"{game} {c} characters / {v} versions" for game, (c, v) in counts.items()))
     print(f"skipped (no file names the prefix): {len(skipped)}" + (f" -- {', '.join(skipped)}" if skipped else ""))
+    print("live texture hashes: " + (", ".join(f"{game}/{name} ({repo})" for game, names in liveHashes.items() for name, repo in sorted(names.items())) or "none"))
     return 0
 
 

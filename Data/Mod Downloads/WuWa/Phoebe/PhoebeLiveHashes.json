@@ -1,0 +1,21 @@
+{
+  "_": "Phoebe's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the base outfit with no Phoebe mod loaded (FrameAnalysis-PhoebeClean38-2026-11-14-033831). 0758a784, 76402ba3, 78fa07fc and 989a9b41 are left out as near-ties: each scores 1.000 on its best candidate and 0.978 - 0.995 on the next (nearly identical images), so no pair is clear. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off PhoebeClean38Draws: 14 of 18 textures, scores 0.999 - 1.000, margins over 0.44. Second pass, by hand (2026-11-14): the four near-ties are two images, each filed twice in the asset folder (4 MB and 512 KB copies) and bound twice in the dump (a 4 MB copy on ps-t2 of her main draws, a 128 KB copy, one mip lower, on ps-t0 of another draw). Matched one to one by mutual best score and size: 0758a784 -> bfb312fa and 78fa07fc -> 96872630 (4 MB to 4 MB, 1.000), 989a9b41 -> e53ccc52 and 76402ba3 -> 0d24776a (512 KB to 128 KB, 1.000). Without the two 4 MB pairs her coat stayed unpainted in the purple test.",
+  "06b39fed": "2375c88b",
+  "0758a784": "bfb312fa",
+  "18aae516": "239a5f3d",
+  "1bc4da29": "d65c550c",
+  "2187f9c9": "c848ae33",
+  "21f813ba": "742c5c7b",
+  "22a9e382": "412d15e4",
+  "44cdd259": "4ae46568",
+  "5198cff7": "803af004",
+  "620fd27a": "13a68ee2",
+  "76402ba3": "0d24776a",
+  "78fa07fc": "96872630",
+  "8383cbbf": "a506a70d",
+  "87686929": "f7462f74",
+  "989a9b41": "e53ccc52",
+  "cb5eca8c": "cf233946",
+  "cd290e05": "204ed695",
+  "eeefa6b0": "d7d75f48"
+}

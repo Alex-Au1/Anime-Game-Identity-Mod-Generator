@@ -160,15 +160,17 @@ files are stored in [Git LFS](https://git-lfs.com).
 | [Zhongli](GI/Zhongli) | GeoArchon, Morax, RexLapis | 6.8 | AGIDMGen |
 | [Zibai](GI/Zibai) |  | 6.8 | AGIDMGen |
 
-## WuWa (WWMI): 54 mods
+## WuWa (WWMI): 75 mods
 
 | Character | Aliases | Game version | From |
 | --- | --- | --- | --- |
-| [Aalto](WuWa/Aalto) |  | 2.7 | AGIDMGen |
+| [Aalto](WuWa/Aalto) |  | 3.8 | AGIDMGen |
+| [Aemeath](WuWa/Aemeath) |  | 3.8 | AGIDMGen |
 | [Augusta](WuWa/Augusta) |  | 2.7 | AGIDMGen |
 | [AugustaHelm](WuWa/AugustaHelm) |  | 2.7 | AGIDMGen |
 | [Baizhi](WuWa/Baizhi) |  | 2.7 | AGIDMGen |
 | [Brant](WuWa/Brant) |  | 2.7 | AGIDMGen |
+| [Buling](WuWa/Buling) |  | 3.8 | AGIDMGen |
 | [CalcharoBody](WuWa/CalcharoBody) |  | 2.7 | AGIDMGen |
 | [CalcharoTorso](WuWa/CalcharoTorso) |  | 2.7 | AGIDMGen |
 | [Camellya](WuWa/Camellya) |  | 2.7 | AGIDMGen |
@@ -187,34 +189,53 @@ files are stored in [Git LFS](https://git-lfs.com).
 | [Chixia](WuWa/Chixia) |  | 2.7 | AGIDMGen |
 | [Ciaccona](WuWa/Ciaccona) |  | 2.7 | AGIDMGen |
 | [Danjin](WuWa/Danjin) |  | 2.7 | AGIDMGen |
+| [Denia](WuWa/Denia) |  | 3.8 | AGIDMGen |
 | [Encore](WuWa/Encore) |  | 2.7 | AGIDMGen |
 | [Galbrena](WuWa/Galbrena) |  | 2.7 | AGIDMGen |
+| [Hiyuki](WuWa/Hiyuki) |  | 3.8 | AGIDMGen |
+| [HiyukiLuneNoire](WuWa/HiyukiLuneNoire) |  | 3.8 | AGIDMGen |
 | [Iuno](WuWa/Iuno) |  | 2.7 | AGIDMGen |
 | [Jianxin](WuWa/Jianxin) |  | 2.7 | AGIDMGen |
-| [Jinhsi](WuWa/Jinhsi) | Jinshi | 2.7 | AGIDMGen |
-| [JinhsiBlossom](WuWa/JinhsiBlossom) | BlossomJinhsi, JinhsiPeachBlossom, JinhsiSkin1, PeachBlossomJinhsi, JinshiSkin1 | 2.7 | AGIDMGen |
-| [Jiyan](WuWa/Jiyan) |  | 2.7 | AGIDMGen |
+| [Jingran](WuWa/Jingran) |  | 3.8 | AGIDMGen |
+| [Jinhsi](WuWa/Jinhsi) | Jinshi | 3.7 | AG Remap |
+| [JinhsiBlossom](WuWa/JinhsiBlossom) | BlossomJinhsi, JinhsiPeachBlossom, JinhsiSkin1, JinshiSkin1, PeachBlossomJinhsi | 3.7 | AG Remap |
+| [Jiyan](WuWa/Jiyan) |  | 3.8 | AGIDMGen |
+| [Lily](WuWa/Lily) |  | 3.8 | AGIDMGen |
 | [Lingyang](WuWa/Lingyang) |  | 2.7 | AGIDMGen |
+| [Lucilla](WuWa/Lucilla) |  | 3.8 | AGIDMGen |
+| [Lucy](WuWa/Lucy) |  | 3.8 | AGIDMGen |
 | [Lumi](WuWa/Lumi) |  | 2.7 | AGIDMGen |
 | [LupaBody](WuWa/LupaBody) |  | 2.7 | AGIDMGen |
 | [LupaTail](WuWa/LupaTail) |  | 2.7 | AGIDMGen |
+| [LuukHerssen](WuWa/LuukHerssen) |  | 3.8 | AGIDMGen |
 | [Lynae](WuWa/Lynae) |  | 3.7 | AG Remap |
 | [LynaePeppermint](WuWa/LynaePeppermint) | LynaeSkin1, PeppermintLynae | 3.7 | AG Remap |
+| [Mornye](WuWa/Mornye) |  | 3.8 | AGIDMGen |
+| [MornyePlushDream](WuWa/MornyePlushDream) |  | 3.8 | AGIDMGen |
 | [Mortefi](WuWa/Mortefi) |  | 2.7 | AGIDMGen |
 | [Phoebe](WuWa/Phoebe) |  | 2.7 | AGIDMGen |
 | [Phrolova](WuWa/Phrolova) |  | 2.7 | AGIDMGen |
+| [Qingxiao](WuWa/Qingxiao) |  | 3.8 | AGIDMGen |
+| [Qiuyuan](WuWa/Qiuyuan) |  | 3.8 | AGIDMGen |
+| [Rebecca](WuWa/Rebecca) |  | 3.8 | AGIDMGen |
 | [Roccia](WuWa/Roccia) |  | 2.7 | AGIDMGen |
-| [RoverFemale](WuWa/RoverFemale) | FemaleRover | 2.7 | AGIDMGen |
+| [RoverFemale](WuWa/RoverFemale) | FemaleRover | 3.8 | AGIDMGen |
+| [RoverFemalePerpetualSpark](WuWa/RoverFemalePerpetualSpark) |  | 3.8 | AGIDMGen |
 | [RoverMale](WuWa/RoverMale) | MaleRover | 2.7 | AGIDMGen |
 | [Sanhua](WuWa/Sanhua) | JinhsiBodyguard | 2.5 | AG Remap |
 | [SanhuaExorcist](WuWa/SanhuaExorcist) | SanhuaSkin1, ExorcistSanhua, SanhuaMoonChasing, MoonChasingSanhua, JinhsiBodyguardExorcist, ExorcistJinhsiBodyguard, JinhsiBodyguardMoonChasing, MoonChasingJinhsiBodyguard | 2.5 | AG Remap |
 | [Shorekeeper](WuWa/Shorekeeper) | TheShorekeeper | 2.7 | AGIDMGen |
+| [Sigrika](WuWa/Sigrika) |  | 3.8 | AGIDMGen |
+| [Suisui](WuWa/Suisui) |  | 3.8 | AGIDMGen |
+| [Suoming](WuWa/Suoming) |  | 3.8 | AGIDMGen |
 | [Taoqi](WuWa/Taoqi) |  | 2.7 | AGIDMGen |
 | [Verina](WuWa/Verina) |  | 2.7 | AGIDMGen |
 | [XiangliYao](WuWa/XiangliYao) |  | 2.7 | AGIDMGen |
-| [Yangyang](WuWa/Yangyang) |  | 2.7 | AGIDMGen |
-| [Yinlin](WuWa/Yinlin) |  | 2.7 | AGIDMGen |
+| [Yangyang](WuWa/Yangyang) |  | 3.8 | AGIDMGen |
+| [YangyangXuanling](WuWa/YangyangXuanling) |  | 3.8 | AGIDMGen |
+| [Yinlin](WuWa/Yinlin) |  | 3.8 | AGIDMGen |
 | [Youhu](WuWa/Youhu) |  | 2.7 | AGIDMGen |
 | [Yuanwu](WuWa/Yuanwu) |  | 2.7 | AGIDMGen |
 | [Zani](WuWa/Zani) | ZaniArchive | 2.7 | AGIDMGen |
+| [ZaniDowntownRepose](WuWa/ZaniDowntownRepose) |  | 3.8 | AGIDMGen |
 | [Zhezhi](WuWa/Zhezhi) |  | 2.7 | AGIDMGen |

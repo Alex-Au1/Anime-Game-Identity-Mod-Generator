@@ -11,7 +11,8 @@ on:
 jobs:
   run-tests:
     name: Run Unit Tester
-    runs-on: ubuntu-latest
+    # ubuntu-24.04, not ubuntu-latest: Python 3.9 is past its end of life and has no build for Ubuntu 26.04
+    runs-on: ubuntu-24.04
 
     steps:
     # no Git LFS: the unit tests build their own fixtures and read nothing under Data/ or Mods/

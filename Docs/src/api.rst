@@ -434,6 +434,13 @@ ModDownloadGameFolders
 
 :raw-html:`<br />`
 
+ModDownloadLiveHashesSuffix
+===========================
+
+.. autodata:: AGIDMGen.constants.ModDownloadRepos.ModDownloadLiveHashesSuffix
+
+:raw-html:`<br />`
+
 ModDownloadRepos
 ================
 
@@ -545,6 +552,14 @@ ModDownloadData
 ===============
 
 .. autodata:: AGIDMGen.data.ModDownloadData.ModDownloadData
+    :no-value:
+
+:raw-html:`<br />`
+
+ModDownloadLiveHashes
+=====================
+
+.. autodata:: AGIDMGen.data.ModDownloadData.ModDownloadLiveHashes
     :no-value:
 
 :raw-html:`<br />`

@@ -10,7 +10,7 @@
 
 
 ##### ExtImports
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 ##### EndExtImports
 
 
@@ -63,6 +63,11 @@ class WWMIIniBuilder():
 
         **Default**: 4
 
+    liveHashes: Optional[Dict[:class:`str`, :class:`str`]]
+        For some of the textures, the hash the game binds them under once they have fully loaded (their "live" hash), by the hash in ``textures``. The game streams its textures, and the hash changes as a texture loads, so each texture listed here gets a second override section, ``[TextureOverrideTexture<n>Live]``, on its live hash. If this value is ``None``, no texture gets one :raw-html:`<br />` :raw-html:`<br />`
+
+        **Default**: ``None``
+
     Attributes
     ----------
     name: :class:`str`
@@ -91,10 +96,14 @@ class WWMIIniBuilder():
 
     weightsPerVertex: :class:`int`
         The number of bone weights of one vertex
+
+    liveHashes: Dict[:class:`str`, :class:`str`]
+        The live hash of some of the textures, by the hash in :attr:`textures`
     """
 
     def __init__(self, name: str, author: str, metadata: Dict[str, Any], components: List[WWMIDrawRange], shapeKeyCount: int,
-                 textures: List[Tuple[str, str]], blendStride: int = 8, blendRemaps: List[WWMIBlendRemap] = None, weightsPerVertex: int = 4):
+                 textures: List[Tuple[str, str]], blendStride: int = 8, blendRemaps: List[WWMIBlendRemap] = None, weightsPerVertex: int = 4,
+                 liveHashes: Optional[Dict[str, str]] = None):
         self.name = name
         self.author = author
         self.metadata = metadata
@@ -104,6 +113,7 @@ class WWMIIniBuilder():
         self.blendStride = blendStride
         self.blendRemaps = [] if (blendRemaps is None) else blendRemaps
         self.weightsPerVertex = weightsPerVertex
+        self.liveHashes = {} if (liveHashes is None) else liveHashes
 
     @property
     def vertexCount(self) -> int:
@@ -242,8 +252,14 @@ class WWMIIniBuilder():
 
         L += ["; Shading: Textures -------------------------", ""]
         for n, (fileName, textureHash) in enumerate(self.textures):
-            L += [f"[ResourceTexture{n}]", f"filename = Textures/{fileName}", "", f"[TextureOverrideTexture{n}]", f"hash = {textureHash}", "match_priority = 0",
-                  "if $object_detected", f"    this = ResourceTexture{n}", "endif", ""]
+            body = ["match_priority = 0", "if $object_detected", f"    this = ResourceTexture{n}", "endif", ""]
+            L += [f"[ResourceTexture{n}]", f"filename = Textures/{fileName}", "", f"[TextureOverrideTexture{n}]", f"hash = {textureHash}"] + body
+
+            # the same texture once the game has streamed it in, which 3DMigoto hashes differently (AG Remap's
+            #   wwmiTextureFix.py --live twin, in its naming)
+            liveHash = self.liveHashes.get(textureHash)
+            if (liveHash is not None and liveHash != textureHash):
+                L += [f"[TextureOverrideTexture{n}Live]", f"hash = {liveHash}"] + body
 
         L += ["; Skinning: Shape Keys Override -------------------------", "", "[TextureOverrideShapeKeyOffsets]", f"hash = {sk.get('offsets_hash', '')}", "match_priority = 0",
               "override_byte_stride = 24", "override_vertex_count = $mesh_vertex_count", "", "[TextureOverrideShapeKeyScale]", f"hash = {sk.get('scale_hash', '')}", "match_priority = 0",

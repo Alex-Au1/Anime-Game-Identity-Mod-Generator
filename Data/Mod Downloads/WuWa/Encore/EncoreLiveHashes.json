@@ -1,0 +1,21 @@
+{
+  "_": "Encore's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the base outfit with no Encore mod loaded (FrameAnalysis-EncoreClean38-2026-11-14-033059). 0585af30 is left out: it is one flat colour (RGBA 255, 77, 0, 255), which pixel correlation cannot pair (no channel varies); the dump's only flat texture on her draws, d143633f (ps-t1 of draw 55), has the same colour, but it was not paired by the tool. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off EncoreClean38Draws: 17 of 18 textures, scores 0.995 - 1.000, margins over 0.17. Second pass, by hand (2026-11-14): 0585af30 -> d143633f, the flat colour above: the asset's TextureUsage puts 0585af30 on ps-t1 of the component whose ps-t0 is 6f62c47a, and the dump binds d143633f on ps-t1 of the very draw (55) whose ps-t0 is 6f62c47a's pair f913734c.",
+  "0585af30": "d143633f",
+  "21f813ba": "742c5c7b",
+  "29c8d938": "f48206c1",
+  "2e6c434e": "2e8c959c",
+  "32a393ae": "4e8ca5cb",
+  "3d32cb0e": "20a94a1c",
+  "47c515ac": "5c567e2a",
+  "6f62c47a": "f913734c",
+  "8183786e": "79bd1dd4",
+  "8383cbbf": "a506a70d",
+  "8def9d8b": "bf3ce4f6",
+  "996b2e4b": "839c9e85",
+  "9d0fefda": "22562e0f",
+  "b6021f06": "07a76f34",
+  "d1df2ed7": "13722177",
+  "e3e1281a": "2727b682",
+  "f1838b66": "4d143df8",
+  "f7063e17": "789f4418"
+}

@@ -1,0 +1,22 @@
+{
+  "_": "Zhezhi's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-ZhezhiCS38-2026-11-14-061235). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off ZhezhiCSDraws: 15 of 19 textures, scores 0.999 - 1.000, margins over 0.19. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 42b99a48 -> eb362a37 ; a07dd592 -> a2098073 ; 9bf218c0 -> ed7643ec ; 861bd2d1 -> c718459e.",
+  "019776db": "d57434c1",
+  "082752de": "4465c3cf",
+  "15d8e51d": "0737767b",
+  "1f4bb8ab": "ae4ae3b3",
+  "21f813ba": "742c5c7b",
+  "246557d6": "40d784ff",
+  "333217d7": "67b3ee90",
+  "42b99a48": "eb362a37",
+  "6ba42f12": "cf88d28e",
+  "7c43fcc6": "0421adc7",
+  "8383cbbf": "a506a70d",
+  "861bd2d1": "c718459e",
+  "8f1f16f2": "e1a1d95f",
+  "9bf218c0": "ed7643ec",
+  "a07dd592": "a2098073",
+  "cc072002": "7a1a784b",
+  "d9a6d77f": "73ee1d2e",
+  "db2412ad": "af39b841",
+  "e5393d0e": "1c4ac885"
+}

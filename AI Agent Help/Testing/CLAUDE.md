@@ -138,6 +138,47 @@ wants it used instead of asking them for screenshots. What it took on 2026-10-13
 - **Finish by testing the artifact users get** (the regenerated `Mods/GI/<Name>`), not only your hand-edited copy. Then
   restore the loaded set, `reload`, and leave the game where you found it.
 
+**WuWa, the first round (Zani, 2026-11-14).** The purple test is what found that every WWMI-Assets-built mod's texture
+overrides were dead (see [Downloads](../Downloads/CLAUDE.md)' "LIVE TEXTURE HASHES"). What it took:
+
+- **A NEGATIVE NEEDS A SECOND RELOAD.** WWMI's log is off, so GameView's `reload` cannot tell whether F10 arrived, and
+  once it did not: the live-twin build stayed unpurple, and the same files turned her fully purple after the next
+  reload. `could not bring Client-Win64-Shipping.exe to the foreground` also happens; retry. Then make a POSITIVE
+  control (point one override at a hash the dump shows on her draws) before calling a binding dead.
+- **In WWMI the components match on `vb0`**, not the index buffer: look for `vb0=<Metadata vb0_hash>` in a full dump.
+  An `--options dump_ib` dump cannot show it.
+- **Dump with the character's mod parked** (a dump's textures are the mod's where it binds any), from the character
+  menu, with LOD bias at maximum. Copy the character's draws out of the dump at once: on 2026-11-14 every
+  `FrameAnalysis-*` folder in `WWMI\` vanished within minutes, by another session's hand, not to the Recycle Bin.
+- **Undo your own moves by hand, not with `mods WWMI restore`.** Its journal held moves from older sessions and replayed
+  them: it swapped three of the maintainer's loaded mods for four others. Record `mods WWMI list` first, move your one
+  folder yourself (`Move-Item`), and compare the list at the end.
+- **A purple test leaves a tint for a while** after the real textures go back: compare with a no-mod shot only once the
+  reload has settled (`pair --crop`).
+
+**THE WUWA SWEEP: EVERY MOD, AND EVERY CHARACTER THE GAME HAS (2026-11-14, WuWa 3.8).** It took four epochs of a
+background game agent (see [Overview](../Overview/CLAUDE.md)'s habit 24). The results are in
+[Downloads](../Downloads/CLAUDE.md)' "THE IN-GAME SWEEP" and "NEW CHARACTERS AND OUTFITS".
+- **Where a model can be shown without owning it:**
+  - Resonators grid and outfit screen: owned characters. A locked outfit card still renders its model.
+  - Gallery -> Crossing Stars: every released character, with the real `vb0` drawn. It has no outfit preview (its
+    magnifier opens a story page).
+  - The in-game Store's outfit preview: unowned outfits. **View only: never press Purchase / Buy or confirm anything**;
+    back out of a purchase dialog.
+  - Not shown by any menu: battle forms (CartethyiaFleurdelys), the other gender's Rover, and some hair variants
+    (CarlottaHairCrystal).
+- **A pass is a purple test, then a real-texture `pair` matching a no-mod shot.** Screen effects can mislead the purple
+  test, so judge by the pair: Sigrika's emissive parts and Mornye PlushDream's Store panels did. A whole extra object
+  that stays unpainted (Rebecca's jacket) is a second `vb0`, so it needs its own part mod. An accessory (a crown, a
+  helm's mask) is often a separate mesh too.
+- **The first click on the game often only focuses its window**, so the rest of a scripted click sequence lands one
+  step off. That opened the Sounds settings once. Take a screenshot before each sequence, and check the screen after
+  its first click.
+- **Dumps are 8-14 GB each: take one at a time**, extract, then delete it. A dds dump sometimes fails the first time;
+  retry it. Stop at once and report if the maintainer takes the game back.
+- **A batch can lose the game's focus partway** (`could not bring ... to the foreground`). Let a dump that already
+  started finish, so GameView restores `d3dx.ini` itself, then rerun the batch with retries.
+
 ## CI: `.github/workflows` (2026-10-06)
 
 The layout follows AGRemap's. `tests.yml` ("Testers") is the entry point: a push to `main`, a pull request,
@@ -167,6 +208,11 @@ every 3 days, or a manual run. It calls `test-workflow.yml`, which runs both tes
 - **The script build's check runs on PyPI's AGRemapUtils 1.0.7 (2026-10-10).** It was published on 2026-10-05,
   after AGRemap's 2026-09-10 change that gave `ScriptBuilder` its `replacements`, and it requires `ordered-set`. Checked
   from PyPI's JSON, not yet by a run on GitHub.
+- **The test runners are pinned to `ubuntu-24.04` (2026-11-14).** `ubuntu-latest` moved to Ubuntu 26.04, and
+  `actions/setup-python` has no Python 3.9 build for it, because 3.9 is past its end of life. The Unit Tests (3.9) job then failed
+  with `The version '3.9' with architecture 'x64' was not found for Ubuntu 26.04`. Check
+  `https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json` before moving the pin, or drop
+  3.9 from the matrix and the branch protection's required checks together (the job names are those checks).
 
 ## PUBLISHING TO PYPI: `python-publish.yml` (2026-10-10)
 

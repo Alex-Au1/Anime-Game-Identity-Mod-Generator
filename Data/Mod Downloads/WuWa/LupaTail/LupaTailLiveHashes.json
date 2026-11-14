@@ -1,0 +1,8 @@
+{
+  "_": "LupaTail's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-LupaCS38-2026-11-14-055915). Left out: 5b5e8084 (best 7c57d4db at 0.0509). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off LupaCSDraws: 5 of 6 textures, scores 0.979 - 1.000, margins over 0.80.",
+  "20927988": "1c1717eb",
+  "53b0c79c": "f60a4753",
+  "7fb7147f": "6e342aaf",
+  "87505b2b": "bb73967a",
+  "fcc168c2": "7c57d4db"
+}

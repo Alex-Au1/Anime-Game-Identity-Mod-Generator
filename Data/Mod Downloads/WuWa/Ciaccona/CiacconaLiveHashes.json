@@ -1,0 +1,22 @@
+{
+  "_": "Ciaccona's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-CiacconaCS38-2026-11-14-060202). Left out: 83141b71 (best 1552ebc2 at 0.4719); b017285b (best d6d9d72c at 0.1812). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CiacconaCSDraws: 19 of 21 textures, scores 0.999 - 1.000, margins over 0.44.",
+  "0448648a": "5734ef32",
+  "10d1aeac": "141dbc74",
+  "1cffa7e8": "46f3a4ed",
+  "1f746639": "9a9b6927",
+  "21f813ba": "742c5c7b",
+  "24af21ae": "d3933df2",
+  "32271b48": "c3b314ca",
+  "342dcbc3": "fb5cd7be",
+  "37400c45": "b210a21c",
+  "5a41b6fa": "f7bf1c9b",
+  "6f620405": "a8f40af2",
+  "8383cbbf": "a506a70d",
+  "a20c032a": "c2bddf85",
+  "cf8ac68f": "4a718845",
+  "de5a0f92": "d0be8afe",
+  "e7f8bb3b": "f6c53a65",
+  "ea49c595": "4db471ed",
+  "ed5511fe": "51ac5e38",
+  "f58c741e": "7e5b9732"
+}

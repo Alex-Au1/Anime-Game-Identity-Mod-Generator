@@ -1,0 +1,8 @@
+{
+  "_": "CarlottaSummerHairNormal's textures (the Splashing Summer outfit): the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump of the Splashing Summer outfit card (previewed, not owned) with no Carlotta mod loaded (FrameAnalysis-CarlottaSummerClean38-2026-11-14-034408). 8383cbbf and c7918746 are left out: no texture bound on her hair draws (6 of them, vb0 fef960d0) matches them (best scores 0.15, 0.12). Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off CarlottaSummerClean38Draws: 5 of 7 textures, scores 1.000 - 1.000, margins over 0.64.",
+  "05824707": "3674bae1",
+  "2fae5fc8": "bf556800",
+  "30bc60f3": "b1245e44",
+  "9ec0b80f": "5be8371d",
+  "ea549e9a": "69cca045"
+}

@@ -33,7 +33,7 @@ A sub-project of [Anime Game Remap (AG Remap)](https://github.com/nhok0169/Anime
 
 ## Pre-generated Mods
 Don't want to run the library? Every character's identity mod is ready-made in the [Mods](Mods/README.md) folder:
-144 GI (GIMI) and 54 WuWa (WWMI) characters. Clone with [Git LFS](https://git-lfs.com) installed.
+144 GI (GIMI) and 75 WuWa (WWMI) characters. Clone with [Git LFS](https://git-lfs.com) installed.
 
 <br>
 

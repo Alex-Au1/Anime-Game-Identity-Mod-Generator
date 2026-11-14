@@ -1,0 +1,20 @@
+{
+  "_": "Lingyang's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (the Resonators grid preview) of the base outfit with no mod of the character loaded (FrameAnalysis-LingyangClean38-2026-11-14-043813). Left out: 83141b71 (best 6bf7a371 at 0.3966); bdf5e2b4 (best 024a8f5d at 0.9409). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off LingyangDraws: 14 of 19 textures, scores 0.996 - 1.000, margins over 0.10. Second pass (2026-11-14), by Tools/Downloads/wwmiLiveHashes.py's near-ties resolved one to one: the tool leaves out a texture whose best two candidates score within 0.1, which happens when the asset folder files one image twice (a full-size copy and a smaller one) and the game binds it twice (full size, and a copy a mip lower on another draw). Each such texture was paired with an untaken candidate scoring >= 0.95, same file size first, then by score (the rule Phoebe, Camellya and Shorekeeper were resolved by and proved in game): 535cb397 -> 5bac8e4d ; da541842 -> b27f3edc ; 291b46d1 -> a4396656.",
+  "0c33d080": "c530942d",
+  "0d10fb38": "5ecab350",
+  "1d9176cc": "90a5b2ad",
+  "21f813ba": "742c5c7b",
+  "291b46d1": "a4396656",
+  "3ebe7858": "b9c22b64",
+  "535cb397": "5bac8e4d",
+  "65faf13f": "39cd4e92",
+  "66e7b828": "162628fd",
+  "6e30ff58": "d53093e2",
+  "795b563b": "30105d20",
+  "8383cbbf": "a506a70d",
+  "84488d7d": "04580dab",
+  "91bba480": "057feb42",
+  "da541842": "b27f3edc",
+  "eaa6090e": "18a32ebf",
+  "f1282b25": "2756ed00"
+}

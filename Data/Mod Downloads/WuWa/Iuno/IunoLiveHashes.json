@@ -1,0 +1,21 @@
+{
+  "_": "Iuno's textures: the hash WWMI-Assets (2.7) and this download folder file them under -> the hash WuWa 3.8 binds with the LOD bias at its maximum (ImageDetail 2), measured 2026-11-14 off a character-menu frame dump (Gallery > Crossing Stars, the character not owned) of the base outfit with no mod of the character loaded (FrameAnalysis-IunoCS38-2026-11-14-055352). Left out: 26f60b32 (best 3d40779b at 0.1579); 414d071c (best 20bb1b79 at 0.1028); 41bd7de9 (best 75d25c45 at 0.0465). Below 0.95 means no texture bound on the character's draws matches, so that pass was not drawn in the frame. Paired by Tools/Downloads/wwmiLiveHashes.py (pixel correlation of every channel that varies, at 64 x 64) off IunoCSDraws: 18 of 21 textures, scores 1.000 - 1.000, margins over 0.40.",
+  "058e71e8": "ed144eda",
+  "21f813ba": "742c5c7b",
+  "36921691": "147a09dd",
+  "5815b5b3": "e2858e1b",
+  "7143a508": "dc098f8d",
+  "8383cbbf": "a506a70d",
+  "8390ce3a": "e08cc917",
+  "8e0e454d": "3d40779b",
+  "a410510a": "0d469340",
+  "a50b55d6": "7078e9ad",
+  "b36886fb": "e3f759b8",
+  "b399ecff": "5315f443",
+  "c70b9ab1": "d07dd526",
+  "cb93d0e5": "a3a40bf8",
+  "d2b23835": "ccdf8393",
+  "eb383fa1": "466cbfd6",
+  "eb65da67": "a9b25e96",
+  "f026fa9b": "34a83aaf"
+}

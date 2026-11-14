@@ -16,13 +16,13 @@ from .constants.DXGIFormats import DXGIFormats, DXGIFormatPrefix
 from .constants.FileEncodings import FileEncodings, IniFileEncoding, ReadEncodings
 from .constants.GIMIBuffers import GIMIBuffers, GIMISemanticBuffers, GIMIFixedStrides, GIMIHashFileSuffix
 from .constants.GIMITextureLayouts import GIMITextureLayouts
-from .constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders
+from .constants.ModDownloadRepos import ModDownloadRepos, ModDownloadGameFolders, ModDownloadLiveHashesSuffix
 from .constants.Credits import AGIDMGenGithubLink, AGIDMGenAuthor, AGIDMGenAuthors
 from .constants.ModLoaders import ModLoaders
 from .constants.ModNames import ModNames, ModNameGameTypeIds
 
 # --- Data --------
-from .data.ModDownloadData import ModDownloadData, ModDownloadAliases
+from .data.ModDownloadData import ModDownloadData, ModDownloadAliases, ModDownloadLiveHashes
 from .data.ModNameData import ModNameData, ModNamePartData
 from .constants.WWMIBuffers import WWMIBuffers, WWMIBlendRemapBuffers, WWMIShapeKeySlots, WWMIBlendRemapSize, WWMIBlendIndexLimit, WWMIDownloadNames, WWMIDownloadTextureSuffix
 
@@ -74,7 +74,7 @@ __all__ = ["IDModGenService", "IDModGenServiceCLI", "AssetsFolderFiles", "LogFil
            "DumpDataKinds", "GIMIBuffers", "GIMISemanticBuffers", "GIMIFixedStrides", "GIMITextureLayouts",
            "DumpDataType", "DumpElement", "IbDumpFile", "VbDumpFile", "GIMIComponent", "GIMIIdentityMod", "GIMITextureSource",
            "DumpValueTools", "GIMIIniBuilder", "GIMIIdentityModGenerator", "GIMIDownloadFolderBuilder", "WWMIDownloadFolderBuilder",
-           "ModDownloadRepos", "ModDownloadGameFolders", "ModDownloadData", "ModDownloadAliases", "ModName", "ModNames", "AGIDMGenGithubLink", "AGIDMGenAuthor", "AGIDMGenAuthors", "ModNameData", "ModNamePartData", "ModNameGameTypeIds", "DownloadFailed", "ModDownload", "ModDownloader", "VersionTools",
+           "ModDownloadRepos", "ModDownloadGameFolders", "ModDownloadLiveHashesSuffix", "ModDownloadData", "ModDownloadAliases", "ModDownloadLiveHashes", "ModName", "ModNames", "AGIDMGenGithubLink", "AGIDMGenAuthor", "AGIDMGenAuthors", "ModNameData", "ModNamePartData", "ModNameGameTypeIds", "DownloadFailed", "ModDownload", "ModDownloader", "VersionTools",
            "GIMIHashFileSuffix", "WWMIDownloadNames", "WWMIDownloadTextureSuffix", "WWMIDrawRange", "WWMIMesh",
            "DXGIFormats", "DXGIFormatPrefix", "FileEncodings", "IniFileEncoding", "ReadEncodings", "ModLoaders",
            "WWMIBuffers", "WWMIBlendRemapBuffers", "WWMIShapeKeySlots", "WWMIBlendRemapSize", "WWMIBlendIndexLimit",
